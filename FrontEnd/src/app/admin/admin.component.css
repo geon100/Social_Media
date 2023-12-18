@@ -1,0 +1,52 @@
+
+.wrapper {
+  display: flex;
+  height: 100vh; 
+}
+.wrapper.hide-sidebar {
+  flex-direction: row; 
+}
+/* Sidebar styling */
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #343a40;
+  padding-top: 20px;
+  color: #818181;
+}
+
+#sidebar a {
+  padding: 10px;
+  font-size: 1.2em;
+  color: #818181;
+  display: block;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+#sidebar a:hover {
+  color: #f8f9fa;
+}
+
+.sidebar-header {
+  text-align: center;
+  padding: 20px;
+  background-color: #343a40;
+}
+
+/* Main content area styling */
+#content {
+  width: calc(100% - 250px); /* Adjust based on the sidebar width */
+  margin-left: 250px; /* Adjust based on the sidebar width */
+  padding: 20px;
+  height: 100%; /* Ensure content fills the available height */
+  box-sizing: border-box; /* Include padding in the width calculation */
+  background-color: #ffffff; /* Example background color */
+}
+
+/* Add additional styles for your main content area */

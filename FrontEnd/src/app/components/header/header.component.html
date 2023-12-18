@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;" *ngIf="showHeader">
+  <div class="container-fluid">
+    
+    <a class="navbar-brand" href="#">
+      GB media
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+      <form class="d-flex mx-5 justify-content-center">
+        <div class="input-group">
+          <input class="form-control text-dark" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+      </form>
+
+      <div class="navbar-collapse collapse d-flex justify-content-end">
+        <ul class="navbar-nav mx-5">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Notifications</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Explore</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">messages</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn" (click)="logout()">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</nav>

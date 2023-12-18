@@ -1,0 +1,45 @@
+<form [formGroup]="addPostForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+  <mat-card>
+    
+    <mat-card-title>
+      Add Post
+    </mat-card-title>
+    <mat-card-content>
+      <div class="form-element">
+        <mat-form-field>
+          <textarea matInput id="caption" name="caption" placeholder="Caption" formControlName="caption"></textarea>
+          <mat-error *ngIf="addPostForm.get('caption')?.touched && addPostForm.get('caption')?.invalid">
+            Caption is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-element">
+        <input #fileInput type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none">
+
+        <img *ngIf="!addPostForm.get('image')?.value" src="../../../assets/images/image upload.jpg" alt="Image Uploader" (click)="openFileInput()">
+        
+        <div *ngIf="addPostForm.get('image')?.value" class="success-message">
+          Image Added
+        </div>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      
+      <button type="button" color="warn" [disabled]="loading" (click)="close()" mat-raised-button>Cancel</button>
+      
+      <button type="submit" color="primary" [disabled]="addPostForm.invalid||loading" mat-raised-button>Add Post</button>
+
+      <!-- <button mat-button type="submit" class="primary" [disabled]="addPostForm.invalid">Add Post</button> -->
+      
+    </mat-card-actions>
+    <div class="container text-center loading-container">
+      <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </mat-card>
+  
+</form>
+
+
+

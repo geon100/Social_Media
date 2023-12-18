@@ -1,0 +1,53 @@
+mat-card {
+  text-align: left;
+  border: 1px solid #ccc;
+  padding: 10px; 
+}
+
+.mat-mdc-form-field {
+  width: 98%;
+  margin: 1%;
+}
+
+.mat-50 {
+  width: 48%;
+  margin: 1%;
+}
+
+.div-50 {
+  width: 48%;
+  margin: 1%;
+  display: inline;
+}
+
+button {
+  margin: 2px;
+}
+
+.mat-mdc-raised-button {
+  width: 100%;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+  transition: opacity 0.5s ease-in-out;
+  
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition-property: color, font-size, opacity;
+}
+
+.success-message:hover {
+  opacity: 0.8;
+}
+
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

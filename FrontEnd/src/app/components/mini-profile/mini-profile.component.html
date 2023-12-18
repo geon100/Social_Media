@@ -1,0 +1,28 @@
+<div class="container bg-light rounded">
+  <!-- Cover photo and oval-shaped profile photo -->
+  <div class="row position-relative">
+    <img *ngIf="user && user.coverPicture" [src]="user.coverPicture" alt="Cover Photo" id="cover" class="w-100 rounded" style="height: 100px; object-fit: cover;">
+  
+    <img *ngIf="user && user.profilePicture" [src]="user.profilePicture" alt="Profile Photo" class="rounded-oval position-absolute top-100 start-50 translate-middle" style="width: 120px; height: 100px; object-fit: cover;">
+  </div>
+  
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-6 text-center mt-3">
+      <h3>{{user?.userName}}</h3>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <p>Followers: {{user?.followers?.length}}</p>
+      <p>Following: {{user?.following?.length}}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-6 text-center">
+      <button class="btn btn-primary mb-3" (click)="openAddPostDialog()">Add Post</button>
+    </div>
+  </div>
+</div>

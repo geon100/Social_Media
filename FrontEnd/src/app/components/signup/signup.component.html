@@ -1,0 +1,86 @@
+<!-- signup.component.html -->
+<!-- signup.component.html -->
+
+<div class="card signupbox">
+  <div class="card-header">
+    <h4>Sign Up</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input type="text" id="fullName" name="fullName" class="form-control" formControlName="fullName">
+        <div *ngIf="signupForm?.get('fullName')?.touched && signupForm?.get('fullName')?.hasError('required')" class="text-danger h6">
+          Full Name is required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date of Birth</label>
+        <div class="input-group">
+          <input type="text" id="dob" name="dob" class="form-control" formControlName="dob" [matDatepicker]="picker" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div *ngIf="signupForm?.get('dob')?.touched && signupForm?.get('dob')?.hasError('required')" class="text-danger h6">
+          Date of Birth is required
+        </div>
+        <div *ngIf="signupForm?.get('dob')?.touched && signupForm?.get('dob')?.hasError('minAge')" class="text-danger h6">
+          Age must be greater than 13
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" id="email" name="email" class="form-control" formControlName="email">
+        <div *ngIf="signupForm?.get('email')?.touched && signupForm?.get('email')?.hasError('required')" class="text-danger h6">
+          Email is required
+        </div>
+        <div *ngIf="signupForm?.get('email')?.touched && signupForm?.get('email')?.invalid" class="text-danger h6">
+          Must be a valid email address
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="userName" class="form-label">Username</label>
+        <input type="text" id="userName" name="userName" class="form-control" formControlName="userName">
+        <div *ngIf="signupForm?.get('userName')?.touched && signupForm?.get('userName')?.hasError('required')" class="text-danger h6">
+          Username is required
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-control" formControlName="password">
+        <div *ngIf="signupForm?.get('password')?.touched && signupForm?.get('password')?.hasError('required')" class="text-danger h6">
+          Password is required
+        </div>
+        <div *ngIf="signupForm?.get('password')?.touched && signupForm?.get('password')?.hasError('minlength')" class="text-danger h6">
+          Password must be at least 6 characters long
+        </div>
+        <div *ngIf="signupForm?.get('password')?.touched && signupForm?.get('password')?.hasError('pattern')" class="text-danger h6">
+          Password must contain at least one uppercase letter, one lowercase letter, and one digit
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" formControlName="confirmPassword">
+        <div *ngIf="signupForm?.get('confirmPassword')?.touched && signupForm?.get('confirmPassword')?.hasError('required')" class="text-danger h6">
+          Confirm Password is required
+        </div>
+        <div *ngIf="signupForm?.get('confirmPassword')?.touched && signupForm?.get('confirmPassword')?.hasError('minlength')" class="text-danger h6">
+          Password must be at least 6 characters long
+        </div>
+        <div *ngIf="signupForm?.get('confirmPassword')?.touched && signupForm?.get('confirmPassword')?.hasError('pattern')" class="text-danger h6">
+          Password must contain at least one uppercase letter, one lowercase letter, and one digit
+        </div>
+        <div *ngIf="signupForm?.get('confirmPassword')?.touched && signupForm?.hasError('mismatch')" class="text-danger h6">
+          Passwords must match
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button type="submit" class="btn btn-success" [disabled]="signupForm.invalid">Sign Up</button>
+      </div>
+    </form>
+  </div>
+</div>
+

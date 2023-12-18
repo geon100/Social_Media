@@ -1,0 +1,31 @@
+
+<div class="card loginbox">
+  <div class="card-header">
+    <h4>Login</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" id="email" name="email" class="form-control" formControlName="email">
+        <div *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.invalid" class="text-danger">
+          Email is required and must be a valid email address
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-control" formControlName="password">
+        <div *ngIf="this.loginForm.get('password')?.touched && this.loginForm.get('password')?.invalid" class="text-danger">
+          Enter a valid Password.
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+      </div>
+    </form>
+    <div class="text-center">
+      <a [routerLink]="'/signup'" style="text-decoration: none;">No Account Yet? Sign Up Now</a>
+    </div>
+    
+  </div>
+</div>
