@@ -1,0 +1,15 @@
+.post-details {
+  display: flex;
+}
+
+.post-image-container {
+  flex-shrink: 0; 
+  margin-right: 16px; 
+}
+
+.post-image {
+  max-width: 200px; 
+  max-height: 200px; 
+  width: auto; 
+  height: auto; 
+}

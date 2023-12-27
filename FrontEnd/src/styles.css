@@ -3,3 +3,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 79%;
+  transform: translate(-50%, -50%);
+}

@@ -1,5 +1,4 @@
-<!-- signup.component.html -->
-<!-- signup.component.html -->
+
 
 <div class="card signupbox">
   <div class="card-header">
@@ -76,9 +75,19 @@
           Passwords must match
         </div>
       </div>
+      <div class="mb-3">
+        <label for="otp" class="form-label">OTP</label>
+        <input type="text" id="otp" name="otp" class="form-control" formControlName="otp">
+        <div *ngIf="signupForm?.get('otp')?.touched && signupForm?.get('otp')?.hasError('required')" class="text-danger h6">
+          OTP is required
+        </div>
+      </div>
       
+      <div class="mb-3">
+        <button type="button" *ngIf="!otpSent" class="btn btn-primary" (click)="getOtp()" [disabled]="!signupForm?.get('email')?.valid">Get OTP</button>
+      </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-success" [disabled]="signupForm.invalid">Sign Up</button>
+        <button  type="submit" class="btn btn-success" [disabled]="signupForm.invalid">Sign Up</button>
       </div>
     </form>
   </div>

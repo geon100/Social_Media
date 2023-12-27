@@ -20,7 +20,6 @@ export class AddPostComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store,
     private dialogRef: MatDialogRef<AddPostComponent>,
     private service: PostService,
     private snackBar: SnackbarService
@@ -43,8 +42,8 @@ export class AddPostComponent {
 
       this.service.addpost(formData).pipe(
         catchError((error) => {
-          console.error('Add Post Failed', error?.error?.message);
           this.snackBar.showError(`Add Post Failed....Error:${error?.error?.message || 'Unknown error'}`);
+          this.close()
           return throwError(() => error);
         }),
         finalize(() => {

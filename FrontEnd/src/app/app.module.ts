@@ -19,6 +19,13 @@ import { userReducer } from './state/UserState/user.reducer';
 import { UserEffects } from './state/UserState/user.effects';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AddPostComponent } from './components/add-post/add-post.component';
+import { ErrorInterceptorInterceptor } from './interceptors/error-interceptor.interceptor';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PostComponent } from './components/post/post.component';
+import { PostviewComponent } from './views/postview/postview.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { ProfileComponent } from './views/profile/profile.component';
+import { ExploreComponent } from './views/explore/explore.component';
 
 
 @NgModule({
@@ -30,7 +37,13 @@ import { AddPostComponent } from './components/add-post/add-post.component';
     MiniProfileComponent,
     LoginComponent,
     SignupComponent,
-    AddPostComponent
+    AddPostComponent,
+    ForgotPasswordComponent,
+    PostComponent,
+    PostviewComponent,
+    CommentsComponent,
+    ProfileComponent,
+    ExploreComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +63,10 @@ import { AddPostComponent } from './components/add-post/add-post.component';
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass:TokenInterceptor,
+    multi:true
+  },{
+    provide:HTTP_INTERCEPTORS,
+    useClass:ErrorInterceptorInterceptor,
     multi:true
   }],
   bootstrap: [AppComponent]

@@ -1,0 +1,61 @@
+/* comments.component.css */
+.comments-container {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure the container takes full height */
+}
+
+.comments-list {
+  flex: 1;
+  max-height: 350px;
+  overflow-y: auto; /* Enable vertical scrolling for the comments list */
+}
+.comment {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover; /* Ensure the profile picture maintains its aspect ratio */
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+.text {
+  margin-top: 5px; /* Provide space between username and comment text */
+}
+
+.add-comment {
+  margin-top: auto;
+}
+
+.add-comment textarea {
+  resize: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.add-comment button {
+  width: 100%;
+}

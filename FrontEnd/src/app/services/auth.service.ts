@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegisterUser, UserCred } from '../models/auth.interface';
+import { RegisterUser, UserCred, newPasswordObj } from '../models/auth.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,6 +18,12 @@ export class AuthService {
   signup(userObj:RegisterUser):Observable<{status:boolean}>{
     return this.http.post<{status:boolean}>(`${this.ApiBaseUrl}/auth/signup`,userObj)
   }
- 
+  sendOtp(email:string){
+    return this.http.post<{status:boolean}>(`${this.ApiBaseUrl}/auth/sendOtp`,{email})
+  }
+
+  resetpassword(newPasswordData:newPasswordObj){
+    return this.http.post<{status:boolean}>(`${this.ApiBaseUrl}/auth/resetPassword`,newPasswordData)
+  }
  
 }

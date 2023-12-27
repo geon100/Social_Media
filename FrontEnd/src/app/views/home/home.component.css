@@ -1,7 +1,39 @@
 :host{
   background-image: url('../../../assets/images/bg.jpg');
   display: block;
-  height: 100vh;
-  color: black
+  min-height: 100vh;
+  color: black;
+  padding-top: 50px;
+}  
+
+.friend-suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
+
+.profile-picture img {
+  width: 50px; /* Set the desired width for the profile picture */
+  height: 50px; /* Set the desired height for the profile picture */
+  border-radius: 50%; /* Make the profile picture circular */
+  margin-right: 10px; /* Add some margin between the picture and user info */
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row; /* Align items in a column */
+}
+
+.user-info h5 {
+  margin: 0; /* Remove default margin for the user name */
+  margin-bottom: 5px; /* Add some spacing between username and button */
+}
+
+
+
+
+
+
 

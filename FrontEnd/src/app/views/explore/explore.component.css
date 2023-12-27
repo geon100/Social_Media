@@ -1,0 +1,6 @@
+:host{
+  background-image: url('../../../assets/images/bg.jpg');
+  display: block;
+  min-height: 100vh;
+  color: black
+}  

@@ -1,1 +1,88 @@
-<p>profile works!</p>
+
+<div class="user-profile">
+  <div class="container text-center loading-container">
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <input #coverPic (change)="changeCover($event)" type="file" hidden accept="image/*">
+
+  <div (click)="openCoverChange(coverPic)" class="cover-photo" [style.background-image]="'url(' + user?.coverPicture + ')'" *ngIf="user?.coverPicture" matTooltip="Change Cover Photo"></div>
+  <div class="profile-section">
+    <input #profilePic (change)="changeProfile($event)" type="file" hidden>
+    <img [src]="user?.profilePicture" alt="Profile Photo" (click)="openProfileChange(profilePic)" class="profile-picture" matTooltip="Change Profile Photo">
+    <div class="user-details">
+      <div class="user-header">
+        <h2>{{ user?.fullName }}</h2>
+  
+        <button *ngIf="isCurrentUser" class="edit-profile-button" (click)="editProfile()">Edit Profile</button>
+        <button class="followButton" mat-raised-button type="button" color="warn" *ngIf="!isCurrentUser && isFollowingUser" (click)="unfollowUser(user?._id)">Unfollow</button>
+        <button class="followButton" mat-raised-button type="button" color="warn" *ngIf="!isCurrentUser && !isFollowingUser" (click)="followUser(user?._id)">Follow</button>
+      </div>
+      <p class="username">@{{ user?.userName }}</p>
+      <p class="bio">{{ user?.bio }}</p>
+    </div>
+  </div>
+  
+
+  <div class="tabs-section">
+    <ul class="tabs">
+      <li [class.active]="activeTab === 'posts'" (click)="setActiveTab('posts')">Posts</li>
+      <li [class.active]="activeTab === 'followers'" (click)="setActiveTab('followers')">Followers</li>
+      <li [class.active]="activeTab === 'following'" (click)="setActiveTab('following')">Following</li>
+    </ul>
+  
+    <div class="tab-content" *ngIf="activeTab === 'posts'">
+  <div *ngIf="posts && posts.length > 0; else noPosts" class="post-content">
+    <div class="post-grid">
+      <div *ngFor="let post of posts" class="post">
+        <img [src]="post?.image" alt="Post Image" (click)="openPost(post)" class="post-image">
+      </div>
+    </div>
+  </div>
+  <ng-template #noPosts>
+    <h1>No posts available.</h1>
+  </ng-template>
+</div>
+
+    
+  
+<div class="tab-content" *ngIf="activeTab === 'followers'">
+  <div *ngIf="user?.followers && user.followers.length > 0; else noFollowers" class="followers-content">
+   
+      <div *ngFor="let follower of user.followers">
+        <div class="follower-item">
+          <img [src]="follower.profilePicture" alt="Follower Profile Picture" class="follower-picture">
+          <div class="follower-details">
+            <h3>{{ follower.fullName }}</h3>
+          </div>
+          <h3 style="cursor: pointer;" [routerLink]="['/profile', follower._id]">@{{ follower.userName }}</h3>
+        </div>
+      </div>
+    
+  </div>
+  <ng-template #noFollowers>
+    <h1>No followers yet.</h1>
+  </ng-template>
+</div>
+
+<div class="tab-content" *ngIf="activeTab === 'following'">
+  <div *ngIf="user?.following && user.following.length > 0; else noFollowing" class="following-content">
+    
+      <div *ngFor="let followedUser of user.following">
+        <div class="following-item">
+          <img [src]="followedUser.profilePicture" alt="Following Profile Picture" class="following-picture">
+          <div class="following-details">
+            <h3>{{ followedUser.fullName }}</h3>
+          </div>
+          <h3 style="cursor: pointer;" [routerLink]="['/profile', followedUser._id]">@{{ followedUser.userName }}</h3>
+        </div>
+      </div>
+    
+  </div>
+  <ng-template #noFollowing>
+    <h1>Not following anyone yet.</h1>
+  </ng-template>
+</div>
+  
+    
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<!-- comments.component.html -->
+<div class="comments-container m-4">
+  <h4 class="mb-3">Comments</h4>
+
+  <!-- Display existing comments -->
+  <div class="comments-list" *ngIf="post.comments.length > 0; else noCommentsSection">
+    <div *ngFor="let comment of post.comments" class="comment">
+      <div class="user-info">
+        <img [src]="comment.user.profilePicture" alt="User Profile" class="profile-picture">
+        <span class="username">{{ comment.user.userName }}</span>
+      </div>
+      <div class="text">{{ comment.text }}</div>
+    </div>
+  </div>
+  <ng-template #noCommentsSection>
+    <p class="text-muted">No comments yet.</p>
+  </ng-template>
+
+  <!-- Add new comment section -->
+  <div class="add-comment mt-3">
+    <textarea [(ngModel)]="newCommentText" class="form-control mb-2" placeholder="Add a comment..."></textarea>
+    <button (click)="addComment()" mat-stroked-button color="primary">Add Comment</button>
+  </div>
+</div>

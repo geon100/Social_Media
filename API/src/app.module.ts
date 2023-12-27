@@ -7,13 +7,14 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { AdminModule } from './admin/admin.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
     AuthModule,ConfigModule.forRoot({}),
     MongooseModule.forRoot(process.env.dbUrl), 
     UserModule, 
-    PostModule, AdminModule,
+    PostModule, AdminModule,CloudinaryModule
     
   ],
   controllers: [AppController],

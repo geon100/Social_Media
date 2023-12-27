@@ -22,10 +22,15 @@ export class AdminService {
   }
   
   changeUserStatus(userid:string){
-    return this.http.post(`${this.ApiBaseUrl}/block`,{userid})
+    return this.http.patch(`${this.ApiBaseUrl}/block`,{userid})
+  }
+  changePostStatus(postId:string){
+    return this.http.patch(`${this.ApiBaseUrl}/blockpost`,{postId})
   }
   
   getPosts():Observable<any>{
     return this.http.get(`${this.ApiBaseUrl}/allposts`)
   }
+
+  
 }

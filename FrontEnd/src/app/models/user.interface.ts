@@ -9,18 +9,19 @@
 // }
 
 export interface User {
-  _id:string,
+  _id: string;
   fullName: string;
   userName: string;
-  dob: Date;
+  dob: Date | string; // Use Date type for date values
   email: string;
   bio: string;
   profilePicture: string;
   coverPicture: string;
-  followers: string[]; 
-  following: string[]; 
-  posts: string[]; 
-  createdAt: Date;
-  updatedAt: Date;
+  followers: string[] | User[]; 
+  following: string[] | User[]; 
+  posts: string[];
+  createdAt: Date | string; // Use Date type for date values
+  updatedAt: Date | string; // Use Date type for date values
 }
+
 

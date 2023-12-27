@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AdminService } from '../../service/admin.service';
 import { User } from 'src/app/models/user.interface';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,18 +15,21 @@ export class AdminUsersComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns: string[] = ['userName', 'profilePicture', 'fullName', 'followersCount', 'followingCount', 'blockAction'];
 
   ngOnInit() {
-    this.adminService.getUsers().subscribe((users) => this.dataSource.data = users);
+    this.adminService.getUsers().subscribe((users) => {this.dataSource.data = users
+      this.dataSource.data = users
+      this.dataSource.paginator=this.paginator
+    });
   }
 
   toggleBlockUser(user: any) { 
-    console.log(user);
 
     this.adminService.changeUserStatus(user._id).subscribe(
       () => {
-        console.log('User status changed successfully');
         const index = this.dataSource.data.findIndex(u => u._id === user._id);
         if (index !== -1) {
           this.dataSource.data[index].isActive = !this.dataSource.data[index].isActive;

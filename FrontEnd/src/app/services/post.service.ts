@@ -9,10 +9,24 @@ export class PostService {
 
   constructor(private http:HttpClient) { }
 
-  
+  loadHomeposts(){
+    return this.http.get(`${this.ApiBaseUrl}/post/getHomeUserPosts`)
+  }
+  loadposts(){
+    return this.http.get(`${this.ApiBaseUrl}/post/getUserPosts`)
+  }
+
  addpost(form:FormData){
-  console.log(form)
+  // console.log(form)
   return this.http.post(`${this.ApiBaseUrl}/post/addpost`,form)
  }
+
+togglelike(post:string){
+  return this.http.patch(`${this.ApiBaseUrl}/post/likepost`,{post})
+}
+
+addComment(CommentObj:any){
+  return this.http.post(`${this.ApiBaseUrl}/post/addcomment`,CommentObj)
+}
  
 }

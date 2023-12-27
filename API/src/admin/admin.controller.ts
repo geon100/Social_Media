@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { LoginObj } from 'src/auth/auth.dto';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,10 +19,17 @@ export class AdminController {
     return this.service.getUsers()
   }
   @UseGuards(AuthGuard('admin-jwt'))
-  @Post('block')
+  @Patch('block')
   blockUser(@Body('userid') userId: string) {
     // console.log({user:req.admin})
     return this.service.changeUserStatus(userId)
+  }
+
+  @UseGuards(AuthGuard('admin-jwt'))
+  @Patch('blockpost')
+  blockPost(@Body('postId') postId: string) {
+    console.log({user:postId})
+    return this.service.changePostStatus(postId)
   }
 
   @UseGuards(AuthGuard('admin-jwt'))

@@ -1,0 +1,41 @@
+<div class="post">
+  <div class="post-header">
+    <div class="user-profile">
+      <img [src]="post.user.profilePicture" alt="User Profile" class="profile-picture">
+    </div>
+    <div class="user-info">
+      <ng-container *ngIf="current; else clickableUsername">
+        <h3 class="username">{{ post.user.userName }}</h3>
+      </ng-container>
+      
+      <ng-template #clickableUsername>
+        
+          <h3 class="username" style="cursor: pointer;" [routerLink]="['/profile', post.user._id]">{{ post.user.userName }}</h3>
+        
+      </ng-template>
+      <p class="timestamp">{{ post.createdAt | date:'medium' }}</p>
+    </div>
+  </div>
+  <div class="post-content">
+    <p class="post-caption">{{ post.caption }}</p>
+    <div>
+      <img [src]="post.image" (dblclick)="toggleLike()" alt="Post Image" class="post-image">
+    </div>
+  </div>
+  <div class="post-actions my-3">
+    <div class="action-button" (click)="toggleLike()">
+      <mat-icon [ngClass]="{'liked-icon': liked}">favorite</mat-icon>
+      
+      <span>{{ post.likes.length }}</span>
+    </div>
+    
+    
+    <div *ngIf="comment" class="action-button" (click)="openPostModal()">
+      <mat-icon>mode_comment</mat-icon>
+      <span>{{ post.comments.length }}</span>
+    </div>
+    <div class="action-button">
+      <mat-icon>share</mat-icon>
+    </div>
+  </div>
+</div>

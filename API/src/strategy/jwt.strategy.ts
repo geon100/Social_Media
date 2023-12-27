@@ -1,6 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { User } from 'src/schemas/user.schema';
@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload:{sub:string,email:string}) {
     let user=await this.userModel.findById(payload.sub).select('-password -__v')
-    
+    if(!user.isActive) throw new ForbiddenException('User Blocked')
     return user
   }
   

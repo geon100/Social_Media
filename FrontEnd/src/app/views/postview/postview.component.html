@@ -1,0 +1,18 @@
+<!-- postmodal.component.html -->
+<div class="modal-content d-flex flex-column flex-md-row">
+  <div class="left-section">
+    <div class="modal-post p-1   rounded">
+      <app-post [comment]="data.comment" [post]="data.post"></app-post>
+    </div>
+  </div>
+
+  <div class="right-section">
+
+    <div>
+      <app-comments [post]="data.post"></app-comments>
+    </div>
+    <ng-template #noComments>
+      <p>No comments available.</p>
+    </ng-template>
+  </div>
+</div>

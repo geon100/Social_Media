@@ -18,6 +18,9 @@ export class Post  {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   likes: mongoose.Types.ObjectId[];
+
+  @Prop({default:true})
+  isActive: Boolean;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

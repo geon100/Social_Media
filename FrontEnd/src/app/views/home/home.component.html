@@ -8,16 +8,48 @@
     </div>
 
     <div class="col-sm-12 col-md-8 col-lg-6">
-      <div class="box bg-white p-3 mb-3 rounded">
-        <h4>Posts</h4>
+      <div *ngIf="posts && posts.length > 0; else noPosts" class="p-1 mb-3 rounded">
+        <app-post *ngFor="let post of posts" [post]="post"></app-post>
       </div>
+      <ng-template #noPosts>
+        <div class="bg-light p-2 rounded text-center">
+          <h1 class="text-muted">Explore and connect with others to discover inspiring content.</h1>
+          <p class="text-secondary">No posts to display at the moment.</p>
+        </div>
+      </ng-template>
     </div>
+    
+    
 
     <div class="col-sm-12 col-md-4 col-lg-3">
       <div class="box bg-light p-3 mb-3 rounded">
         <h4>Friend Suggestions</h4>
+    
+        <ng-container *ngIf="suggestions && suggestions.length > 0; else noSuggestions">
+          <!-- Loop through friend suggestions -->
+          <div *ngFor="let user of suggestions" class="friend-suggestion">
+            <div class="profile-picture">
+              <img [src]="user.profilePicture" alt="Profile Picture">
+            </div>
+            <div class="user-info">
+              <h5 style="cursor: pointer;" [routerLink]="['/profile', user._id]">@{{ user.userName }}</h5>
+            </div>
+            <div>
+              <button class="btn btn-primary" (click)="followUser(user._id)">Follow</button>
+            </div>
+          </div>
+        </ng-container>
+    
+        <ng-template #noSuggestions>
+          <div class="text-center">
+            <p class="text-secondary">No friend suggestions at the moment.</p>
+          </div>
+        </ng-template>
       </div>
     </div>
+    
+    
+    
   
   </div>
 </div>

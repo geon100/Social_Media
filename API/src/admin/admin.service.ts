@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { LoginObj } from 'src/auth/auth.dto';
@@ -19,10 +19,10 @@ export class AdminService {
   async login(obj:LoginObj){
     const adminUser=await this.adminModel.findOne({email:obj.email})
 
-    if(!adminUser) throw new ForbiddenException('Credentials Incorrect')
+    if(!adminUser) throw new UnauthorizedException('Invalid credentials')
     const pwMatch=adminUser.password===obj.password
 
-    if(!pwMatch) throw new ForbiddenException('Credentials Incorrect')
+    if(!pwMatch) throw new UnauthorizedException('Invalid credentials')
     return {token:await this.signToken(adminUser._id,adminUser.email)}
 }
 
@@ -56,6 +56,21 @@ export class AdminService {
     } catch (error) {
       console.error(`Error changing user status: ${error.message}`);
       throw new Error('Failed to change user status');
+    }
+  }
+  async changePostStatus(postId: string): Promise<void> {
+    try {
+      const post = await this.postModel.findById(postId);
+
+      if (post) {
+        post.isActive = !post.isActive;
+        await post.save()
+      } else {
+        console.log(`post with ID ${postId} not found.`);
+      }
+    } catch (error) {
+      console.error(`Error changing post status: ${error.message}`);
+      throw new Error('Failed to change post status');
     }
   }
   async getPosts(){

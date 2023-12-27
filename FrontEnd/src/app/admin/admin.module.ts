@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AdmintokenInterceptor } from './interceptor/admintoken.interceptor';
 import { PostsComponent } from './components/posts/posts.component';
+import { ViewPostComponent } from './components/view-post/view-post.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PostsComponent } from './components/posts/posts.component';
     AdminDashboardComponent,
     AdminUsersComponent,
     AdminSidebarComponent,
-    PostsComponent
+    PostsComponent,
+    ViewPostComponent
   ],
   imports: [
     CommonModule,
