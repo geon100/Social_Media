@@ -5,12 +5,12 @@ import mongoose from 'mongoose';
 import { Comment } from 'src/schemas/comment.schema';
 import { Post } from 'src/schemas/post.schema';
 
-cloudinary.config({
-  cloud_name: 'dt4zlqomk',
-    api_key: '154456853779316',
-    api_secret: 'iYVXhNtFtTM1rBtiWJr9s3n6lkc',
-    secure: true,
-});
+// cloudinary.config({
+//   cloud_name: 'dt4zlqomk',
+//     api_key: '154456853779316',
+//     api_secret: 'iYVXhNtFtTM1rBtiWJr9s3n6lkc',
+//     secure: true,
+// });
 
 @Injectable()
 export class PostService {
@@ -41,13 +41,13 @@ export class PostService {
       
   }
 
-  async upload(file:any){
-    // console.log("Reached service",file);
-    const url=(await cloudinary.uploader.upload(file?.path, {
-    folder: 'Nexus',
-    resource_type: 'image'})).url
-    return url
-  }
+  // async upload(file:any){
+  //   // console.log("Reached service",file);
+  //   const url=(await cloudinary.uploader.upload(file?.path, {
+  //   folder: 'Nexus',
+  //   resource_type: 'image'})).url
+  //   return url
+  // }
 
   async addpost(userId:mongoose.Schema.Types.ObjectId,caption:string,img:string){
     
@@ -107,8 +107,14 @@ export class PostService {
     post.comments.push(comment._id)
     await post.save()
     return comment
+  }
 
-
+  async deleteComment(postId,commentId){
+    const post=await this.postModel.findById(postId)
+    post.comments=post.comments.filter(val=>val.toString()!==commentId)
+    await this.CommentModel.deleteOne({_id:commentId})
+    await post.save()
+    return {status:true}
   }
   
 }

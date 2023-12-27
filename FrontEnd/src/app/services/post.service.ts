@@ -28,5 +28,9 @@ togglelike(post:string){
 addComment(CommentObj:any){
   return this.http.post(`${this.ApiBaseUrl}/post/addcomment`,CommentObj)
 }
+
+delComment(commentId:string,postId:string){
+  return this.http.post(`${this.ApiBaseUrl}/post/delcomment`,{commentId,postId})
+}
  
 }

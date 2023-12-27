@@ -4,6 +4,7 @@ import { PostService } from './post.service';
 import { PostSchema } from 'src/schemas/post.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommentSchema } from 'src/schemas/comment.schema';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
   imports:[
@@ -11,6 +12,7 @@ import { CommentSchema } from 'src/schemas/comment.schema';
       { name: 'Post', schema: PostSchema },
       { name: 'Comment', schema: CommentSchema },
       ]),
+      CloudinaryModule
   ],
   controllers: [PostController],
   providers: [PostService]

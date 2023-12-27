@@ -6,10 +6,11 @@ import * as path from 'path';
 import { PostService } from './post.service';
 import { AuthGuard } from '@nestjs/passport';
 import * as fs from 'fs';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Controller('post')
 export class PostController {
-  constructor(private service: PostService) {}
+  constructor(private service: PostService,private cloud:CloudinaryService) {}
 
   @Post('addpost')
   @UseGuards(AuthGuard('jwt'))
@@ -35,7 +36,7 @@ export class PostController {
     if (!file) throw new BadRequestException('Missing required parameter - file');
 
     try {
-      const img = await this.service.upload(file);
+      const img = await this.cloud.upload(file);
       const res = this.service.addpost(req.user._id, caption, img);
 
       fs.unlinkSync(file.path);
@@ -70,6 +71,13 @@ export class PostController {
     const {comment,postId}=commentObj
     const userId=req.user._id
     return this.service.addComment(comment,postId,userId)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Post('delcomment')
+  deleteComment(@Req() req,@Body() commentObj: any){
+    const {commentId,postId}=commentObj
+    const userId=req.user._id
+    return this.service.deleteComment(postId,commentId)
   }
 }
 

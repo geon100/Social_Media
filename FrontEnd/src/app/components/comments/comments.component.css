@@ -23,6 +23,8 @@
 
 .user-info {
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
   align-items: center;
 }
 
