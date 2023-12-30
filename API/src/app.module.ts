@@ -8,13 +8,14 @@ import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { AdminModule } from './admin/admin.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     AuthModule,ConfigModule.forRoot({}),
     MongooseModule.forRoot(process.env.dbUrl), 
     UserModule, 
-    PostModule, AdminModule,CloudinaryModule
+    PostModule, AdminModule,CloudinaryModule, ChatModule,
+    
     
   ],
   controllers: [AppController],

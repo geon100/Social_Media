@@ -9,6 +9,7 @@ import { Otp } from 'src/schemas/otp.schema';
 
 @Injectable()
 export class AuthService {
+ 
   constructor(
     @InjectModel('User') private userModel:mongoose.Model<User>,
     @InjectModel('Otp') private otpModel:mongoose.Model<Otp>,

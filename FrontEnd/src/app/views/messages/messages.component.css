@@ -1,0 +1,175 @@
+:host {
+  background-image: url('../../../assets/images/bg.jpg');
+  display: block;
+  min-height: 100vh;
+  padding-top: 50px;
+  color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1500px;
+  margin: 20px auto;
+}
+
+.user-list {
+  flex: 1;
+  border-right: 1px solid #e6ecf3;
+  padding: 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.search-box button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  justify-content: space-between;
+  /* border-bottom: 1px solid #e6ecf3; */
+  /* background-color: #fff; */
+  transition: background-color 0.3s;
+}
+
+li:hover {
+  background-color: #f7f9fb;
+}
+
+li img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info p {
+  font-weight: bold;
+}
+
+.user-info .status {
+  color: #ff0707;
+}
+
+li.active {
+  background-color: #6e869e;
+}
+
+.chat {
+  flex: 2;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-user {
+  border-bottom: 1px solid #e6ecf3;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.selected-user span {
+  font-weight: bold;
+}
+
+.chat-box {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 70vh;
+  color: rgb(255, 255, 255);
+  overflow-y: auto;
+}
+
+li.sent {
+  justify-content: flex-end;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  width: 270px;
+}
+
+.message img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-content {
+  background-color: #000000;
+  border-radius: 8px;
+  padding: 8px;
+  max-width: 70%;
+}
+
+.message-content p {
+  margin: 0;
+}
+
+.time {
+  font-size: 12px;
+  color: #999999;
+}
+
+.message-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.message-input textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  margin-bottom: 10px;
+}
+
+.message-input button {
+  align-self: flex-end;
+  background-color: #3498db;
+  color: rgb(15, 14, 14);
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

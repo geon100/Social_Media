@@ -63,10 +63,17 @@ export class SignupComponent {
       ).subscribe(() => {
         this.snackBar.showSuccess('OTP sent successfully');
         this.otpSent = true; // Set the flag to true after sending OTP
+
+        this.timer()
       });
     }
   }
-
+  private timer(){
+    setTimeout(() => {
+      this.snackBar.showError('Otp Expired')
+      this.otpSent = false;
+    }, 30000);
+  }
   signup() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value)

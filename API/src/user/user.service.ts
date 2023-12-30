@@ -33,7 +33,6 @@ export class UserService {
         path: 'comments',
         populate: { path: 'user' }
       })
-      console.log(user)
       return {user,posts}
     } catch (error) {
       throw error

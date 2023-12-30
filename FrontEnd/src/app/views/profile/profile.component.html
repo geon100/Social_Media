@@ -16,6 +16,7 @@
         <button *ngIf="isCurrentUser" class="edit-profile-button" (click)="editProfile()">Edit Profile</button>
         <button class="followButton" mat-raised-button type="button" color="warn" *ngIf="!isCurrentUser && isFollowingUser" (click)="unfollowUser(user?._id)">Unfollow</button>
         <button class="followButton" mat-raised-button type="button" color="warn" *ngIf="!isCurrentUser && !isFollowingUser" (click)="followUser(user?._id)">Follow</button>
+        <button *ngIf="!isCurrentUser && isFollowingUser" mat-raised-button type="button" color="primary" class="edit-profile-button" (click)="Message(user?._id)">Message</button>
       </div>
       <p class="username">@{{ user?.userName }}</p>
       <p class="bio">{{ user?.bio }}</p>

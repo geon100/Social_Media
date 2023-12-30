@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
 import { UserService } from 'src/app/services/user.service';
 import { PostviewComponent } from '../postview/postview.component';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Subscription, catchError, finalize, throwError } from 'rxjs';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,9 @@ export class ProfileComponent implements OnInit,OnDestroy{
  constructor(private route: ActivatedRoute,
   private dialog: MatDialog,
   private service:UserService,
-  private snackBar:SnackbarService){}
+  private chat:ChatService,
+  private snackBar:SnackbarService,
+  private router:Router){}
 
  ngOnInit(): void {
   this.route.params.subscribe(params => {
@@ -145,4 +148,11 @@ unfollowUser(userId:string|User): void {
 ngOnDestroy(): void {
   this.userServiceSubscription?.unsubscribe();
 }
+
+Message(userId:string){
+  this.chat.chatOpen(userId).subscribe(()=>{
+    this.router.navigate(['chat'])
+  })
+}
+
 }

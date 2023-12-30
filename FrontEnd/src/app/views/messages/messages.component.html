@@ -1,22 +1,57 @@
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
-<p>messages works!</p>
+<div class="container">
+  <div class="user-list">
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+      <button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    
+    <ul>
+      <ng-container *ngIf="chats.length > 0; else noUsers">
+        <li *ngFor="let chat of chats" (click)="selectUser(chat)" [class.active]="selectedUser === chat">
+          <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}">
+          <div class="user-info">
+            <p>{{ chat.users[0].userName }}</p>
+            <span class="status">busy</span>
+          </div>
+        </li>
+      </ng-container>
+      <ng-template #noUsers>
+        <h2>No users available</h2>
+      </ng-template>
+    </ul>
+  </div>
+  
+  <div class="chat" *ngIf="selectedUser">
+    <div class="selected-user">
+      <span class="name">@{{ selectedUser?.users[0]?.userName }}</span>
+    </div>
+    
+    <ul class="chat-box" #chatBox>
+      <li *ngFor="let message of messages" [ngClass]="{ 'sent': message.sender._id === currentUser._id }">
+        <div class="message">
+          <img [src]="message.sender.profilePicture" alt="{{ message.sender.userName }}">
+          <div class="message-content">
+            <h6>{{message.sender.userName}}</h6>
+            <p>{{ message.text }}</p>
+            <span class="time">{{ message.createdAt | date:'HH:mm' }}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    
+    <div class="message-input">
+      <div class="input-container">
+        <textarea matInput placeholder="Type your message here..." [(ngModel)]="messageText" (keydown.enter)="sendMessage(selectedUser._id)"></textarea>
+        <button mat-raised-button color="primary" (click)="sendMessage(selectedUser._id)">Send</button>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div *ngIf="!selectedUser" class="chat">
+    <!-- Default content when no user is selected -->
+    <h1>Select a user to start chatting.</h1>
+  </div>
+</div>
