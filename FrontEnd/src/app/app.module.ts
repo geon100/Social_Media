@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,9 +26,13 @@ import { PostviewComponent } from './views/postview/postview.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ExploreComponent } from './views/explore/explore.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { ImageModalComponent } from './components/image-modal/image-modal.component';
+import { SharelistComponent } from './components/sharelist/sharelist.component';
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     HeaderComponent,
@@ -43,7 +47,9 @@ import { ExploreComponent } from './views/explore/explore.component';
     PostviewComponent,
     CommentsComponent,
     ProfileComponent,
-    ExploreComponent
+    ExploreComponent,
+    ImageModalComponent,
+    SharelistComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +64,8 @@ import { ExploreComponent } from './views/explore/explore.component';
       user: userReducer,
     }),
     EffectsModule.forRoot([UserEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    PickerModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,

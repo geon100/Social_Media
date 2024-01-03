@@ -116,5 +116,12 @@ export class PostService {
     await post.save()
     return {status:true}
   }
+
+  async getPost(postId){
+    return await this.postModel.findOne({_id:postId,isActive:true}).populate('user').populate({
+      path: 'comments',
+      populate: { path: 'user' }
+    }).exec();
+  }
   
 }

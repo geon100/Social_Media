@@ -34,7 +34,7 @@
       <mat-icon>mode_comment</mat-icon>
       <span>{{ post.comments.length }}</span>
     </div>
-    <div class="action-button">
+    <div class="action-button" (click)="sharelistModal(post._id)">
       <mat-icon>share</mat-icon>
     </div>
   </div>

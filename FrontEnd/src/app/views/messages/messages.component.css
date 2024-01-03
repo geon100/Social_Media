@@ -81,9 +81,20 @@ li img {
   font-weight: bold;
 }
 
-.user-info .status {
-  color: #ff0707;
+/* Add these styles to your CSS file */
+.status {
+  font-weight: bold;
+  margin-left: 5px;
 }
+
+.online {
+  color: green;
+}
+
+.offline {
+  color: red;
+}
+
 
 li.active {
   background-color: #6e869e;
@@ -136,7 +147,15 @@ li.sent {
   background-color: #000000;
   border-radius: 8px;
   padding: 8px;
-  max-width: 70%;
+  max-width: 90%;
+}
+.message-content img{
+  border-radius: 0%;
+  border:1px solid white;
+  /* padding: 8px; */
+  margin: 0;
+  height: 200px;
+  width: 200px;
 }
 
 .message-content p {
@@ -165,7 +184,7 @@ li.sent {
 
 .message-input button {
   align-self: flex-end;
-  background-color: #3498db;
+
   color: rgb(15, 14, 14);
   border: none;
   padding: 8px;

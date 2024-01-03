@@ -1,35 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Cloudinary } from 'cloudinary-core';
-import { diskStorage } from 'multer';
-import { MulterModule } from '@nestjs/platform-express';
+
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+
 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors();
+  const corsOptions: CorsOptions = {
+    origin: 'http://localhost:4200',  
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: false,
+  };
+  app.enableCors(corsOptions);
+  app.useWebSocketAdapter(new IoAdapter(app));
   await app.listen(3000);
 
-  // cloudinary.v2.config({
-  //   cloud_name: 'dt4zlqomk',
-  //   api_key: '154456853779316',
-  //   api_secret: 'iYVXhNtFtTM1rBtiWJr9s3n6lkc',
-  //   secure: true,
-  // });
-
-  
-
-  // const cloudinaryStorage = diskStorage({
-  //   destination: './uploads',
-  //   filename: (req, file, cb) => {
-  //     cb(null, file.originalname);
-  //   },
-  // });
-
-
-   
-
-    
-  
 }
 bootstrap();

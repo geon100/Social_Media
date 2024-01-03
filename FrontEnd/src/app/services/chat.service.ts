@@ -24,6 +24,15 @@ export class ChatService {
   sendMessage(chatId:string,textMessage:string){
     return this.http.post(`${this.ApiBaseUrl}/send`,{chatId,textMessage})
   }
+
+  sendImage(form:FormData){
+    return this.http.post(`${this.ApiBaseUrl}/sendImage`,form)
+  }
+
+  sendPost(postId:string,chatId:string){
+    return this.http.post(`${this.ApiBaseUrl}/sendPost`,{postId,chatId})
+  }
+
   
   
 }

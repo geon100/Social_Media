@@ -17,7 +17,6 @@ export class PostService {
   }
 
  addpost(form:FormData){
-  // console.log(form)
   return this.http.post(`${this.ApiBaseUrl}/post/addpost`,form)
  }
 
@@ -32,5 +31,8 @@ addComment(CommentObj:any){
 delComment(commentId:string,postId:string){
   return this.http.post(`${this.ApiBaseUrl}/post/delcomment`,{commentId,postId})
 }
- 
+ getPost(postId:string){
+  
+  return this.http.get(`${this.ApiBaseUrl}/post/getPost/${postId}`)
+ }
 }

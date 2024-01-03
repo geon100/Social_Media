@@ -55,11 +55,33 @@ export class ChatService {
                   }).exec();
               }
 
-              async sendMessage(chatId,textMessage,userId){
-                console.log('send message')
+              async sendMessage(chatId:string,textMessage:string,userId:string){
                 const message=await this.messageModel.create({
                   sender:userId,
                   text:textMessage,
+                  chatId
+                })
+                return await message.populate({
+                  path: 'sender',
+                  select: '_id userName profilePicture',
+                })
+              }
+              async sendPost(chatId:string,post:string,userId:string){
+                const message=await this.messageModel.create({
+                  sender:userId,
+                  postId:post,
+                  chatId
+                })
+                return await message.populate([
+                  {
+                    path: 'sender',
+                    select: '_id userName profilePicture',
+                  }])
+              }
+              async sendImage(chatId,img,userId){
+                const message=await this.messageModel.create({
+                  sender:userId,
+                  image:img,
                   chatId
                 })
                 return await message.populate({

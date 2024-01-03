@@ -22,11 +22,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(loadUserData());
 
-    this.postServiceSubscription = this.postService.loadHomeposts().subscribe((res) => {
+    this.postServiceSubscription = this.postService.loadHomeposts().subscribe((res:any) => {
       this.posts = res;
     });
 
-    this.userServiceSubscription = this.userService.getSuggestions().subscribe((res) => {
+    this.userServiceSubscription = this.userService.getSuggestions().subscribe((res:any) => {
       this.users = res;
       this.loadUser();
     });
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.postServiceSubscription?.unsubscribe();
         this.userServiceSubscription?.unsubscribe();
 
-        this.postServiceSubscription = this.postService.loadHomeposts().subscribe((res) => {
+        this.postServiceSubscription = this.postService.loadHomeposts().subscribe((res:any) => {
           this.posts = res;
         });
 

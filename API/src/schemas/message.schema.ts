@@ -14,6 +14,9 @@ export class Message {
 
   @Prop({ trim: true })
   image: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post'})
+  postId: mongoose.Types.ObjectId;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

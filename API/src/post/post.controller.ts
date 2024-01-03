@@ -1,5 +1,5 @@
 
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Patch, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import * as path from 'path';
@@ -78,6 +78,14 @@ export class PostController {
     const {commentId,postId}=commentObj
     const userId=req.user._id
     return this.service.deleteComment(postId,commentId)
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('getPost/:id')
+  getUser(@Req() req,@Param() params: any){
+    
+    
+    return this.service.getPost(params.id)
   }
 }
 

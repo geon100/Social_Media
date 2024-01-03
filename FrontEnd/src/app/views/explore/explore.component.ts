@@ -19,14 +19,13 @@ export class ExploreComponent implements OnDestroy {
   ngOnInit(): void {
     this.store.select(getUser).subscribe(val=>{
       if (!val) {
-        alert('call')
         this.store.dispatch(loadUserData())
         this.store.select(getUser).subscribe(val=>{
   
         })
       }
     })
-    this.postsSubscription = this.service.loadposts().subscribe((res) => {
+    this.postsSubscription = this.service.loadposts().subscribe((res:any) => {
       this.posts = res;
     });
   }

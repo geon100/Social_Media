@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h2>Select a Chat to Share</h2>
+  <button mat-icon-button (click)="closeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="modal-content">
+  <ul>
+    <ng-container *ngIf="chats.length > 0; else noUsers">
+      <li *ngFor="let chat of chats" (click)="selectUser(chat)">
+        <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}">
+        <div class="user-info">
+          <p>{{ chat.users[0].userName }}</p>
+          <span class="status">busy</span>
+        </div>
+      </li>
+    </ng-container>
+    <ng-template #noUsers>
+      <h2>No Chats available</h2>
+    </ng-template>
+  </ul>
+</div>

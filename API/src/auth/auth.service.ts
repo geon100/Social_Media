@@ -9,7 +9,7 @@ import { Otp } from 'src/schemas/otp.schema';
 
 @Injectable()
 export class AuthService {
- 
+  private otpStorage:{email?:string}={}
   constructor(
     @InjectModel('User') private userModel:mongoose.Model<User>,
     @InjectModel('Otp') private otpModel:mongoose.Model<Otp>,
@@ -18,9 +18,10 @@ export class AuthService {
 
   async signup(obj:UserObj){
     const hashed=await argon.hash(obj.password)
-    const otpDoc=await this.otpModel.findOne({email:obj.email})
-    console.log(otpDoc.otp)
-    if(!obj.otp || !otpDoc.otp || otpDoc.otp!==obj.otp){
+    const otpDoc=this.otpStorage[obj.email]
+    console.log(otpDoc)
+    console.log(this.otpStorage)
+    if(!obj.otp || !otpDoc || otpDoc!==obj.otp){
       throw new BadRequestException('invalid OTP')
     }
     try {
@@ -71,7 +72,12 @@ export class AuthService {
   async generateOtp(email:string){
     try {
       const otp=Math.floor(1000 + Math.random() * 9000);
-      await this.otpModel.create({email,otp})
+      this.otpStorage[email] = String(otp);
+      console.log('otp',this.otpStorage[email])
+      setTimeout(() => {
+        console.log('deleted',this.otpStorage[email])
+        delete this.otpStorage[email];
+      }, 30 * 1000);
       return otp
     } catch (error) {
       throw error;

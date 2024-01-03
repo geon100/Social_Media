@@ -77,7 +77,7 @@ export class UserController {
     @Req() req
   ) {
     if (!file) throw new BadRequestException('Missing required parameter - file');
-    console.log('Hi')
+    // console.log('Hi')
     try {
       const img = await this.cloud.upload(file);
       const res = await this.service.changeCover(req.user._id,img);

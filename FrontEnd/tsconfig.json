@@ -23,7 +23,6 @@
       "ES2022",
       "dom"
     ],
-    "types": ["@ctrl/ngx-emoji-mart"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

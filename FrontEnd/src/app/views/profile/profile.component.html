@@ -6,6 +6,7 @@
   <input #coverPic (change)="changeCover($event)" type="file" hidden accept="image/*">
 
   <div (click)="openCoverChange(coverPic)" class="cover-photo" [style.background-image]="'url(' + user?.coverPicture + ')'" *ngIf="user?.coverPicture" matTooltip="Change Cover Photo"></div>
+  
   <div class="profile-section">
     <input #profilePic (change)="changeProfile($event)" type="file" hidden>
     <img [src]="user?.profilePicture" alt="Profile Photo" (click)="openProfileChange(profilePic)" class="profile-picture" matTooltip="Change Profile Photo">

@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.interface';
 import { PostService } from 'src/app/services/post.service';
 import { getUser } from 'src/app/state/UserState/user.selector';
 import { PostviewComponent } from 'src/app/views/postview/postview.component';
+import { SharelistComponent } from '../sharelist/sharelist.component';
 
 @Component({
   selector: 'app-post',
@@ -37,11 +38,16 @@ export class PostComponent implements OnInit{
     });
     
   }
+
+  sharelistModal(post:string){
+    this.dialog.open(SharelistComponent, {
+      data: post ,
+    });
+  }
     
   
 
   toggleLike(){
-    // alert('hi')
     this.service.togglelike(this.post._id).subscribe((res:any)=>{
       
       this.post.likes=res.likes

@@ -35,6 +35,9 @@ export class User extends Document {
 
   @Prop({default:true})
   isActive: Boolean;
+  
+  @Prop({default:false})
+  isOnline: Boolean;
 
 }
 

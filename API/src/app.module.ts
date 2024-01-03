@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { AdminModule } from './admin/admin.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ChatModule } from './chat/chat.module';
+import { ChatGateway } from './chat/chat.gateway';
 @Module({
   imports: [
     AuthModule,ConfigModule.forRoot({}),
@@ -19,6 +20,6 @@ import { ChatModule } from './chat/chat.module';
     
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,ChatGateway],
 })
 export class AppModule {}

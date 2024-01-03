@@ -1,10 +1,16 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as path from 'path';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import * as fs from 'fs';
 
 @Controller('chat')
 export class ChatController {
-  constructor(private service: ChatService) {}
+  constructor(private service: ChatService,private cloud:CloudinaryService) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post('create')
@@ -25,10 +31,52 @@ export class ChatController {
     
     return this.service.loadMessages(params.id)
   }
+
+
   @UseGuards(AuthGuard('jwt'))
   @Post('send')
   sendMessage(@Req() req,@Body() obj: any){
     const {chatId,textMessage}=obj
     return this.service.sendMessage(chatId,textMessage,req.user._id)
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('sendPost')
+  sendPost(@Req() req,@Body() obj: any){
+    const {postId,chatId}=obj
+    return this.service.sendPost(chatId,postId,req.user._id)
+  }
+
+
+  @Post('sendImage')
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FileInterceptor('image', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, cb) => {
+        const filename = 'IMG' + '-' + Date.now();
+        cb(null, `${filename}${path.extname(file.originalname)}`);
+      }
+    }),
+    fileFilter: (req, file, cb) => {
+      if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/))
+        return cb(null, false);
+      cb(null, true);
+    }
+  }))
+  async uploadFile(
+    @Body('chatId') chatId: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req
+  ) {
+    if (!file) throw new BadRequestException('Missing required parameter - file');
+    console.log('img chat')
+      const img = await this.cloud.upload(file);
+      const res = this.service.sendImage(chatId,img,req.user._id);
+      console.log('img chat')
+      fs.unlinkSync(file.path);
+
+      return res;
+    
   }
 }
