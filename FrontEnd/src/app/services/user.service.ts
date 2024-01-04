@@ -43,4 +43,8 @@ export class UserService {
     const data={status:false}
     return this.http.patch(`${this.ApiBaseUrl}/user/offline`,data)
   }
+
+  updateProfile(form:any){
+    return this.http.patch(`${this.ApiBaseUrl}/user/update`,form)
+  }
 }

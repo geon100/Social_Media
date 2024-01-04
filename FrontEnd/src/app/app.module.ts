@@ -29,6 +29,7 @@ import { ExploreComponent } from './views/explore/explore.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { SharelistComponent } from './components/sharelist/sharelist.component';
+import { EditprofileComponent } from './components/editprofile/editprofile.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { SharelistComponent } from './components/sharelist/sharelist.component';
     ProfileComponent,
     ExploreComponent,
     ImageModalComponent,
-    SharelistComponent
+    SharelistComponent,
+    EditprofileComponent
   ],
   imports: [
     BrowserModule,

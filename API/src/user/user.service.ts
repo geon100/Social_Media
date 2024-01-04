@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Post } from 'src/schemas/post.schema';
@@ -65,6 +65,28 @@ export class UserService {
 
     return {status:true}
   }
+
+  async updateUser(userId,obj){
+    try {
+      const user=await this.userModel.findById(userId)
+        user.userName=obj.userName
+        user.fullName=obj.fullName
+        user.bio=obj.bio
+        user.dob=new Date(obj.dob)
+        
+      await user.save()
+
+      return await this.userModel.findById(userId)
+      .populate('followers')
+      .populate('following')
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Username or email already exists');
+      }
+      throw error;
+    }
+  }
+
   async changeCover(id:string,img:string){
     const user=await this.userModel.findById(id)
     

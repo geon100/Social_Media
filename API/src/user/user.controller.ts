@@ -31,6 +31,12 @@ export class UserController {
     console.log({controller:req.user.isOnline})
     return this.service.offline(req.user._id)
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('update')
+  userUpdate(@Req() req,@Body() userobj:any){
+    // console.log({controller:req.user.isOnline})
+    return this.service.updateUser(req.user._id,userobj)
+  }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('getUser/:id')

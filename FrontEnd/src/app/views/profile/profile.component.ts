@@ -7,6 +7,8 @@ import { PostviewComponent } from '../postview/postview.component';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Subscription, catchError, finalize, throwError } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
+import { EditprofileComponent } from 'src/app/components/editprofile/editprofile.component';
+
 
 @Component({
   selector: 'app-profile',
@@ -45,7 +47,18 @@ export class ProfileComponent implements OnInit,OnDestroy{
   });
  }
 
- editProfile(){}
+ editProfile(){
+    const dialogRef =this.dialog.open(EditprofileComponent, {
+      width: '400px', 
+      data: this.user,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.user=result
+      }
+    });
+ }
 
  openProfileChange(profilePic:any){
   if(this.isCurrentUser) profilePic.click()
