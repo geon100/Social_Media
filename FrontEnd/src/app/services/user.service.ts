@@ -38,4 +38,9 @@ export class UserService {
   changeProfile(form:any){
     return this.http.patch(`${this.ApiBaseUrl}/user/ChangeProfile`,form)
   }
+
+  offline(){
+    const data={status:false}
+    return this.http.patch(`${this.ApiBaseUrl}/user/offline`,data)
+  }
 }

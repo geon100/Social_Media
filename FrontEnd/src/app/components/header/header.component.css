@@ -5,3 +5,16 @@
   width: 100%;
   z-index: 1000;
 }
+
+.navbar-nav .nav-item {
+  margin-right: 20px; 
+}
+
+.nav-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-content mat-icon {
+  margin-right: 5px; 
+}

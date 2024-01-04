@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,11 +18,18 @@ export class UserController {
     // console.log({user:req.user})
     return this.service.getSuggestions(req.user)
   }
+  
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
   getMe(@Req() req){
     // console.log({user:req.user})
     return req.user
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('offline')
+  offline(@Req() req){
+    console.log({controller:req.user.isOnline})
+    return this.service.offline(req.user._id)
   }
 
   @UseGuards(AuthGuard('jwt'))

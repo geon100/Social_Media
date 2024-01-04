@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(loadUserData());
-
+    console.log('begin')
     this.postServiceSubscription = this.postService.loadHomeposts().subscribe((res:any) => {
       this.posts = res;
     });

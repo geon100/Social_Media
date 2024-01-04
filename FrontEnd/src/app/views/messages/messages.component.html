@@ -12,8 +12,8 @@
       <ng-container *ngIf="chats.length > 0; else noUsers">
         <li *ngFor="let chat of chats" (click)="selectUser(chat)" [class.active]="selectedUser === chat">
           <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}">
+          <h3>@{{ chat.users[0].userName }}</h3>
           <div class="user-info">
-            <p>{{ chat.users[0].userName }}</p>
             <span class="status" [ngClass]="{'online': chat.users[0].isOnline, 'offline': !chat.users[0].isOnline}">
               {{ chat.users[0].isOnline ? 'Online' : 'Offline' }}
             </span>
@@ -44,7 +44,8 @@
               <p>A Post Has been shared</p>
               <button class="btn btn-dark" (click)="ViewPost(message.postId)">View Post</button>
             </div>
-            <span class="time">{{ message.createdAt | date:'HH:mm' }}</span>
+            <span class="time">{{ message.createdAt | date:'h:mm a' }}</span>
+
           </div>
         </div>
       </li>
@@ -53,8 +54,8 @@
     <div class="message-input">
       <div class="input-container">
         <textarea matInput placeholder="Type your message here..." [(ngModel)]="messageText"></textarea>
-        <button mat-raised-button color="primary" (click)="sendMessage(selectedUser._id)">Send</button>
-        <button (click)="openFileInput()" mat-raised-button color="accent" class="m-2"><mat-icon>add_a_photo</mat-icon>Send Photo</button>
+        <button class="btn btn-success" (click)="sendMessage(selectedUser._id)"><mat-icon>send</mat-icon></button>
+        <button (click)="openFileInput()"  class="btn btn-danger m-2"><mat-icon>add_a_photo</mat-icon></button>
         <button (click)="picker()" class="btn btn-warning"><mat-icon> insert_emoticon</mat-icon></button>
         <input #fileInput type="file" (change)="handleFileInput($event,selectedUser._id)" accept="image/*" style="display: none">
         <emoji-mart *ngIf="pickerAppear" (emojiClick)="addEmoji($event)" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>

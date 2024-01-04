@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Post } from 'src/schemas/post.schema';
 import { User } from 'src/schemas/user.schema';
 import { v2 as cloudinary } from 'cloudinary';
+import { use } from 'passport';
 
 cloudinary.config({
   cloud_name: 'dt4zlqomk',
@@ -58,7 +59,12 @@ export class UserService {
     await user.save();
     return { status: true };
   }
+  async offline(userId:string){
+    const user=await this.userModel.findByIdAndUpdate(userId, { isOnline: false }, { new: true })
+    console.log({controller:user.isOnline})
 
+    return {status:true}
+  }
   async changeCover(id:string,img:string){
     const user=await this.userModel.findById(id)
     

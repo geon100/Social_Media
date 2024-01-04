@@ -24,7 +24,8 @@
   </div>
   <div class="post-actions my-3">
     <div class="action-button" (click)="toggleLike()">
-      <mat-icon [ngClass]="{'liked-icon': liked}">favorite</mat-icon>
+      <mat-icon *ngIf="!liked">favorite_border</mat-icon>
+      <mat-icon *ngIf="liked" class="liked-icon">favorite</mat-icon>
       
       <span>{{ post.likes.length }}</span>
     </div>

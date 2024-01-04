@@ -20,22 +20,40 @@
 
       <div class="navbar-collapse collapse d-flex justify-content-end">
         <ul class="navbar-nav mx-5">
-          <!-- <li class="nav-item">
-            <a class="nav-link" [routerLink]="['']">Notifications</a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['']">Home</a>
+          <li class="nav-item" matTooltip="HOME">
+            <a class="nav-link" [routerLink]="['']">
+              <div class="nav-item-content">
+                <mat-icon>home</mat-icon>
+                <span>Home</span>
+              </div>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/explore']">Explore</a>
+          <li class="nav-item" matTooltip="EXPLORE">
+            <a class="nav-link" [routerLink]="['/explore']">
+              <div class="nav-item-content">
+                <mat-icon>explore</mat-icon>
+                <span>Explore</span>
+              </div>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/chat']">messages</a>
+          <li class="nav-item" matTooltip="MESSAGES">
+            <a class="nav-link" [routerLink]="['/chat']">
+              <div class="nav-item-content">
+                <mat-icon>message</mat-icon>
+                <span>Messages</span>
+              </div>
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="btn text-white" (click)="logout()">Logout</a>
+          <li class="nav-item" matTooltip="LOGOUT">
+            <a class="btn text-white" (click)="logout()">
+              <div class="nav-item-content">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+              </div>
+            </a>
           </li>
         </ul>
+        
       </div>
     </div>
     

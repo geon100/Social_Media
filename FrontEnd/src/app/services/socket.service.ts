@@ -1,24 +1,28 @@
 // socket.service.ts
 
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, connect } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  private socket: Socket;
+  private socket!: Socket;
 
   constructor() { 
-    this.socket = io('http://localhost:3000');
+    
 
+    
+  }
+  initializeSocket(){
+    this.socket = io('http://localhost:3000')
     // this.socket.on('connect', () => {
-    //   this._onConnect.next();
+    //   alert('connect')
     // });
 
     // this.socket.on('disconnect', () => {
-    //   this._onDisconnect.next();
+    //   alert('disconnect')
     // });
   }
 

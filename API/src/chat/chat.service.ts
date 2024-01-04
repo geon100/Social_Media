@@ -38,7 +38,7 @@ export class ChatService {
                   .select('-users') 
                   .populate({
                     path: 'users',
-                    select: '_id userName profilePicture',
+                    select: '_id userName profilePicture isOnline',
                   }).exec();
 
                   chats.forEach(chat => {
