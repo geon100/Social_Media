@@ -28,7 +28,7 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Patch('offline')
   offline(@Req() req){
-    console.log({controller:req.user.isOnline})
+    // console.log({controller:req.user.isOnline})
     return this.service.offline(req.user._id)
   }
   @UseGuards(AuthGuard('jwt'))

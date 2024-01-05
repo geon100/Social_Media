@@ -61,7 +61,7 @@ export class UserService {
   }
   async offline(userId:string){
     const user=await this.userModel.findByIdAndUpdate(userId, { isOnline: false }, { new: true })
-    console.log({controller:user.isOnline})
+    // console.log({controller:user.isOnline})
 
     return {status:true}
   }
