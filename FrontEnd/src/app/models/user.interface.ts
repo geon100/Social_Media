@@ -17,13 +17,14 @@ export interface User {
   bio: string;
   profilePicture: string;
   coverPicture: string;
-  followers: string[] | User[]; 
-  following: string[] | User[]; 
+  followers?: string[] | User[]; 
+  following?: string[] | User[]; 
   posts: string[];
   isActive:boolean;
   isOnline:boolean;
-  createdAt: Date | string; // Use Date type for date values
-  updatedAt: Date | string; // Use Date type for date values
+  createdAt: Date | string; 
+  updatedAt: Date | string; 
+  saved:string[]
 }
 
 

@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RegisterUser, UserCred, newPasswordObj } from '../models/auth.interface';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +12,10 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private ApiBaseUrl = 'http://localhost:3000'
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router: Router,private cookieService:CookieService,private snackBar:SnackbarService) { }
 
-  login(usercred:UserCred):Observable<{token:string}>{
-      return this.http.post<{token:string}>(`${this.ApiBaseUrl}/auth/signin`,usercred)
+  login(usercred:UserCred):Observable<{token:string,refreshToken:string}>{
+      return this.http.post<{token:string,refreshToken:string}>(`${this.ApiBaseUrl}/auth/signin`,usercred)
   }
 
   signup(userObj:RegisterUser):Observable<{status:boolean}>{
@@ -25,5 +28,21 @@ export class AuthService {
   resetpassword(newPasswordData:newPasswordObj){
     return this.http.post<{status:boolean}>(`${this.ApiBaseUrl}/auth/resetPassword`,newPasswordData)
   }
+  logout(){
+    localStorage.removeItem('userToken')
+    this.router.navigate(['login'])
+  }
+
+  refreshToken():Observable<any>{
+    const refreshToken = this.cookieService.get('refreshToken');
+    if (!refreshToken) {
+      this.snackBar.showError('Refresh token expired')
+      this.logout(); 
+      return throwError(()=>'Refresh token not found');
+      
+    }
+    return this.http.post(`${this.ApiBaseUrl}/auth/generateNewAccess`, { refreshToken })
+  }
+  
  
 }

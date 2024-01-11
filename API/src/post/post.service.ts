@@ -4,6 +4,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import mongoose from 'mongoose';
 import { Comment } from 'src/schemas/comment.schema';
 import { Post } from 'src/schemas/post.schema';
+import { User } from 'src/schemas/user.schema';
 
 // cloudinary.config({
 //   cloud_name: 'dt4zlqomk',
@@ -16,18 +17,20 @@ import { Post } from 'src/schemas/post.schema';
 export class PostService {
 
   constructor(@InjectModel('Post') private postModel:mongoose.Model<Post>,
+              @InjectModel('User') private userModel:mongoose.Model<User>,
+              @InjectModel('Notification') private notifyModel:mongoose.Model<Notification>,
               @InjectModel('Comment') private CommentModel:mongoose.Model<Comment>){}
 
-  async loadPosts(){
+  async loadPosts(page:number,limit:number){
     return await this.postModel.find({isActive:true}).populate('user').populate({
       path: 'comments',
       populate: { path: 'user' }
-    }).sort({ createdAt: -1 }) .exec();
+    }).sort({ createdAt: -1 }).skip((page-1)*limit).limit(limit).exec();
   }
   
-  async loadHomePosts(user) {
+  async loadHomePosts(user,page:number,limit:number) {
     const followingIds = user.following.map(followedUser => followedUser.toString());
-  
+    
     return await this.postModel
   .find({ user: { $in: followingIds },isActive:true })
   .populate('user')
@@ -35,7 +38,7 @@ export class PostService {
     path: 'comments',
     populate: { path: 'user' }
   })
-  .sort({ createdAt: -1 }) 
+  .sort({ createdAt: -1 }).skip((page-1)*limit).limit(limit)
   .exec();
 
       
@@ -70,8 +73,6 @@ export class PostService {
   async likePost(postId: any, userId: any) {
     
     const post = await this.postModel.findById(postId);
-  
-    // console.log(post, postId, userId);
     if (!post) {
       throw new NotFoundException('Post not found');
     }
@@ -82,9 +83,32 @@ export class PostService {
     post.likes = post.likes.filter((likeId) => likeId.toString() !== user_Id.toString());
   } else {
     post.likes.push(user_Id);
+    await this.notifyModel.create({
+      sender:userId,
+      receiver:post.user,
+      type:'like'
+    })
+  }
+  
+  return await post.save();
   }
 
-  return await post.save();
+  async savePost(postId: string, userId: string) {
+    const user = await this.userModel.findById(userId);
+   
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const post_Id = new mongoose.Types.ObjectId(postId)
+
+  if (user.saved.some((savedId) => savedId.toString() === post_Id.toString())) {
+    user.saved = user.saved.filter((savedId) => savedId.toString() !== post_Id.toString());
+  } else {
+    user.saved.push(post_Id);
+  }
+
+  return await user.save();
   }
 
   async addComment(commentStr:string,postId:string,userId){

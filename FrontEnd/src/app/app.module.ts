@@ -30,7 +30,10 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { SharelistComponent } from './components/sharelist/sharelist.component';
 import { EditprofileComponent } from './components/editprofile/editprofile.component';
-
+import { VideocallComponent } from './components/videocall/videocall.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -51,10 +54,13 @@ import { EditprofileComponent } from './components/editprofile/editprofile.compo
     ExploreComponent,
     ImageModalComponent,
     SharelistComponent,
-    EditprofileComponent
+    EditprofileComponent,
+    VideocallComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
+    InfiniteScrollModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
@@ -77,7 +83,7 @@ import { EditprofileComponent } from './components/editprofile/editprofile.compo
     provide:HTTP_INTERCEPTORS,
     useClass:ErrorInterceptorInterceptor,
     multi:true
-  }],
+  },CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

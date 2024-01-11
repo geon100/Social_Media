@@ -54,6 +54,12 @@ export class ChatService {
                     select: '_id userName profilePicture',
                   }).exec();
               }
+              async readStatus(messages:string[]) {
+                console.log(messages)
+                const object_Ids=messages.map((id)=>new mongoose.Types.ObjectId(id))
+                await this.messageModel.updateMany({_id:{$in:object_Ids}},{$set:{read:true}})
+                
+              }
 
               async sendMessage(chatId:string,textMessage:string,userId:string){
                 const message=await this.messageModel.create({
@@ -66,17 +72,15 @@ export class ChatService {
                   select: '_id userName profilePicture',
                 })
               }
-              async sendPost(chatId:string,post:string,userId:string){
-                const message=await this.messageModel.create({
-                  sender:userId,
-                  postId:post,
-                  chatId
+              sendPost(chatIds:string[],post:string,userId:string){
+                chatIds.forEach(async (chatId)=>{
+                  await this.messageModel.create({
+                    sender:userId,
+                    postId:post,
+                    chatId
+                  })
                 })
-                return await message.populate([
-                  {
-                    path: 'sender',
-                    select: '_id userName profilePicture',
-                  }])
+                return {status:true}
               }
               async sendImage(chatId,img,userId){
                 const message=await this.messageModel.create({

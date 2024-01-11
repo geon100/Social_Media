@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { catchError, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -13,7 +14,11 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder,private service:AuthService,private router:Router,private snackBar:SnackbarService) {}
+  constructor(private formBuilder: FormBuilder,
+    private service:AuthService,
+    private router:Router,
+    private cookie:CookieService,
+    private snackBar:SnackbarService) {}
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
@@ -32,6 +37,9 @@ export class LoginComponent implements OnInit{
       ).subscribe((response) => {
         // Success case
         localStorage.setItem('userToken', response?.token);
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1);
+        this.cookie.set('refreshToken', response?.refreshToken, expirationDate);
         this.snackBar.showSuccess('Login Successful')
         this.router.navigate(['']);
       });

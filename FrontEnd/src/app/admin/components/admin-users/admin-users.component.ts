@@ -20,7 +20,7 @@ export class AdminUsersComponent implements OnInit {
   displayedColumns: string[] = ['userName', 'profilePicture', 'fullName', 'followersCount', 'followingCount', 'blockAction'];
 
   ngOnInit() {
-    this.adminService.getUsers().subscribe((users) => {this.dataSource.data = users
+    this.adminService.getUsers().subscribe((users) => {
       this.dataSource.data = users
       this.dataSource.paginator=this.paginator
     });

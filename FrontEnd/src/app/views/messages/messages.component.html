@@ -30,6 +30,7 @@
   <div class="chat" *ngIf="selectedUser">
     <div class="selected-user">
       <span class="name">@{{ selectedUser?.users[0]?.userName }}</span>
+      <button class="btn btn-primary" (click)="startVideoCall()">Start Video Call</button>
     </div>
     
     <ul class="chat-box" #chatBox>
@@ -44,8 +45,16 @@
               <p>A Post Has been shared</p>
               <button class="btn btn-dark" (click)="ViewPost(message.postId)">View Post</button>
             </div>
-            <span class="time">{{ message.createdAt | date:'h:mm a' }}</span>
-
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div><span class="time m-2">{{ message.createdAt | date:'h:mm a' }}</span></div>
+              <span *ngIf="message.sender._id === currentUser._id">
+                <mat-icon *ngIf="!message.read" matTooltip="unread" style="font-size: 20px;">check_circle_outline</mat-icon>
+                <mat-icon *ngIf="message.read" matTooltip="read" style="font-size: 20px;">check_circle</mat-icon>
+              </span>
+            </div>
+            
+            
+            
           </div>
         </div>
       </li>

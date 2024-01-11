@@ -23,11 +23,13 @@ export class ChatGateway implements OnModuleInit {
 
   @SubscribeMessage('newMessage')
   onNewMessage(@MessageBody() body: any) {
-    console.log(body);
+    // console.log(body);
     this.server.emit('onMessage', {
       content: body,
     });
   }
+
+  
 }
 
 

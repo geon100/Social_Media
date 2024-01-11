@@ -5,22 +5,22 @@ import * as argon from 'argon2';
 import { User } from 'src/schemas/user.schema';
 import { LoginObj, UserObj, newPasswordObj } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { Otp } from 'src/schemas/otp.schema';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
   private otpStorage:{email?:string}={}
   constructor(
     @InjectModel('User') private userModel:mongoose.Model<User>,
-    @InjectModel('Otp') private otpModel:mongoose.Model<Otp>,
+
     private jwt:JwtService
   ){}
-
+ 
+  
   async signup(obj:UserObj){
     const hashed=await argon.hash(obj.password)
     const otpDoc=this.otpStorage[obj.email]
-    console.log(otpDoc)
-    console.log(this.otpStorage)
+    
     if(!obj.otp || !otpDoc || otpDoc!==obj.otp){
       throw new BadRequestException('invalid OTP')
     }
@@ -53,17 +53,38 @@ export class AuthService {
 
       if(!pwMatch) throw new UnauthorizedException('Invalid credentials')
       
-      return {token:await this.signToken(user._id,user.email)}
+      return {token:await this.signToken(user._id,user.email),refreshToken:await this.signRefreshToken(user._id,user.email)}
   }
-
-   private signToken(userId:string,email:string):Promise<string>{
+  async generateNewAccessToken(token:string){
+    try {
+      const decoded = await jwt.verify(token, process.env.JWT_SECRET) as { sub: string, email: string };
+      console.log('called',decoded)
+      return {token:await this.signToken(decoded.sub,decoded.email)};
+    } catch (error) {
+      
+      console.error('Token verification failed:', error.message);
+      throw new Error('Invalid refresh token');
+    }
+  }
+    private signToken(userId:string,email:string):Promise<string>{
     const payload={
       sub:userId,
       email
     }
     
     return this.jwt.signAsync(payload,{
-      expiresIn:'1d',
+      expiresIn:'30 min',
+      secret:process.env.JWT_SECRET
+    })
+  }
+   private signRefreshToken(userId:string,email:string):Promise<string>{
+    const payload={
+      sub:userId,
+      email
+    }
+    
+    return this.jwt.signAsync(payload,{
+      expiresIn:'1 day',
       secret:process.env.JWT_SECRET
     })
   }
@@ -110,14 +131,16 @@ export class AuthService {
     const { email, otp, newPassword } = newObj;
 
     try {
-      const otpDoc=await this.otpModel.findOne({email})
+      const otpDoc=this.otpStorage[email]
     
-    if(!newObj?.otp || !otpDoc?.otp || otpDoc?.otp!==newObj?.otp){
+    if(!otp || !otpDoc || otpDoc!==otp){
       throw new BadRequestException('invalid OTP')
     }
     
+    
+    
     const user=await this.userModel.findOne({email})
-    const hashed=await argon.hash(newObj.newPassword)
+    const hashed=await argon.hash(newPassword)
     user.password=hashed
     await user.save()
 

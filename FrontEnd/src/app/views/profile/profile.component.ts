@@ -46,7 +46,9 @@ export class ProfileComponent implements OnInit,OnDestroy{
       }); 
   });
  }
+ reportUser(id:string){
 
+ }
  editProfile(){
     const dialogRef =this.dialog.open(EditprofileComponent, {
       width: '400px', 
@@ -58,8 +60,13 @@ export class ProfileComponent implements OnInit,OnDestroy{
         this.user=result
       }
     });
+  
  }
-
+share(id:string){
+  const profileUrl = encodeURIComponent(window.location.href);
+  const text = `Check out my profile:*${profileUrl}/${id}*`;
+    return `https://api.whatsapp.com/send?text=${text}`;
+}
  openProfileChange(profilePic:any){
   if(this.isCurrentUser) profilePic.click()
  }

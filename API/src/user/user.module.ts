@@ -5,12 +5,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from 'src/schemas/user.schema';
 import { PostSchema } from 'src/schemas/post.schema';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { NotificationSchema } from 'src/schemas/notification.schema';
 
 @Module({
   imports:[
     MongooseModule.forFeature([
       { name: 'Post', schema: PostSchema },
       { name: 'User', schema: UserSchema },
+      { name: 'Notification', schema: NotificationSchema },
       ]),
       CloudinaryModule
   ],

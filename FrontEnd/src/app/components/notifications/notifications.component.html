@@ -1,0 +1,31 @@
+<div class="notification-modal">
+  <div class="modal-header">
+    <h2>Notifications</h2>
+    <button mat-mini-fab color="warn" (click)="closeModal()"><mat-icon>close</mat-icon></button>
+  </div>
+  
+  <div class="modal-body">
+    <ng-container *ngIf="notifications.length; else noNotifications">
+      <div *ngFor="let notification of notifications">
+        <div class="notification-item">
+          
+          <div *ngIf="notification.type === 'follow'">
+            <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has started following you.
+          </div>
+          <div *ngIf="notification.type === 'like'">
+            <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has liked your Photo.
+          </div>
+        
+            
+          
+          
+          <span class="timestamp">{{ notification.createdAt | date:'short' }}</span>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-template #noNotifications>
+      <p>No notifications available.</p>
+    </ng-template>
+  </div>
+</div>

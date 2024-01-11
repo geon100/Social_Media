@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Route, Router, UrlSegment, Event as NavigationEvent } from '@angular/router';
-import { filter } from 'rxjs';
+
 import { UserService } from 'src/app/services/user.service';
+import { NotificationsComponent } from '../notifications/notifications.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,8 +14,9 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit{
 
   showHeader: boolean = true;
-
-  constructor(private router: Router,private service:UserService) {}
+  notify:boolean=false;
+  notification:any
+  constructor(private router: Router,private service:UserService,private authservice:AuthService,private dialog: MatDialog) {}
 
   ngOnInit() {
     this.router.events.subscribe((event: NavigationEvent) => {
@@ -20,12 +24,12 @@ export class HeaderComponent implements OnInit{
         this.showHeader = !['/login', '/admin' , '/signup' ,'/admin/login','/admin/users', '/admin/dashboard','/admin/posts','/forgot-password'].includes(event.url);
       }
     });
+    
   }
-
+  
   logout(){
     this.service.offline().subscribe(()=>console.log('user offline'))
-    localStorage.removeItem('userToken')
-    this.router.navigate(['login'])
+    this.authservice.logout()
   }
   
   }

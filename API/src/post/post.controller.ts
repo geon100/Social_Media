@@ -1,5 +1,5 @@
 
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, Query, Req, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import * as path from 'path';
@@ -50,19 +50,26 @@ export class PostController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('getUserPosts')
-  getPosts(@Req() req){
-    return this.service.loadPosts()
+  getPosts(@Req() req,@Query('page') page=1){
+    const limit=5
+    return this.service.loadPosts(page,limit)
   }
   @UseGuards(AuthGuard('jwt'))
   @Get('getHomeUserPosts')
-  getHomePosts(@Req() req){
-    return this.service.loadHomePosts(req.user)
+  getHomePosts(@Req() req,@Query('page') page=1){
+    const limit=5
+    return this.service.loadHomePosts(req.user,page,limit)
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('likepost')
   toggleLike(@Req() req,@Body('post') post: any){
-    return this.service.likePost(post,req.user)
+    return this.service.likePost(post,req.user._id)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('savepost')
+  toggleSave(@Req() req,@Body('post') post: any){
+    return this.service.savePost(post,req.user._id)
   }
 
   @UseGuards(AuthGuard('jwt'))

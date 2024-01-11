@@ -23,12 +23,18 @@ export class TokenInterceptor implements HttpInterceptor {
     })
     return next.handle(newReq);
   }else{
-    const newReq=request.clone({
-      setHeaders:{
-        Authorization:`Bearer ${usertoken}`
-      }
-    })
-    return next.handle(newReq);
+    const token = usertoken 
+    
+    if (token) {
+      const newReq = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return next.handle(newReq);
+    } else {
+      return next.handle(request);
+    }
   }
 }
 }

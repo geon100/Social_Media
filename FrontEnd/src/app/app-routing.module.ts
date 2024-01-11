@@ -9,6 +9,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ExploreComponent } from './views/explore/explore.component';
+import { VideocallComponent } from './components/videocall/videocall.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent,canActivate:[authGuard]},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'profile',component:ProfileComponent,canActivate:[authGuard]},
   {path:'explore',component:ExploreComponent,canActivate:[authGuard]},
   { path: 'profile/:id', component: ProfileComponent,canActivate:[authGuard] },
+  { path: 'videocall/:channelId', component: VideocallComponent,canActivate:[authGuard] },
   {path:'forgot-password',component:ForgotPasswordComponent},
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
 ];

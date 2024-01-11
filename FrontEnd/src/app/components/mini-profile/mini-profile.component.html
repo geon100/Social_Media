@@ -4,14 +4,20 @@
     <img *ngIf="user && user.coverPicture" [src]="user.coverPicture" alt="Cover Photo" id="cover" class="w-100 rounded" style="height: 100px; object-fit: cover;">
   
     <img *ngIf="user && user.profilePicture" [src]="user.profilePicture" alt="Profile Photo" class="rounded-oval position-absolute top-100 start-50 translate-middle" style="width: 120px; height: 100px; object-fit: cover;">
+    
   </div>
   
 
   <div class="row justify-content-center mt-5">
     <div class="col-6 text-center mt-3">
-      <h3 [routerLink]="['/profile']" style="cursor: pointer;">{{user?.userName}}</h3>
+      <h3 [routerLink]="['/profile']" style="cursor: pointer; display: inline-block; margin-right: 10px;">{{user?.userName}}</h3>
+
+      <!-- Use inline styles to align the notification icon with the name -->
+      <mat-icon *ngIf="notification?.length === 0" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
+      <mat-icon *ngIf="notification?.length > 0" matBadge="{{notification.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
     </div>
-  </div>
+</div>
+
 
   <div class="row justify-content-center">
     <div class="col-6">
@@ -23,6 +29,7 @@
   <div class="row justify-content-center">
     <div class="col-6 text-center">
       <button class="btn btn-primary mb-3" (click)="openAddPostDialog()">Add Post</button>
+      
     </div>
   </div>
 </div>

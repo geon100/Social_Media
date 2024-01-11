@@ -1,0 +1,5 @@
+/* usergraph.component.css */
+ag-charts-angular {
+  width: 100%;
+  height: 400px; /* Set an appropriate height for your chart */
+}

@@ -17,7 +17,8 @@ cloudinary.config({
 export class UserService {
 
   constructor(@InjectModel('Post') private postModel:mongoose.Model<Post>,
-              @InjectModel('User') private userModel:mongoose.Model<User>){}
+              @InjectModel('User') private userModel:mongoose.Model<User>,
+              @InjectModel('Notification') private notifyModel:mongoose.Model<Notification>){}
 
 
   async getSuggestions(user){
@@ -26,19 +27,39 @@ export class UserService {
     return await this.userModel.find({_id:{$nin:followingIds}})
     
   }
-  async getUserData(userId:string){
+  async getUserData(userId: string) {
     try {
-      const user=await this.userModel.findById(userId).populate('followers').populate('following')
-
-      const posts=await this.postModel.find({user:userId,isActive:true}).populate('user').populate({
+      const user = await this.userModel
+        .findById(userId)
+        .populate('followers')
+        .populate('following')
+        .populate({
+          path: 'saved',
+          populate: {
+            path: 'user',
+          },
+        });
+  
+      const posts = await this.postModel
+        .find({ user: userId, isActive: true })
+        .populate('user')
+        .populate({
+          path: 'comments',
+          populate: { path: 'user' },
+        });
+  
+    
+      await this.postModel.populate(user.saved, {
         path: 'comments',
-        populate: { path: 'user' }
-      })
-      return {user,posts}
+        populate: { path: 'user' },
+      });
+  
+      return { user, posts };
     } catch (error) {
-      throw error
+      throw error;
     }
   }
+  
 
   async followUser(userId:string,loggedinUser:string){
     const logUser=await this.userModel.findById(loggedinUser)
@@ -47,6 +68,11 @@ export class UserService {
     const user=await this.userModel.findById(userId)
     user.followers.push(logUser._id)
     await user.save()
+    await this.notifyModel.create({
+      sender:loggedinUser,
+      receiver:userId,
+      type:'follow'
+    })
     return {status:true}
   }
 
@@ -101,5 +127,13 @@ export class UserService {
     return await user.save()
 
   }
-  
+  async loadNotifications(userId) {
+    return await this.notifyModel.find({ receiver: userId }).sort({ createdAt: -1 }).populate({
+      path: 'sender',
+      select: '_id userName profilePicture',
+    }).exec();
+  }
+  async readNotifications(userId:string) {
+    return await this.notifyModel.deleteMany({ receiver: userId })
+  }
 }

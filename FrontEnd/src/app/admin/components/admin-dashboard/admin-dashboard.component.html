@@ -1,1 +1,54 @@
-<p>admin-dashboard works!</p>
+<div class="container-fluid">
+  <mat-card style="min-height: 500px;">
+    <mat-card-header>
+      <h1>Admin Dashboard</h1>
+    </mat-card-header>
+  
+    <!-- Cards in the Same Line -->
+    <mat-card-content class="horizontal-cards my-5">
+  
+      <!-- Total Users Card -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Total Users</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          
+          <h3>{{ totalUsersCount }}</h3>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Total Posts Card -->
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Total Posts</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- Display the total posts count or any relevant information -->
+          <h3>{{ totalPostsCount }}</h3>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Additional Information Card -->
+      <!-- <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Additional Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+         
+          <p>{{ additionalInfo }}</p>
+        </mat-card-content>
+      </mat-card> -->
+  
+    </mat-card-content>
+  
+    <!-- User Graph Card -->
+    <mat-card-content>
+      <app-usergraph></app-usergraph>
+    </mat-card-content>
+  
+    <mat-card-footer>
+      <!-- Footer content if needed -->
+    </mat-card-footer>
+  </mat-card>
+</div>

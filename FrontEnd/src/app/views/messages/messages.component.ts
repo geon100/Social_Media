@@ -12,6 +12,7 @@ import { loadUserData } from 'src/app/state/UserState/user.actions';
 import { getUser } from 'src/app/state/UserState/user.selector';
 import { PostviewComponent } from '../postview/postview.component';
 import { PostService } from 'src/app/services/post.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -25,6 +26,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   selectedUser:any
   currentUser!:User
   pickerAppear:boolean=false
+  read:boolean=false
   private subscriptions: Subscription[] = [];
   loading:boolean=false
   @ViewChild('chatBox') chatBox!: ElementRef;
@@ -32,9 +34,11 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   constructor(private service:ChatService,
     private store:Store,private snackBar:SnackbarService,
     private socketService: SocketService,private postService:PostService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,private route:Router) { }
 
-  
+    startVideoCall(){
+      this.route.navigate(['/videocall',this.selectedUser._id ]);
+    }
   ngAfterViewInit(): void {
     this.scrollToBottom()
   }
@@ -74,9 +78,11 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
         console.log(res.content.message)
         if (res.content.chatId === this.selectedUser._id && this.currentUser._id!==res.content.message.sender._id) {
           this.messages.push(res.content.message);
+          
           setTimeout(()=>{
             this.scrollToBottom();
           })
+          this.markMessagesAsRead([res.content.message._id]);
         }
       })
     )
@@ -90,17 +96,23 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     this.subscriptions.push(
       this.service.loadmessages(this.selectedUser._id).subscribe((res:any)=>{
         this.messages=res
+        const messageIds = this.messages.filter((message:any)=>!message.read&&message.sender._id!==this.currentUser._id).map((message: any) => message._id);
+        if(messageIds.length!==0)
+        this.markMessagesAsRead(messageIds);
         setTimeout(() => {
           this.scrollToBottom()
         });
       })
     )
- 
+  }
+  markMessagesAsRead(messageIds: string[]): void {
+    // alert(1)
+    this.service.readMessage(messageIds).subscribe()
   }
   openImageModal(imageUrl: string): void {
     this.dialog.open(ImageModalComponent, {
       data: imageUrl ,
-      maxWidth: '100vw', // Set the maximum width of the modal to the viewport width
+      maxWidth: '100vw', 
       maxHeight: '100vh'
     });
 
@@ -137,6 +149,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
           this.socketService.sendMessage(res, chat);
           this.messages.push(res)
           this.messageText=''
+          
           setTimeout(() => {
             this.scrollToBottom();
           });

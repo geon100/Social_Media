@@ -16,9 +16,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 
 const materialModules = [
   MatDatepickerModule,
+  MatBadgeModule,
   MatInputModule,
   MatNativeDateModule,
   MatFormFieldModule,
@@ -33,7 +37,9 @@ const materialModules = [
   MatTableModule,
   MatGridListModule,
   MatPaginatorModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSelectModule,
+  MatMenuModule
 ];
 
 @NgModule({

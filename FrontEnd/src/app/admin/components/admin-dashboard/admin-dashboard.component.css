@@ -1,0 +1,16 @@
+/* usergraph.component.css */
+
+.horizontal-cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-card {
+  flex: 1;
+  margin-right: 16px; /* Adjust margin as needed */
+}
+
+
+.mat-card:last-child {
+  margin-right: 0;
+}

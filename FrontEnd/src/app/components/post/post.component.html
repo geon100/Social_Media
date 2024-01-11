@@ -38,5 +38,9 @@
     <div class="action-button" (click)="sharelistModal(post._id)">
       <mat-icon>share</mat-icon>
     </div>
+    <div class="action-button" (click)="savePost()" style="margin-left: auto;">
+      <mat-icon *ngIf="!save">bookmark_border</mat-icon>
+      <mat-icon *ngIf="save">bookmark</mat-icon>
+    </div>
   </div>
 </div>

@@ -15,6 +15,7 @@ import { SharelistComponent } from '../sharelist/sharelist.component';
 export class PostComponent implements OnInit{
   @Input() post: any;
   liked!:boolean
+  save!:boolean
   current!:boolean
   @Input() comment:boolean=true
   constructor(private store:Store,private service:PostService,private dialog: MatDialog){}
@@ -24,9 +25,8 @@ export class PostComponent implements OnInit{
       if(res) {
         this.liked=this.post.likes.includes(res?._id)
         this.current=this.post.user.userName===res.userName
+        this.save=res.saved.includes(this.post._id)
       }
-      
-      console.log('post',this.post.comments)
     })
     
   }
@@ -45,7 +45,11 @@ export class PostComponent implements OnInit{
     });
   }
     
-  
+  savePost(){
+    this.service.savePosts(this.post._id).subscribe((res:any)=>{
+      this.save=!this.save
+    })
+  }
 
   toggleLike(){
     this.service.togglelike(this.post._id).subscribe((res:any)=>{

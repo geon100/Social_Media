@@ -6,7 +6,7 @@ import { UserSchema } from 'src/schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../strategy/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import { OtpSchema } from 'src/schemas/otp.schema';
+
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { OtpSchema } from 'src/schemas/otp.schema';
       signOptions: { expiresIn: '1h' },
     }),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: 'Otp', schema: OtpSchema }]),
+    
   ],
   controllers: [AuthController],
   providers: [AuthService,JwtStrategy]

@@ -60,9 +60,9 @@ li {
   transition: background-color 0.3s;
 }
 
-li:hover {
+/* li:hover {
   background-color: #f7f9fb;
-}
+} */
 
 li img {
   width: 40px;

@@ -9,11 +9,15 @@ export class PostService {
 
   constructor(private http:HttpClient) { }
 
-  loadHomeposts(){
-    return this.http.get(`${this.ApiBaseUrl}/post/getHomeUserPosts`)
+  loadHomeposts(page:number){
+    return this.http.get(`${this.ApiBaseUrl}/post/getHomeUserPosts`, {
+      params: { page: page.toString() }
+    });
   }
-  loadposts(){
-    return this.http.get(`${this.ApiBaseUrl}/post/getUserPosts`)
+  loadposts(page:number){
+    return this.http.get(`${this.ApiBaseUrl}/post/getUserPosts`, {
+      params: { page: page.toString() }
+    });
   }
 
  addpost(form:FormData){
@@ -22,6 +26,9 @@ export class PostService {
 
 togglelike(post:string){
   return this.http.patch(`${this.ApiBaseUrl}/post/likepost`,{post})
+}
+savePosts(post:string){
+  return this.http.patch(`${this.ApiBaseUrl}/post/savepost`,{post})
 }
 
 addComment(CommentObj:any){

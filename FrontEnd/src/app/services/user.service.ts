@@ -47,4 +47,10 @@ export class UserService {
   updateProfile(form:any){
     return this.http.patch(`${this.ApiBaseUrl}/user/update`,form)
   }
+  loadNotifications(){
+    return this.http.get(`${this.ApiBaseUrl}/user/getNotify`)
+  }
+  readNotifications(){
+    return this.http.delete(`${this.ApiBaseUrl}/user/readNotify`)
+  }
 }

@@ -15,16 +15,21 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       
     });
   }
-
+ 
   async validate(payload: { sub: string, email: string }) {
     let user = await this.userModel.findById(payload.sub).select('-password -__v');
   
-    if (!user) throw new ForbiddenException('User not found');
-  
-    if (!user.isActive) throw new ForbiddenException('User Blocked');
+    if (!user) {
+      console.log(user,'userjwtstra')
+      throw new ForbiddenException('User not found');
+    }
+    if (!user.isActive) throw new ForbiddenException('Blocked User');
   
     if (!user.isOnline) {
       user = await this.userModel.findByIdAndUpdate(payload.sub, { isOnline: true }, { new: true }).select('-password -__v');
+      setTimeout(async () => {
+        await this.userModel.findByIdAndUpdate(payload.sub, { isOnline: false }, { new: true }).select('-password -__v');
+      }, 30 * 60 * 1000);
     }
   
     return user;

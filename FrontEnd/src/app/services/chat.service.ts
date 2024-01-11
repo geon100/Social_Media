@@ -20,6 +20,9 @@ export class ChatService {
   loadmessages(chatId:string){
     return this.http.get(`${this.ApiBaseUrl}/messages/${chatId}`)
   }
+  readMessage(messageIds:string[]){
+    return this.http.patch(`${this.ApiBaseUrl}/readMessage`,{messageIds})
+  }
 
   sendMessage(chatId:string,textMessage:string){
     return this.http.post(`${this.ApiBaseUrl}/send`,{chatId,textMessage})
@@ -29,8 +32,8 @@ export class ChatService {
     return this.http.post(`${this.ApiBaseUrl}/sendImage`,form)
   }
 
-  sendPost(postId:string,chatId:string){
-    return this.http.post(`${this.ApiBaseUrl}/sendPost`,{postId,chatId})
+  sendPost(postId:string,chatIds:string[]){
+    return this.http.post(`${this.ApiBaseUrl}/sendPost`,{postId,chatIds})
   }
 
   

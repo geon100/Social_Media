@@ -11,6 +11,11 @@ export class AuthController {
     console.log('Request Body:', userobj);
     return this.service.signup(userobj)
   }
+  @Post('generateNewAccess')
+  generateNewAccess(@Body('refreshToken') refreshToken: string, @Req() request: Request) {
+    console.log('Request Body:', refreshToken);
+    return this.service.generateNewAccessToken(refreshToken)
+  }
   
   @Post('signin')
   signIn(@Body() loginCred:LoginObj){

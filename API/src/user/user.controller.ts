@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, InternalServerErrorException, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -17,6 +17,18 @@ export class UserController {
   getSuggestions(@Req() req){
     // console.log({user:req.user})
     return this.service.getSuggestions(req.user)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('getNotify')
+  getNotify(@Req() req){
+    // console.log({user:req.user})
+    return this.service.loadNotifications(req.user._id)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('readNotify')
+  readNotify(@Req() req){
+    // console.log({user:req.user})
+    return this.service.readNotifications(req.user._id)
   }
   
   @UseGuards(AuthGuard('jwt'))

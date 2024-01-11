@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Patch, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -31,6 +31,12 @@ export class ChatController {
     
     return this.service.loadMessages(params.id)
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('readMessage')
+  readMessage(@Req() req,@Body('messageIds') messageIds: string[]){
+    
+    return this.service.readStatus(messageIds)
+  }
 
 
   @UseGuards(AuthGuard('jwt'))
@@ -43,8 +49,8 @@ export class ChatController {
   @UseGuards(AuthGuard('jwt'))
   @Post('sendPost')
   sendPost(@Req() req,@Body() obj: any){
-    const {postId,chatId}=obj
-    return this.service.sendPost(chatId,postId,req.user._id)
+    const {postId,chatIds}=obj
+    return this.service.sendPost(chatIds,postId,req.user._id)
   }
 
 

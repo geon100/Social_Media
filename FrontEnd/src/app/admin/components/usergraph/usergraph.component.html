@@ -1,0 +1,21 @@
+
+<!-- usergraph.component.html -->
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Select Year</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Year</mat-label>
+      <mat-select [(ngModel)]="selectedYear" (ngModelChange)="onSelectYear()">
+        <mat-option *ngFor="let year of availableYears" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ag-charts-angular [options]="chartOptions"></ag-charts-angular>
+  </mat-card-content>
+</mat-card>
+
+
+
+  
+  

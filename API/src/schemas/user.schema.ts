@@ -32,6 +32,9 @@ export class User extends Document {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   following: mongoose.Types.ObjectId[];
+  
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  saved: mongoose.Types.ObjectId[];
 
   @Prop({default:true})
   isActive: Boolean;

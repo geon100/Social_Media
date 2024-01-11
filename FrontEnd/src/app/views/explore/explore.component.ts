@@ -13,22 +13,30 @@ import { getUser } from 'src/app/state/UserState/user.selector';
 export class ExploreComponent implements OnDestroy {
   posts: any=[]
   postsSubscription: Subscription | undefined;
-
+  private page:number=1
   constructor(private store: Store, private service: PostService) {}
 
   ngOnInit(): void {
     this.store.select(getUser).subscribe(val=>{
       if (!val) {
         this.store.dispatch(loadUserData())
-        this.store.select(getUser).subscribe(val=>{
-  
-        })
       }
     })
-    this.postsSubscription = this.service.loadposts().subscribe((res:any) => {
-      this.posts = res;
-    });
+    this.loadComponentposts()
+    
   }
+  private loadComponentposts(){
+    this.postsSubscription = this.service.loadposts(this.page).subscribe((res:any) => {
+      this.posts=this.posts.concat(res)
+    })
+  }
+
+  onScroll() {
+    
+    this.page++;
+    this.loadComponentposts();
+  
+}
 
   ngOnDestroy(): void {
    
