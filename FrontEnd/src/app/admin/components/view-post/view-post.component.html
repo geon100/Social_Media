@@ -6,9 +6,10 @@
   <mat-card-content>
     <div class="post-details">
       <div class="post-image-container">
-        <img [src]="data.post.image" alt="" class="post-image">
+        <img *ngIf="data.post" [src]="data.post.image" alt="" class="post-image">
+        <img *ngIf="!data.post" [src]="data.report.reportedUser.profilePicture" alt="" class="post-image">
       </div>
-      <div class="post-info">
+      <div class="post-info" *ngIf="data.post">
         <p><strong>Post Caption:</strong> {{ data.post.caption }}</p>
         <p><strong>Likes Count:</strong> {{ data.post.likes.length }}</p>
         <p><strong>Comments Count:</strong> {{ data.post.comments.length }}</p>
@@ -17,6 +18,29 @@
         <p><strong>Post Date:</strong> {{ data.post.createdAt | date: 'medium' }}</p>
         <p><strong>Post Status:</strong> <span class="text-success" *ngIf="data.post.isActive; else blockedStatus">Active</span></p>
         <ng-template #blockedStatus><span class="text-danger">Blocked</span></ng-template>
+      </div>
+      <div class="post-info" *ngIf="!data.post">
+        <p><strong>User Name:</strong> {{ data.report.reportedUser.username }}</p>
+        <p><strong>Full Name:</strong> {{ data.report.reportedUser.fullName }}</p>
+        <p><strong>followers:</strong> {{ data.report.reportedUser.followers.length }}</p>
+        <p><strong>following:</strong> {{ data.report.reportedUser.following.length }}</p>
+        
+        
+        <p><strong>User Status:</strong> <span class="text-success" *ngIf="data.report.reportedUser.isActive; else blockedStatus">Active</span></p>
+        <ng-template #blockedStatus><span class="text-danger">Blocked</span></ng-template>
+      </div>
+      <div *ngIf="data.report">
+        <h4><strong class="text-danger">Reported By:</strong> {{ data.report.reportedBy.userName }}</h4>
+        <h4><strong class="text-danger">Reason:</strong> {{ data.report.text }}</h4>
+        <div *ngIf="data.post">
+          <button class="btn btn-danger" *ngIf="data.post?.isActive" (click)="block(data.post._id)">Block</button>
+        <button class="btn btn-primary" *ngIf="!data.post?.isActive" (click)="block(data.post._id)">Unblock</button>
+        </div>
+        <div *ngIf="!data.post">
+         
+        <button class="btn btn-danger" *ngIf="data.report.reportedUser?.isActive" (click)="blockUser(data.report._id)">Block</button>
+        <button class="btn btn-primary" *ngIf="!data.report.reportedUser?.isActive" (click)="blockUser(data.report.reportedUser._id)">Unblock</button>
+        </div>
       </div>
     </div>
   </mat-card-content>

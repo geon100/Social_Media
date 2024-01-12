@@ -41,6 +41,9 @@ export class User extends Document {
   
   @Prop({default:false})
   isOnline: Boolean;
+  
+  @Prop({default:0})
+  reportCount: number;
 
 }
 

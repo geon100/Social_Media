@@ -19,6 +19,12 @@ export class AdminController {
     return this.service.getUsers()
   }
   @UseGuards(AuthGuard('admin-jwt'))
+  @Get('allreports')
+  getReports(@Req() req){
+    // console.log({user:req.admin})
+    return this.service.getReports()
+  }
+  @UseGuards(AuthGuard('admin-jwt'))
   @Patch('block')
   blockUser(@Body('userid') userId: string) {
     // console.log({user:req.admin})

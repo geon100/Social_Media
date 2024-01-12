@@ -34,6 +34,7 @@ import { VideocallComponent } from './components/videocall/videocall.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CookieService } from 'ngx-cookie-service';
+import { ReportModalComponent } from './components/report-modal/report-modal.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -56,7 +57,8 @@ import { CookieService } from 'ngx-cookie-service';
     SharelistComponent,
     EditprofileComponent,
     VideocallComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ReportModalComponent
   ],
   imports: [
     BrowserModule,

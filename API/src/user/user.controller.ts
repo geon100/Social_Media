@@ -62,6 +62,11 @@ export class UserController {
   }
   
   @UseGuards(AuthGuard('jwt'))
+  @Post('reportUser')
+  reportUser(@Req() req,@Body() reportData:string){
+    return this.service.reportUser(reportData,req.user._id)
+  }
+  @UseGuards(AuthGuard('jwt'))
   @Patch('followUser')
   followUser(@Req() req,@Body('userId') id:string){
     return this.service.followUser(id,req.user._id)

@@ -15,6 +15,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { ViewPostComponent } from './components/view-post/view-post.component';
 import { UsergraphComponent } from './components/usergraph/usergraph.component';
 import { AgChartsAngularModule } from 'ag-charts-angular';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AgChartsAngularModule } from 'ag-charts-angular';
     AdminSidebarComponent,
     PostsComponent,
     ViewPostComponent,
-    UsergraphComponent
+    UsergraphComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,

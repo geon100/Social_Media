@@ -24,7 +24,7 @@
         <button *ngIf="!isCurrentUser && isFollowingUser" mat-raised-button type="button" color="primary" class="edit-profile-button" (click)="Message(user?._id)">Message</button>
         <!-- <button  mat-raised-button type="button" color="accent" class="edit-profile-button" (click)="share(user?._id)">Share</button> -->
         <a *ngIf="isCurrentUser" mat-raised-button type="button" class="edit-profile-button" color="accent" [href]="share(user?._id)" data-action="share/whatsapp/share" target="_blank"><mat-icon>share</mat-icon>Share via WhatsApp</a>
-        <button *ngIf="!isCurrentUser" mat-raised-button color="accent" class="edit-profile-button"  (click)="reportUser(user?._id)">Report User</button>
+        <button *ngIf="!isCurrentUser" type="button" mat-raised-button color="accent" class="edit-profile-button"  (click)="reportUser(user?._id)">Report User</button>
       </div>
       <p class="username">@{{ user?.userName }}</p>
       <p class="bio">{{ user?.bio }}</p>

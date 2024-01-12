@@ -18,6 +18,7 @@ export class UserService {
 
   constructor(@InjectModel('Post') private postModel:mongoose.Model<Post>,
               @InjectModel('User') private userModel:mongoose.Model<User>,
+              @InjectModel('Report') private reportModel:mongoose.Model<Report>,
               @InjectModel('Notification') private notifyModel:mongoose.Model<Notification>){}
 
 
@@ -60,6 +61,28 @@ export class UserService {
     }
   }
   
+  async reportUser(reportData: any, reportedBy: any) {
+    console.log(reportData, reportedBy);
+    const existingReport = await this.reportModel.findOne({
+      reportedBy: reportedBy,
+      reportedUser: reportData.userId
+    });
+    
+    if (!existingReport) {
+      await this.reportModel.create({
+        reportedBy: reportedBy,
+        reportedUser: reportData.userId,
+        text:reportData.reportText,
+        type:reportData.type
+      });
+      const reportedUser=await this.userModel.findById(reportData.userId);
+      reportedUser.reportCount++
+      if(reportedUser.reportCount>15){
+        reportedUser.isActive=false
+      }
+      await reportedUser.save()
+    }
+  }
 
   async followUser(userId:string,loggedinUser:string){
     const logUser=await this.userModel.findById(loggedinUser)

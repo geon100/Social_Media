@@ -7,6 +7,7 @@ import { CommentSchema } from 'src/schemas/comment.schema';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 import { UserSchema } from 'src/schemas/user.schema';
 import { Notification, NotificationSchema } from 'src/schemas/notification.schema';
+import { ReportSchema } from 'src/schemas/report.schema';
 
 @Module({
   imports:[
@@ -15,6 +16,7 @@ import { Notification, NotificationSchema } from 'src/schemas/notification.schem
       { name: 'Comment', schema: CommentSchema },
       { name: 'User', schema: UserSchema },
       { name: 'Notification', schema: NotificationSchema },
+      { name: 'Report', schema: ReportSchema },
       ]),
       CloudinaryModule
   ],

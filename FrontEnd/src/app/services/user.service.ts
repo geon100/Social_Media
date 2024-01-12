@@ -31,7 +31,9 @@ export class UserService {
   getSuggestions(){
     return this.http.get(`${this.ApiBaseUrl}/user/getSuggestions`)
   }
-
+  reportUser(reportData:any){
+    return this.http.post(`${this.ApiBaseUrl}/user/reportUser`,reportData)
+  }
   changeCover(form:any){
     return this.http.patch(`${this.ApiBaseUrl}/user/ChangeCover`,form)
   }

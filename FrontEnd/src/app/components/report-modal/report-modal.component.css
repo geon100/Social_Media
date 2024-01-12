@@ -1,0 +1,20 @@
+
+
+.report-dialog-content {
+  padding: 16px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 16px;
+}
+
+.report-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-flat-button {
+  margin-left: 8px;
+}

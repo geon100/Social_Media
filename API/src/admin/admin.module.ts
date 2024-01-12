@@ -8,20 +8,22 @@ import { PassportModule } from '@nestjs/passport';
 import { AdJwtStrategy } from 'src/strategy/adminJwt.strategy';
 import { UserSchema } from 'src/schemas/user.schema';
 import { PostSchema } from 'src/schemas/post.schema';
+import { ReportSchema } from 'src/schemas/report.schema';
 
 @Module({
   imports: [
     PassportModule.register({
       defaultStrategy: 'admin-jwt',
-      property: 'admin', // Set the user property name
+      property: 'admin', 
     }),
     JwtModule.register({
-      secret: process.env.JWT_SECRET, // Replace with your secret key
+      secret: process.env.JWT_SECRET, 
       signOptions: { expiresIn: '1h' },
     }),
     MongooseModule.forFeature([{ name: 'Admin', schema: AdminSchema }]),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: 'Post', schema: PostSchema }])
+    MongooseModule.forFeature([{ name: 'Post', schema: PostSchema }]),
+    MongooseModule.forFeature([{ name: 'Report', schema: ReportSchema }])
   ],
   controllers: [AdminController],
   providers: [AdminService,AdJwtStrategy],

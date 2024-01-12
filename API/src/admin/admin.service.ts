@@ -13,6 +13,7 @@ export class AdminService {
     @InjectModel('Admin') private adminModel:mongoose.Model<Admin>,
     @InjectModel('User') private userModel:mongoose.Model<User>,
     @InjectModel('Post') private postModel:mongoose.Model<Post>,
+    @InjectModel('Report') private reportModel:mongoose.Model<Report>,
     private jwt:JwtService
   ){}
 
@@ -78,5 +79,20 @@ export class AdminService {
   
     return posts
   }
+  async getReports(){
+    const reports = await this.reportModel
+  .find()
+  .populate([
+    { path: 'reportedUser', options: { strictPopulate: false } },
+    { path: 'reportedPost', options: { strictPopulate: false } },
+    { path: 'reportedBy', options: { strictPopulate: false } }
+  ])
+  .exec();
+
+  
+    return reports
+  }
+
+  
 
 }

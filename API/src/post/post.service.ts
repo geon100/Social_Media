@@ -18,6 +18,7 @@ export class PostService {
 
   constructor(@InjectModel('Post') private postModel:mongoose.Model<Post>,
               @InjectModel('User') private userModel:mongoose.Model<User>,
+              @InjectModel('Report') private reportModel:mongoose.Model<Report>,
               @InjectModel('Notification') private notifyModel:mongoose.Model<Notification>,
               @InjectModel('Comment') private CommentModel:mongoose.Model<Comment>){}
 
@@ -91,6 +92,29 @@ export class PostService {
   }
   
   return await post.save();
+  }
+
+  async reportPost(reportData: any, reportedBy: any) {
+    console.log(reportData, reportedBy);
+    const existingReport = await this.reportModel.findOne({
+      reportedBy: reportedBy,
+      reportedPost: reportData.postId
+    });
+    
+    if (!existingReport) {
+      await this.reportModel.create({
+        reportedBy: reportedBy,
+        reportedPost: reportData.postId,
+        text:reportData.reportText,
+        type:reportData.type
+      });
+      const reportedPost=await this.postModel.findById(reportData.postId);
+      reportedPost.reportCount++
+      if(reportedPost.reportCount>15){
+        reportedPost.isActive=false
+      }
+      await reportedPost.save()
+    }
   }
 
   async savePost(postId: string, userId: string) {

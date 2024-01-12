@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Subscription, catchError, finalize, throwError } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { EditprofileComponent } from 'src/app/components/editprofile/editprofile.component';
+import { ReportModalComponent } from 'src/app/components/report-modal/report-modal.component';
 
 
 @Component({
@@ -47,6 +48,23 @@ export class ProfileComponent implements OnInit,OnDestroy{
   });
  }
  reportUser(id:string){
+  // alert(id)
+  const dialogRef = this.dialog.open(ReportModalComponent, {
+    width: '500px', 
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if(result){
+      const report={
+        userId:id,
+        reportText:result,
+        type:'user'
+      }
+      this.service.reportUser(report).subscribe(()=>{
+        this.snackBar.showSuccess('User Reported')
+      })
+    }
+  });
 
  }
  editProfile(){

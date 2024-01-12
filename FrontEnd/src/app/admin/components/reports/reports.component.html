@@ -1,0 +1,56 @@
+<!-- report-list.component.html -->
+
+<mat-card style="min-height: 500px; margin-top: 80px;">
+  <mat-card-header>
+    <h1>Report Listing</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="dataSource && dataSource.data.length > 0; else noReports">
+      <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="reportedContent">
+          <th mat-header-cell *matHeaderCellDef>Reported Content</th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Use ngIf to conditionally display post image or user profile picture -->
+            <ng-container *ngIf="element.type === 'post'; else userProfile">
+              <img *ngIf="element.reportedPost.image" [src]="element.reportedPost.image" alt="Post Image" style="max-width: 80px; max-height: 80px;">
+            </ng-container>
+            <ng-template #userProfile>
+              <img *ngIf="element.reportedUser.profilePicture" [src]="element.reportedBy.profilePicture" alt="User Profile Picture" style="max-width: 80px; max-height: 80px;">
+            </ng-template>
+          </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="reportType">
+          <th mat-header-cell *matHeaderCellDef>Report Type</th>
+          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+        </ng-container>
+        <ng-container matColumnDef="reportDetails">
+          <th mat-header-cell *matHeaderCellDef>Report Details</th>
+          <td mat-cell *matCellDef="let element">{{ element.text }}</td>
+        </ng-container>
+        <ng-container matColumnDef="reportedBy">
+          <th mat-header-cell *matHeaderCellDef>Reported By</th>
+          <td mat-cell *matCellDef="let element">{{ element.reportedBy.userName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Add your action buttons here -->
+            <button mat-raised-button color="primary"(click)=viewDetails(element) >View</button>
+            <!-- <button mat-raised-button color="warn" >Delete</button> -->
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    
+  </mat-card-content>
+  <ng-template #noReports>
+    <p>No reports available.</p>
+  </ng-template>
+  <mat-card-footer>
+    <mat-paginator *ngIf="dataSource && dataSource.data.length > 5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </mat-card-footer>
+</mat-card>

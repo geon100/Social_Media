@@ -15,6 +15,21 @@
       </ng-template>
       <p class="timestamp">{{ post.createdAt | date:'medium' }}</p>
     </div>
+    <button mat-icon-button [matMenuTriggerFor]="moreOptionsMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #moreOptionsMenu="matMenu">
+      <button mat-menu-item (click)="openPostModal()">
+        <mat-icon>remove_red_eye</mat-icon> View Post
+      </button>
+      <button mat-menu-item (click)="sharelistModal(post._id)">
+        <mat-icon>share</mat-icon> Share Post
+      </button>
+      <button mat-menu-item (click)="reportPost(post._id)">
+        <mat-icon>report</mat-icon> Report Post
+      </button>
+    </mat-menu>
   </div>
   <div class="post-content">
     <p class="post-caption">{{ post.caption }}</p>

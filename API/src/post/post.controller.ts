@@ -71,7 +71,11 @@ export class PostController {
   toggleSave(@Req() req,@Body('post') post: any){
     return this.service.savePost(post,req.user._id)
   }
-
+  @UseGuards(AuthGuard('jwt'))
+  @Post('reportPost')
+  reportUser(@Req() req,@Body() reportData:string){
+    return this.service.reportPost(reportData,req.user._id)
+  }
   @UseGuards(AuthGuard('jwt'))
   @Post('addcomment')
   addComment(@Req() req,@Body() commentObj: any){

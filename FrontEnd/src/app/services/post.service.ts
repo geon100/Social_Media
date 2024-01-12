@@ -30,7 +30,9 @@ togglelike(post:string){
 savePosts(post:string){
   return this.http.patch(`${this.ApiBaseUrl}/post/savepost`,{post})
 }
-
+reportPost(reportData:any){
+  return this.http.post(`${this.ApiBaseUrl}/post/reportPost`,reportData)
+}
 addComment(CommentObj:any){
   return this.http.post(`${this.ApiBaseUrl}/post/addcomment`,CommentObj)
 }

@@ -6,6 +6,8 @@ import { PostService } from 'src/app/services/post.service';
 import { getUser } from 'src/app/state/UserState/user.selector';
 import { PostviewComponent } from 'src/app/views/postview/postview.component';
 import { SharelistComponent } from '../sharelist/sharelist.component';
+import { ReportModalComponent } from '../report-modal/report-modal.component';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +20,7 @@ export class PostComponent implements OnInit{
   save!:boolean
   current!:boolean
   @Input() comment:boolean=true
-  constructor(private store:Store,private service:PostService,private dialog: MatDialog){}
+  constructor(private store:Store,private service:PostService,private dialog: MatDialog,private snackBar:SnackbarService){}
 
   ngOnInit(): void {
     this.store.select(getUser).subscribe(res=>{
@@ -30,7 +32,26 @@ export class PostComponent implements OnInit{
     })
     
   }
-
+  reportPost(id:string){
+    alert(id)
+    const dialogRef = this.dialog.open(ReportModalComponent, {
+      width: '500px', 
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        const report={
+          postId:id,
+          reportText:result,
+          type:'post'
+        }
+        this.service.reportPost(report).subscribe(()=>{
+          this.snackBar.showSuccess('Post Reported')
+        })
+      }
+    });
+  
+   }
    openPostModal() {
     this.dialog.open(PostviewComponent, {
       width: '49%',

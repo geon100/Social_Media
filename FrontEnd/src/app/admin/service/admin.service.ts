@@ -31,6 +31,8 @@ export class AdminService {
   getPosts():Observable<any>{
     return this.http.get(`${this.ApiBaseUrl}/allposts`)
   }
-
+  getReports(){
+    return this.http.get(`${this.ApiBaseUrl}/allreports`)
+  }
   
 }

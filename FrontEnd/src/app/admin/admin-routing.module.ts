@@ -7,6 +7,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { authguardGuard } from './guard/authguard.guard';
 import { loggedinGuard } from './guard/loggedin.guard';
 import { PostsComponent } from './components/posts/posts.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const adminRoutes: Routes = [
   {
@@ -22,6 +23,7 @@ const adminRoutes: Routes = [
           { path: 'dashboard', component: AdminDashboardComponent },
           { path: 'users', component: AdminUsersComponent },
           { path: 'posts', component: PostsComponent },
+          { path: 'reports', component: ReportsComponent },
         ]
       }
     ]

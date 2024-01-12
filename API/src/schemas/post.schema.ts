@@ -21,6 +21,9 @@ export class Post  {
 
   @Prop({default:true})
   isActive: Boolean;
+
+  @Prop({default:0})
+  reportCount: number;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
