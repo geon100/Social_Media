@@ -60,6 +60,13 @@ export class UserController {
     
     return this.service.getUserData(user)
   }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('followers')
+  getfollowers(@Req() req,@Param() params: any){
+    
+    
+    return this.service.getFollowers(req.user)
+  }
   
   @UseGuards(AuthGuard('jwt'))
   @Post('reportUser')

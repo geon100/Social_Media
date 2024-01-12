@@ -53,23 +53,35 @@ export class PostService {
   //   return url
   // }
 
-  async addpost(userId:mongoose.Schema.Types.ObjectId,caption:string,img:string){
-    
+  async addpost(userId: mongoose.Schema.Types.ObjectId, caption: string, img: string, tags: string[]) {
     try {
-      const newPost=await this.postModel.create({
-        user:userId,
+      const newPost = await this.postModel.create({
+        user: userId,
         caption,
-        image:img,
-      })
-      if(newPost)
-      return {status:true}
-      
+        image: img,
+      });
+  
+      if (tags.length) {
+        newPost.tags = tags.map((tag) => new mongoose.Types.ObjectId(tag));
+        await newPost.save();
+  
+        for (const tag of newPost.tags) {
+          await this.notifyModel.create({
+            sender: userId,
+            receiver: tag,
+            type: 'tag',
+            post:newPost._id
+          });
+        }
+      }
+  
+      return { status: true };
     } catch (error) {
-      
+      console.error('Error adding post:', error);
       throw error;
     }
-
   }
+  
 
   async likePost(postId: any, userId: any) {
     

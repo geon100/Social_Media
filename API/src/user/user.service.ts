@@ -28,6 +28,11 @@ export class UserService {
     return await this.userModel.find({_id:{$nin:followingIds}})
     
   }
+
+  async getFollowers(user:any){
+    return await await this.userModel.findById(user._id,{followers:1,_id:0}).populate('followers')
+  }
+
   async getUserData(userId: string) {
     try {
       const user = await this.userModel
@@ -84,30 +89,46 @@ export class UserService {
     }
   }
 
-  async followUser(userId:string,loggedinUser:string){
-    const logUser=await this.userModel.findById(loggedinUser)
-    logUser.following.push(new mongoose.Types.ObjectId(userId))
-    await logUser.save()
-    const user=await this.userModel.findById(userId)
-    user.followers.push(logUser._id)
-    await user.save()
-    await this.notifyModel.create({
-      sender:loggedinUser,
-      receiver:userId,
-      type:'follow'
-    })
-    return {status:true}
-  }
-
-  async unfollowUser(userId: string, loggedinUser: string) {
+  async followUser(userId: string, loggedinUser: string) {
     const logUser = await this.userModel.findById(loggedinUser);
-    logUser.following = logUser.following.filter(val => val.toString() !== userId);
-    await logUser.save();
-    const user = await this.userModel.findById(userId);
-    user.followers = user.followers.filter(val => val.toString() !== userId);
-    await user.save();
+    const userToFollow = await this.userModel.findById(userId);
+  
+    // Check if the user is not already in the following list
+    if (!logUser.following.includes(new mongoose.Types.ObjectId(userId))) {
+      logUser.following.push(new mongoose.Types.ObjectId(userId));
+      await logUser.save();
+    }
+  
+    // Check if the loggedinUser is not already in the followers list
+    if (!userToFollow.followers.includes(logUser._id)) {
+      userToFollow.followers.push(logUser._id);
+      await userToFollow.save();
+    }
+  
+    await this.notifyModel.create({
+      sender: loggedinUser,
+      receiver: userId,
+      type: 'follow',
+    });
+  
     return { status: true };
   }
+  
+  async unfollowUser(userId: string, loggedinUser: string) {
+    const logUser = await this.userModel.findById(loggedinUser);
+    const userToUnfollow = await this.userModel.findById(userId);
+  
+    
+    logUser.following = logUser.following.filter(val => val.toString() !== userId);
+    await logUser.save();
+  
+    
+    userToUnfollow.followers = userToUnfollow.followers.filter(val => val.toString() !== loggedinUser);
+    await userToUnfollow.save();
+  
+    return { status: true };
+  }
+  
   async offline(userId:string){
     const user=await this.userModel.findByIdAndUpdate(userId, { isOnline: false }, { new: true })
     // console.log({controller:user.isOnline})
@@ -154,7 +175,24 @@ export class UserService {
     return await this.notifyModel.find({ receiver: userId }).sort({ createdAt: -1 }).populate({
       path: 'sender',
       select: '_id userName profilePicture',
+    }).populate({
+      path: 'post',
+      populate: [
+        {
+          path: 'user',
+          model: 'User',  // Replace 'User' with the actual model name for the user
+        },
+        {
+          path: 'comments',
+          populate: {
+            path: 'user',
+            model: 'User',  // Replace 'User' with the actual model name for the user in the comments
+          },
+        },
+      ],
     }).exec();
+    
+    
   }
   async readNotifications(userId:string) {
     return await this.notifyModel.deleteMany({ receiver: userId })

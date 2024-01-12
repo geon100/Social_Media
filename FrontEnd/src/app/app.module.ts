@@ -35,6 +35,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ReportModalComponent } from './components/report-modal/report-modal.component';
+import { UsertaglistComponent } from './components/usertaglist/usertaglist.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -58,7 +59,8 @@ import { ReportModalComponent } from './components/report-modal/report-modal.com
     EditprofileComponent,
     VideocallComponent,
     NotificationsComponent,
-    ReportModalComponent
+    ReportModalComponent,
+    UsertaglistComponent
   ],
   imports: [
     BrowserModule,

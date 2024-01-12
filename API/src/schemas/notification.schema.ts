@@ -8,11 +8,14 @@ export class Notification {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   receiver: mongoose.Types.ObjectId;
+  
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post'})
+  post: mongoose.Types.ObjectId;
 
   @Prop({ trim: true })
   text: string;
 
-  @Prop({ enum: ['like', 'follow'] })
+  @Prop({ enum: ['like', 'follow','tag'] })
   type: string;
 
 }

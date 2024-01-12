@@ -21,6 +21,9 @@ export class Post  {
 
   @Prop({default:true})
   isActive: Boolean;
+  
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  tags:mongoose.Types.ObjectId[] ;
 
   @Prop({default:0})
   reportCount: number;

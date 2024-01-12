@@ -29,15 +29,18 @@ export class PostController {
     }
   }))
   async uploadFile(
-    @Body('caption') caption: string,
+    @Body() body: { caption: string, taggedUsers?: string[] },
     @UploadedFile() file: Express.Multer.File,
     @Req() req
   ) {
     if (!file) throw new BadRequestException('Missing required parameter - file');
 
     try {
+      let tags:string[]=[]
       const img = await this.cloud.upload(file);
-      const res = this.service.addpost(req.user._id, caption, img);
+      if(body.taggedUsers)
+      tags=body.taggedUsers
+      const res = this.service.addpost(req.user._id, body.caption, img,tags);
 
       fs.unlinkSync(file.path);
 

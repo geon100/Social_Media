@@ -15,6 +15,9 @@
           <div *ngIf="notification.type === 'like'">
             <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has liked your Photo.
           </div>
+          <div *ngIf="notification.type === 'tag'">
+            <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has tagged you in a <span (click)="redirectPost(notification.post)" style="font-weight: bold;cursor: pointer;">post</span>.
+          </div>
         
             
           

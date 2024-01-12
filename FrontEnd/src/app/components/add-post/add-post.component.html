@@ -14,6 +14,10 @@
         </mat-form-field>
       </div>
 
+      <button *ngIf="tags.length===0" mat-fab color="primary" (click)="tagUsers()">Tag</button>
+      <button *ngIf="tags.length>0" mat-fab matBadge="{{tags.length}}" matBadgeColor="warn" (click)="tagUsers()">Tag</button>
+      
+      
       <div class="form-element">
         <input #fileInput type="file" (change)="handleFileInput($event)" accept="image/*" style="display: none">
 

@@ -16,6 +16,9 @@ export class UserService {
   getMe():Observable<User>{
       return this.http.get<User>(`${this.ApiBaseUrl}/user/me`)
   }
+  getFollowers(){
+    return this.http.get(`${this.ApiBaseUrl}/user/followers`)
+  }
 
   getUserByUsername(id:string='logged'){
     return this.http.get(`${this.ApiBaseUrl}/user/getUser/${id}`)

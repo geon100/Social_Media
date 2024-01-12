@@ -1,12 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { UsertaglistComponent } from '../usertaglist/usertaglist.component';
 
 @Component({
   selector: 'app-add-post',
@@ -17,12 +18,14 @@ export class AddPostComponent {
   addPostForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
   loading = false;
-
+  tags:any[]=[]
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddPostComponent>,
     private service: PostService,
-    private snackBar: SnackbarService
+    private snackBar: SnackbarService,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +42,11 @@ export class AddPostComponent {
       const formData = new FormData();
       formData.append('caption', this.addPostForm.get('caption')?.value);
       formData.append('image', this.addPostForm.get('image')?.value);
+      if(this.tags.length){
+        for (let i = 0; i < this.tags.length; i++) {
+          formData.append('taggedUsers[]', this.tags[i]);
+        }
+      }
 
       this.service.addpost(formData).pipe(
         catchError((error) => {
@@ -60,7 +68,16 @@ export class AddPostComponent {
       
     }
   }
-
+  tagUsers(){
+    const dialog=this.dialog.open(UsertaglistComponent, {});
+    dialog.afterClosed().subscribe(res=>{
+      if(res?.length>0){
+        this.snackBar.showSuccess(`users Tagged`)
+        this.tags=res
+        
+      }
+    })
+  }
   handleFileInput(event: any): void {
     const file = event?.target?.files[0];
     console.log(file);
@@ -74,4 +91,5 @@ export class AddPostComponent {
   close() {
     this.dialogRef.close();
   }
+  
 }
