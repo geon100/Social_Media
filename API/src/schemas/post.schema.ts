@@ -6,6 +6,12 @@ import mongoose from 'mongoose';
 export class Post  {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   user: mongoose.Types.ObjectId;
+  
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'})
+  collaborator: mongoose.Types.ObjectId;
+  
+  @Prop({default:false})
+  collab: Boolean;
 
   @Prop({ required: true })
   caption: string;

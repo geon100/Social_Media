@@ -18,6 +18,7 @@ export class AddPostComponent {
   addPostForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
   loading = false;
+  collab:any=null
   tags:any[]=[]
   constructor(
     private fb: FormBuilder,
@@ -46,6 +47,9 @@ export class AddPostComponent {
         for (let i = 0; i < this.tags.length; i++) {
           formData.append('taggedUsers[]', this.tags[i]);
         }
+      }
+      if(this.collab){
+        formData.append('collaborator',this.collab._id)
       }
 
       this.service.addpost(formData).pipe(
@@ -78,6 +82,18 @@ export class AddPostComponent {
       }
     })
   }
+
+  addCollab(){
+    const dialog=this.dialog.open(UsertaglistComponent, {data:'collab'});
+    dialog.afterClosed().subscribe(res=>{
+      if(res){
+        this.snackBar.showSuccess(`user collab added`)
+        this.collab=res
+        
+      }
+    })
+  }
+
   handleFileInput(event: any): void {
     const file = event?.target?.files[0];
     console.log(file);

@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.posts=this.posts.concat(res);
       
     });
-  }
+    }
   
   onScroll() {
     

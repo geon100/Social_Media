@@ -23,7 +23,7 @@ export class PostService {
               @InjectModel('Comment') private CommentModel:mongoose.Model<Comment>){}
 
   async loadPosts(page:number,limit:number){
-    return await this.postModel.find({isActive:true}).populate('user').populate({
+    return await this.postModel.find({isActive:true}).populate('user collaborator').populate({
       path: 'comments',
       populate: { path: 'user' }
     }).sort({ createdAt: -1 }).skip((page-1)*limit).limit(limit).exec();
@@ -33,14 +33,23 @@ export class PostService {
     const followingIds = user.following.map(followedUser => followedUser.toString());
     
     return await this.postModel
-  .find({ user: { $in: followingIds },isActive:true })
-  .populate('user')
+  .find({
+    $or: [
+      { user: { $in: followingIds } },
+      { collaborator: { $in: followingIds }, collab: true },
+    ],
+    isActive: true,
+  })
+  .populate('user collaborator') 
   .populate({
     path: 'comments',
     populate: { path: 'user' }
   })
-  .sort({ createdAt: -1 }).skip((page-1)*limit).limit(limit)
+  .sort({ createdAt: -1 })
+  .skip((page - 1) * limit)
+  .limit(limit)
   .exec();
+
 
       
   }
@@ -53,7 +62,7 @@ export class PostService {
   //   return url
   // }
 
-  async addpost(userId: mongoose.Schema.Types.ObjectId, caption: string, img: string, tags: string[]) {
+  async addpost(userId: mongoose.Schema.Types.ObjectId, caption: string, img: string, tags: string[],collaborator) {
     try {
       const newPost = await this.postModel.create({
         user: userId,
@@ -73,6 +82,18 @@ export class PostService {
             post:newPost._id
           });
         }
+      }
+      if(collaborator){
+        newPost.collaborator=new mongoose.Types.ObjectId(collaborator)
+        
+        await newPost.save();
+
+        await this.notifyModel.create({
+          sender: userId,
+          receiver: newPost.collaborator,
+          type: 'collab',
+          post:newPost._id
+        });
       }
   
       return { status: true };
@@ -101,6 +122,13 @@ export class PostService {
       receiver:post.user,
       type:'like'
     })
+    if(post.collab && user_Id.toString()!==post.collaborator.toString()){
+      await this.notifyModel.create({
+        sender:userId,
+        receiver:post.collaborator,
+        type:'like'
+      })
+    }
   }
   
   return await post.save();
@@ -178,10 +206,22 @@ export class PostService {
   }
 
   async getPost(postId){
-    return await this.postModel.findOne({_id:postId,isActive:true}).populate('user').populate({
+    return await this.postModel.findOne({_id:postId,isActive:true}).populate('user collaborator').populate({
       path: 'comments',
       populate: { path: 'user' }
     }).exec();
+  }
+
+  async acceptCollaborator(postId:string){
+    console.log(postId)
+    await this.postModel.findByIdAndUpdate(postId, { collab: true }, { new: true })
+    await this.notifyModel.deleteOne({post:postId})
+    return {status:true}
+
+  }
+
+  async rejectCollab(postId:string){
+    await this.notifyModel.deleteOne({post:postId})
   }
   
 }

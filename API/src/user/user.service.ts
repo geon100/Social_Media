@@ -47,8 +47,8 @@ export class UserService {
         });
   
       const posts = await this.postModel
-        .find({ user: userId, isActive: true })
-        .populate('user')
+        .find({ $or:[{user: userId},{collaborator:userId,collab: true}], isActive: true })
+        .populate('user collaborator')
         .populate({
           path: 'comments',
           populate: { path: 'user' },
@@ -195,6 +195,7 @@ export class UserService {
     
   }
   async readNotifications(userId:string) {
-    return await this.notifyModel.deleteMany({ receiver: userId })
+    return await this.notifyModel.deleteMany({ receiver: userId, type: { $ne: 'collab' } });
+
   }
 }

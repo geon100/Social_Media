@@ -23,6 +23,7 @@ export class PostComponent implements OnInit{
   constructor(private store:Store,private service:PostService,private dialog: MatDialog,private snackBar:SnackbarService){}
 
   ngOnInit(): void {
+    console.log(this.post.tags)
     this.store.select(getUser).subscribe(res=>{
       if(res) {
         this.liked=this.post.likes.includes(res?._id)

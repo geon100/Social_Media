@@ -85,4 +85,32 @@ export class ChatController {
       return res;
     
   }
+  @Post('sendAudio')
+@UseGuards(AuthGuard('jwt'))
+@UseInterceptors(FileInterceptor('audio', {
+  storage: diskStorage({
+    destination: './uploads',
+    filename: (req, file, cb) => {
+      const filename = 'AUDIO' + '-' + Date.now();
+      cb(null, `${filename}${path.extname(file.originalname)}`);
+    }
+  }),
+  
+}))
+async uploadAudio(
+  @Body('chatId') chatId: string,
+  @UploadedFile() file: Express.Multer.File,
+  @Req() req
+) {
+  console.log(file)
+  if (!file) throw new BadRequestException('Missing required parameter - file');
+  
+  const audio = await this.cloud.upload(file); 
+  const res = this.service.sendAudio(chatId, audio, req.user._id);
+  
+  fs.unlinkSync(file.path);
+
+  return res;
+}
+
 }

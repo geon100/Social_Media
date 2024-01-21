@@ -18,11 +18,17 @@
           <div *ngIf="notification.type === 'tag'">
             <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has tagged you in a <span (click)="redirectPost(notification.post)" style="font-weight: bold;cursor: pointer;">post</span>.
           </div>
+          <div *ngIf="notification.type === 'collab'">
+            <span (click)="redirectUser(notification.sender._id)" style="font-weight: bold;cursor: pointer;">{{notification.sender.userName}}</span> has asked you to be a collaborator in a <span (click)="redirectPost(notification.post)" style="font-weight: bold;cursor: pointer;">post</span>.
+          </div>
         
             
           
-          
           <span class="timestamp">{{ notification.createdAt | date:'short' }}</span>
+          <div *ngIf="notification.type === 'collab'">
+            <button type="button" color="primary" mat-mini-fab matTooltip="Accept" (click)="accept(notification.post._id)"><mat-icon>check</mat-icon></button>
+            <button type="button" color="light" mat-mini-fab matTooltip="reject" (click)="reject(notification.post._id)"><mat-icon>close</mat-icon></button>
+          </div>
         </div>
       </div>
     </ng-container>

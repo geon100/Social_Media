@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UsertaglistComponent implements OnInit{
   selectedUsers:any[]=[]
   followers:any[]=[]
-  constructor(private dialogRef: MatDialogRef<UsertaglistComponent>,private service:UserService){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private dialogRef: MatDialogRef<UsertaglistComponent>,private service:UserService){}
   
   ngOnInit(): void {
     this.service.getFollowers().subscribe((res:any)=>{
@@ -43,5 +43,9 @@ export class UsertaglistComponent implements OnInit{
       this.dialogRef.close(this.selectedUsers)
     }else
     this.closeModal()
+  }
+
+  sendCollabRequest(user: any){
+    this.dialogRef.close(user)
   }
 }

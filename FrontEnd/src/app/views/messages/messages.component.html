@@ -30,7 +30,6 @@
   <div class="chat" *ngIf="selectedUser">
     <div class="selected-user">
       <span class="name">@{{ selectedUser?.users[0]?.userName }}</span>
-      <button class="btn btn-primary" (click)="startVideoCall()">Start Video Call</button>
     </div>
     
     <ul class="chat-box" #chatBox>
@@ -39,6 +38,7 @@
           <img [src]="message.sender.profilePicture" alt="{{ message.sender.userName }}">
           <div class="message-content">
             <h6>{{message.sender.userName}}</h6>
+            <audio *ngIf="message?.audio" [src]="message?.audio" controls></audio>
             <img *ngIf="message.image" [src]="message.image" (click)="openImageModal(message.image)" alt="User Profile" class="chat-image">
             <p *ngIf="message.text">{{ message.text }}</p>
             <div *ngIf="message.postId">
@@ -68,6 +68,7 @@
         <button (click)="picker()" class="btn btn-warning"><mat-icon> insert_emoticon</mat-icon></button>
         <input #fileInput type="file" (change)="handleFileInput($event,selectedUser._id)" accept="image/*" style="display: none">
         <emoji-mart *ngIf="pickerAppear" (emojiClick)="addEmoji($event)" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>
+        <button class="btn btn-danger m-2" (click)="openRecorder()"><mat-icon>mic</mat-icon></button>
         
         
       </div>

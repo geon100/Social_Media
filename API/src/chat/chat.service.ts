@@ -93,4 +93,15 @@ export class ChatService {
                   select: '_id userName profilePicture',
                 })
               }
+              async sendAudio(chatId,audio,userId){
+                const message=await this.messageModel.create({
+                  sender:userId,
+                  audio:audio,
+                  chatId
+                })
+                return await message.populate({
+                  path: 'sender',
+                  select: '_id userName profilePicture',
+                })
+              }
 }

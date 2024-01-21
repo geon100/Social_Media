@@ -5,16 +5,28 @@
     </div>
     <div class="user-info">
       <ng-container *ngIf="current; else clickableUsername">
-        <h3 class="username">{{ post.user.userName }}</h3>
+        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.user._id]">
+          {{ post.user.userName }}
+        </h3>
+        <ng-container *ngIf="post.collab">and</ng-container>
+        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.collaborator._id]">
+          {{ post.collaborator.userName }}
+        </h3>
       </ng-container>
-      
+    
       <ng-template #clickableUsername>
-        
-          <h3 class="username" style="cursor: pointer;" [routerLink]="['/profile', post.user._id]">{{ post.user.userName }}</h3>
-        
+        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.user._id]">
+          {{ post.user.userName }}
+        </h3>
+        <ng-container *ngIf="post.collab">and</ng-container>
+        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.collaborator._id]">
+          {{ post.collaborator.userName }}
+        </h3>
       </ng-template>
+    
       <p class="timestamp">{{ post.createdAt | date:'medium' }}</p>
     </div>
+    
     <button mat-icon-button [matMenuTriggerFor]="moreOptionsMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -52,6 +64,9 @@
     </div>
     <div class="action-button" (click)="sharelistModal(post._id)">
       <mat-icon>share</mat-icon>
+    </div>
+    <div class="action-button" *ngIf="post.tags.length>0" matTooltip="tagged user Count">
+      <mat-icon>account_circle</mat-icon>{{post.tags.length}}
     </div>
     <div class="action-button" (click)="savePost()" style="margin-left: auto;">
       <mat-icon *ngIf="!save">bookmark_border</mat-icon>

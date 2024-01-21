@@ -37,6 +37,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ReportModalComponent } from './components/report-modal/report-modal.component';
 import { UsertaglistComponent } from './components/usertaglist/usertaglist.component';
 
+import { RecorderComponent } from './components/recorder/recorder.component';
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -60,10 +62,12 @@ import { UsertaglistComponent } from './components/usertaglist/usertaglist.compo
     VideocallComponent,
     NotificationsComponent,
     ReportModalComponent,
-    UsertaglistComponent
+    UsertaglistComponent,
+    RecorderComponent
   ],
   imports: [
     BrowserModule,
+    // NgxAgoraModule.forRoot(agoraConfig),
     InfiniteScrollModule,
     AppRoutingModule,
     ReactiveFormsModule,

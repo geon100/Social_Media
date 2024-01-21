@@ -16,7 +16,7 @@ export class CloudinaryService {
     // console.log("Reached service",file);
     const url=(await cloudinary.uploader.upload(file?.path, {
     folder: 'Nexus',
-    resource_type: 'image'})).url
+    resource_type: 'auto'})).url
     // console.log(url)
     return url
   }

@@ -22,10 +22,11 @@ export class SocketService {
     // });
 
     // this.socket.on('disconnect', () => {
-    //   alert('disconnect')
-    // });
-  }
-
+      //   alert('disconnect')
+      // });
+    }
+    
+    private _onBothUsersReady = new Subject<void>();
   // private _onConnect = new Subject<void>();
   // private _onDisconnect = new Subject<void>();
 
@@ -41,6 +42,7 @@ export class SocketService {
     this.socket.emit('newMessage', { message, chatId });
   }
 
+ 
   onMessage(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('onMessage', (data: any) => {
@@ -48,6 +50,8 @@ export class SocketService {
       });
     });
   }
+
+ 
   // disconnect(): void {
   //   this.socket.disconnect()
   // }

@@ -1,8 +1,18 @@
-<div class="video-container">
-  <div id="local-stream" class="local-stream"></div>
-  
-</div>
-<div class="controls">
-  <button class="btn btn-primary" >Start Video Call</button>
-  <button class="btn btn-danger" >End Video Call</button>
+<!-- video-call.component.html -->
+
+<div class="video-call-container">
+  <div class="remote-video">
+    
+    <video id="remoteVideo" #received_video autoplay playsinline></video>
+  </div>
+  <div class="local-video">
+    
+    <video id="localVideo" #local_video autoplay muted playsinline></video>
+  </div>
+  <div class="controls">
+    <!-- Additional controls for the video call can be added here -->
+    <!-- For example, buttons to mute audio, end call, etc. -->
+    <!-- <button (click)="muteAudio()">Mute Audio</button> -->
+    <!-- <button (click)="endCall()">End Call</button> -->
+  </div>
 </div>

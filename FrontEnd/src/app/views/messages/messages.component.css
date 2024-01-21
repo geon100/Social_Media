@@ -5,7 +5,10 @@
   padding-top: 50px;
   color: white;
 }
-
+.chat-box li .message audio {
+  max-width: 100%; /* Ensure the audio doesn't exceed its container width */
+  margin-top: 10px; /* Add some space between audio and other content */
+}
 .container {
   display: flex;
   justify-content: space-between;

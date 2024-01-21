@@ -1,11 +1,12 @@
 <div class="modal-header">
-  <h2>Select a Users to Tag</h2>
+  <h2 *ngIf="!data">Select a Users to Tag</h2>
+  <h2 *ngIf="data">Select a Users to request Collaboration</h2>
   <button mat-icon-button (click)="closeModal()">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<div class="modal-content">
+<div *ngIf="!data" class="modal-content">
   <ul>
     <ng-container *ngIf="followers.length > 0; else noUsers">
       <li *ngFor="let user of followers" (click)="toggleUserSelection(user)">
@@ -21,4 +22,19 @@
     </ng-template>
   </ul>
   <button mat-raised-button color="primary" (click)="selectUsers()">Tag Selected Users</button>
+</div>
+<div *ngIf="data" class="modal-content">
+  <ul>
+    <ng-container *ngIf="followers.length > 0; else noUsers">
+      <li *ngFor="let user of followers" (click)="sendCollabRequest(user)">
+        <img [src]="user.profilePicture" alt="{{ user.userName }}">
+        <div class="user-info">
+          <p>{{ user.userName }}</p>
+        </div>
+      </li>
+    </ng-container>
+    <ng-template #noUsers>
+      <h2>No Users available</h2>
+    </ng-template>
+  </ul>
 </div>

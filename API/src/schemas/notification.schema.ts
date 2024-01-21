@@ -15,7 +15,7 @@ export class Notification {
   @Prop({ trim: true })
   text: string;
 
-  @Prop({ enum: ['like', 'follow','tag'] })
+  @Prop({ enum: ['like', 'follow','tag','collab'] })
   type: string;
 
 }

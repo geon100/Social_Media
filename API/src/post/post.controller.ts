@@ -29,7 +29,7 @@ export class PostController {
     }
   }))
   async uploadFile(
-    @Body() body: { caption: string, taggedUsers?: string[] },
+    @Body() body: { collaborator?:string,caption: string, taggedUsers?: string[] },
     @UploadedFile() file: Express.Multer.File,
     @Req() req
   ) {
@@ -37,10 +37,13 @@ export class PostController {
 
     try {
       let tags:string[]=[]
+      let collaborator:string=''
       const img = await this.cloud.upload(file);
       if(body.taggedUsers)
       tags=body.taggedUsers
-      const res = this.service.addpost(req.user._id, body.caption, img,tags);
+      if(body.collaborator)
+      collaborator=body.collaborator
+      const res = this.service.addpost(req.user._id, body.caption, img,tags,collaborator);
 
       fs.unlinkSync(file.path);
 
@@ -100,6 +103,18 @@ export class PostController {
     
     
     return this.service.getPost(params.id)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('acceptCollab')
+  acceptCollab(@Req() req,@Body('post') postId: string){
+
+    return this.service.acceptCollaborator(postId)
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('rejectCollab')
+  rejectCollab(@Req() req,@Body('post') postId: string){
+
+    return this.service.acceptCollaborator(postId)
   }
 }
 

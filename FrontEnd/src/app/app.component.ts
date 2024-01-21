@@ -7,7 +7,10 @@ import { SocketService } from './services/socket.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  constructor(private socketService: SocketService){}
+  constructor(private socketService: SocketService){
+   
+    
+  }
   ngOnInit(): void {
     this.socketService.initializeSocket();
   }

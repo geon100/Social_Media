@@ -13,6 +13,8 @@ import { getUser } from 'src/app/state/UserState/user.selector';
 import { PostviewComponent } from '../postview/postview.component';
 import { PostService } from 'src/app/services/post.service';
 import { Route, Router } from '@angular/router';
+import { RecorderComponent } from 'src/app/components/recorder/recorder.component';
+
 
 @Component({
   selector: 'app-messages',
@@ -29,6 +31,8 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   read:boolean=false
   private subscriptions: Subscription[] = [];
   loading:boolean=false
+  incomingCall:boolean=false
+  calldata!:any
   @ViewChild('chatBox') chatBox!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private service:ChatService,
@@ -36,8 +40,35 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     private socketService: SocketService,private postService:PostService,
     private dialog: MatDialog,private route:Router) { }
 
-    startVideoCall(){
-      this.route.navigate(['/videocall',this.selectedUser._id ]);
+    openRecorder(){
+      const dialog=this.dialog.open(RecorderComponent, {
+        width: '20%',
+      });
+
+      dialog.afterClosed().subscribe((res:Blob | null)=>{
+        if(res){
+          const formData = new FormData();
+          formData.append('audio', res);
+          formData.append('chatId',this.selectedUser._id)
+          this.loading = true;
+          this.service.sendAudio(formData).pipe(catchError((error) => {
+            this.snackBar.showError(`Audio Sending Failed....Error:${error?.error?.message || 'Unknown error'}`);
+            
+            return throwError(() => error);
+          }),
+          finalize(() => {
+            this.loading = false;
+          })).subscribe(res=>{
+            this.socketService.sendMessage(res, this.selectedUser._id);
+            this.snackBar.showSuccess('Audio Sent')
+            this.messages.push(res)
+                this.messageText=''
+                setTimeout(() => {
+                  this.scrollToBottom();
+                });
+          })
+        }
+      })
     }
   ngAfterViewInit(): void {
     this.scrollToBottom()
@@ -51,6 +82,9 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
       })
     )
     
+  
+    
+
     this.subscriptions.push(
       this.store.select(getUser).subscribe(val=>{
         if (val) this.currentUser=val
@@ -63,15 +97,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
       })
     )
 
-    // this.subscriptions.push(this.socketService.onConnect().subscribe(() => {
-      
-    // }))
     
-  
-    // this.subscriptions.push(this.socketService.onDisconnect().subscribe(() => {
-    //   this.currentUser.isOnline=false
-    //   // Add logic for user offline status if needed
-    // }))
 
     this.subscriptions.push(
       this.socketService.onMessage().subscribe((res: any) => {
@@ -158,7 +184,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
       
     }
   }
-
+  
   addEmoji(event:any){
     this.messageText=event.emoji.native
   }

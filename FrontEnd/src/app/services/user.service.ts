@@ -58,4 +58,10 @@ export class UserService {
   readNotifications(){
     return this.http.delete(`${this.ApiBaseUrl}/user/readNotify`)
   }
+  acceptCollab(post:any){
+    return this.http.patch(`${this.ApiBaseUrl}/post/acceptCollab`,{post})
+  }
+   rejectCollab(post:any){
+    return this.http.patch(`${this.ApiBaseUrl}/post/rejectCollab`,{post})
+  }
 }

@@ -31,10 +31,14 @@ export class ChatService {
   sendImage(form:FormData){
     return this.http.post(`${this.ApiBaseUrl}/sendImage`,form)
   }
+  sendAudio(form:FormData){
+    return this.http.post(`${this.ApiBaseUrl}/sendAudio`,form)
+  }
 
   sendPost(postId:string,chatIds:string[]){
     return this.http.post(`${this.ApiBaseUrl}/sendPost`,{postId,chatIds})
   }
+  
 
   
   

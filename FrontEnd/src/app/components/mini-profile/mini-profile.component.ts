@@ -40,7 +40,9 @@ export class MiniProfileComponent implements OnInit,OnDestroy{
 
     dialogRef.afterClosed().subscribe((res) => {
       if(res!=='none'){
-        this.notification=[]
+      this.notification=this.notification.filter((val:any)=>val.type==='collab')
+      if(res==='accept' || res==='reject')
+      this.notification=[]
       this.service.readNotifications().subscribe()
       }
     });
