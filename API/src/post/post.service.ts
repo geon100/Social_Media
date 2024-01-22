@@ -54,15 +54,9 @@ export class PostService {
       
   }
 
-  // async upload(file:any){
-  //   // console.log("Reached service",file);
-  //   const url=(await cloudinary.uploader.upload(file?.path, {
-  //   folder: 'Nexus',
-  //   resource_type: 'image'})).url
-  //   return url
-  // }
 
-  async addpost(userId: mongoose.Schema.Types.ObjectId, caption: string, img: string, tags: string[],collaborator) {
+
+  async addpost(userId: mongoose.Schema.Types.ObjectId, caption: string, img: string, tags: string[],collaborator:string) {
     try {
       const newPost = await this.postModel.create({
         user: userId,
@@ -104,7 +98,7 @@ export class PostService {
   }
   
 
-  async likePost(postId: any, userId: any) {
+  async likePost(postId: string, userId: string) {
     
     const post = await this.postModel.findById(postId);
     if (!post) {
@@ -140,7 +134,7 @@ export class PostService {
   return await post.save();
   }
 
-  async reportPost(reportData: any, reportedBy: any) {
+  async reportPost(reportData: {postId:string,reportText:string,type:string}, reportedBy: any) {
     console.log(reportData, reportedBy);
     const existingReport = await this.reportModel.findOne({
       reportedBy: reportedBy,

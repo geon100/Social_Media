@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ChatMessage, ChatRoom } from '../models/all.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private ApiBaseUrl = 'http://localhost:3000/chat'
+  private ApiBaseUrl = `${environment.apiUrl}/chat`
   constructor(private http:HttpClient) { }
 
   chatOpen(userId:string){

@@ -4,6 +4,7 @@ import { AdminService } from '../../service/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewPostComponent } from '../view-post/view-post.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { Post } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-posts',
@@ -18,7 +19,7 @@ export class PostsComponent implements OnInit{
   displayedColumns: string[] = ['user', 'caption', 'image', 'commentsCount', 'likesCount','actions'];
 
   ngOnInit() {
-    this.adminService.getPosts().subscribe((posts:any) => {
+    this.adminService.getPosts().subscribe((posts:Post[]) => {
       this.dataSource.data = posts
       this.dataSource.paginator=this.paginator
     });
@@ -42,7 +43,7 @@ export class PostsComponent implements OnInit{
 
   // viewPost(id:string){} 
 
-  viewPost(post: any): void {
+  viewPost(post: Post): void {
     this.dialog.open(ViewPostComponent, {
       width: '49%', 
       data: { post: post }

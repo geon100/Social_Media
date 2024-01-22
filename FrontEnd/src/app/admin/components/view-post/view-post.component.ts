@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminService } from '../../service/admin.service';
+import { Post } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-view-post',

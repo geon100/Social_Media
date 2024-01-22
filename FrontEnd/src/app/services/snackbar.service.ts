@@ -16,7 +16,7 @@ export class SnackbarService {
   }
 
   private showSnackbar(message: string, panelClass: string, duration: number) {
-    console.log(typeof panelClass)
+   
     const config: MatSnackBarConfig = {
       panelClass: [panelClass,'mat-snack-bar'],
       duration: duration,

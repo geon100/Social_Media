@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, connect } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
 import { ChatMessage } from '../models/all.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class SocketService {
     
   }
   initializeSocket(){
-    this.socket = io('http://localhost:3000')
+    this.socket = io(environment.apiUrl)
     // this.socket.on('connect', () => {
     //   alert('connect')
     // });

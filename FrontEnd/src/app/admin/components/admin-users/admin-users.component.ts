@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AdminService } from '../../service/admin.service';
 import { User } from 'src/app/models/user.interface';
 import { MatPaginator } from '@angular/material/paginator';
+import { UserData } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-admin-users',
@@ -20,13 +21,13 @@ export class AdminUsersComponent implements OnInit {
   displayedColumns: string[] = ['userName', 'profilePicture', 'fullName', 'followersCount', 'followingCount', 'blockAction'];
 
   ngOnInit() {
-    this.adminService.getUsers().subscribe((users) => {
+    this.adminService.getUsers().subscribe((users:UserData[]) => {
       this.dataSource.data = users
       this.dataSource.paginator=this.paginator
     });
   }
 
-  toggleBlockUser(user: any) { 
+  toggleBlockUser(user: UserData) { 
 
     this.adminService.changeUserStatus(user._id).subscribe(
       () => {

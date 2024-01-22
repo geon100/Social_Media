@@ -4,13 +4,14 @@ import { User } from '../models/user.interface';
 import { Observable } from 'rxjs';
 import { Form } from '@angular/forms';
 import { NotificationData, Post, UserData } from '../models/all.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private ApiBaseUrl = 'http://localhost:3000'
+  private ApiBaseUrl = environment.apiUrl
 
   constructor(private http:HttpClient) { }
 

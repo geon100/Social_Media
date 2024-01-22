@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CommentData, Post } from '../models/all.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  private ApiBaseUrl = 'http://localhost:3000'
+  private ApiBaseUrl = environment.apiUrl
 
   constructor(private http:HttpClient) { }
 

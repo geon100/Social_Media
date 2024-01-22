@@ -1,6 +1,7 @@
 import {  Component, OnInit } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { AgChartOptions } from 'ag-charts-community';
+import { UserData } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-usergraph',
@@ -26,13 +27,13 @@ export class UsergraphComponent implements OnInit {
   }
 
   onSelectYear() {
-    console.log(this.selectedYear)
+    
     // this.cdr.detectChanges();
     this.fetchAndProcessUserData();
   }
 
   private fetchAndProcessUserData() {
-    this.adminService.getUsers().subscribe((userData: any[]) => {
+    this.adminService.getUsers().subscribe((userData: UserData[]) => {
       const filteredUserData = this.filterUserDataByYear(userData, Number(this.selectedYear));
       const userCountData = this.processUserData(filteredUserData);
       console.log(this.selectedYear)
@@ -41,7 +42,7 @@ export class UsergraphComponent implements OnInit {
     });
   }
   
-  private filterUserDataByYear(userData: any[], selectedYear: number): any[] {
+  private filterUserDataByYear(userData: UserData[], selectedYear: number): any[] {
     return userData.filter(user => {
       const userYear = new Date(user.createdAt).getFullYear();
       return userYear === selectedYear;
@@ -49,7 +50,7 @@ export class UsergraphComponent implements OnInit {
   }
   
 
-  private processUserData(userData: any[]): any[] {
+  private processUserData(userData: UserData[]): any[] {
     // Similar to your existing processing logic, but now only for the selected year
     const userCountMap = this.initializeUserCountMap();
 

@@ -5,12 +5,13 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { SnackbarService } from './snackbar.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private ApiBaseUrl = 'http://localhost:3000'
+  private ApiBaseUrl = environment.apiUrl
 
   constructor(private http:HttpClient,private router: Router,private cookieService:CookieService,private snackBar:SnackbarService) { }
 

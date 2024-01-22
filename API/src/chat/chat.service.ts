@@ -82,7 +82,7 @@ export class ChatService {
                 })
                 return {status:true}
               }
-              async sendImage(chatId,img,userId){
+              async sendImage(chatId:string,img:string,userId){
                 const message=await this.messageModel.create({
                   sender:userId,
                   image:img,
@@ -93,6 +93,7 @@ export class ChatService {
                   select: '_id userName profilePicture',
                 })
               }
+              
               async sendAudio(chatId,audio,userId){
                 const message=await this.messageModel.create({
                   sender:userId,

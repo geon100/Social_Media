@@ -33,7 +33,7 @@ export class AdminLoginComponent {
             this.snackBar.showError(`Login failed....Error:${error?.error?.message || 'Unknown error'}`)
             return throwError(() => error); 
           })
-        ).subscribe((response) => {
+        ).subscribe((response:{token:string}) => {
           localStorage.setItem('adminToken', response?.token);
           this.snackBar.showSuccess('Login Successful')
           this.router.navigate(['admin/dashboard']);

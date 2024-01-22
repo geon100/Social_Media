@@ -79,7 +79,7 @@ export class PostController {
   }
   @UseGuards(AuthGuard('jwt'))
   @Post('reportPost')
-  reportUser(@Req() req,@Body() reportData:string){
+  reportUser(@Req() req,@Body() reportData:any){
     return this.service.reportPost(reportData,req.user._id)
   }
   @UseGuards(AuthGuard('jwt'))

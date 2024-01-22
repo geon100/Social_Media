@@ -4,7 +4,7 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from
 import { Server } from "socket.io";
 
 const options: CorsOptions = {
-  origin: ["http://localhost:4200"],
+  origin: [process.env.corsOrigin],
   methods: ["GET", "POST"],
   credentials: true
 };

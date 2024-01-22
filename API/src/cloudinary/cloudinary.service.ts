@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: 'dt4zlqomk',
-    api_key: '154456853779316',
-    api_secret: 'iYVXhNtFtTM1rBtiWJr9s3n6lkc',
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret,
     secure: true,
 });
 
@@ -15,7 +15,7 @@ export class CloudinaryService {
   async upload(file:any){
     // console.log("Reached service",file);
     const url=(await cloudinary.uploader.upload(file?.path, {
-    folder: 'Nexus',
+    folder: process.env.folder,
     resource_type: 'auto'})).url
     // console.log(url)
     return url

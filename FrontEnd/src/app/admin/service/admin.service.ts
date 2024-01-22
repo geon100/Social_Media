@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Post, UserData } from 'src/app/models/all.interface';
 import { UserCred, RegisterUser } from 'src/app/models/auth.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  private ApiBaseUrl = 'http://localhost:3000/admin'
+  private ApiBaseUrl = `${environment.apiUrl}/admin`
 
   constructor(private http:HttpClient) { }
 
@@ -17,8 +19,8 @@ export class AdminService {
       // console.log(usercred)
       // return of({token:'abc'})
   }
-  getUsers():Observable<any>{
-    return this.http.get(`${this.ApiBaseUrl}/allUsers`)
+  getUsers():Observable<UserData[]>{
+    return this.http.get<UserData[]>(`${this.ApiBaseUrl}/allUsers`)
   }
   
   changeUserStatus(userid:string){
@@ -28,8 +30,8 @@ export class AdminService {
     return this.http.patch(`${this.ApiBaseUrl}/blockpost`,{postId})
   }
   
-  getPosts():Observable<any>{
-    return this.http.get(`${this.ApiBaseUrl}/allposts`)
+  getPosts():Observable<Post[]>{
+    return this.http.get<Post[]>(`${this.ApiBaseUrl}/allposts`)
   }
   getReports(){
     return this.http.get(`${this.ApiBaseUrl}/allreports`)
