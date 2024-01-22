@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.interface';
 import { Observable } from 'rxjs';
 import { Form } from '@angular/forms';
+import { NotificationData, Post, UserData } from '../models/all.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +18,22 @@ export class UserService {
       return this.http.get<User>(`${this.ApiBaseUrl}/user/me`)
   }
   getFollowers(){
-    return this.http.get(`${this.ApiBaseUrl}/user/followers`)
+    return this.http.get<{followers:UserData[]}>(`${this.ApiBaseUrl}/user/followers`)
   }
 
   getUserByUsername(id:string='logged'){
-    return this.http.get(`${this.ApiBaseUrl}/user/getUser/${id}`)
+    return this.http.get<{user:UserData,posts:Post[]}>(`${this.ApiBaseUrl}/user/getUser/${id}`)
   }
 
   followUser(userId:string|undefined){
-    return this.http.patch(`${this.ApiBaseUrl}/user/followUser`,{userId})
+    return this.http.patch<{status:boolean}>(`${this.ApiBaseUrl}/user/followUser`,{userId})
   }
   unfollowUser(userId:string|undefined){
-    return this.http.patch(`${this.ApiBaseUrl}/user/unfollowUser`,{userId})
+    return this.http.patch<{status:boolean}>(`${this.ApiBaseUrl}/user/unfollowUser`,{userId})
   }
 
   getSuggestions(){
-    return this.http.get(`${this.ApiBaseUrl}/user/getSuggestions`)
+    return this.http.get<UserData[]>(`${this.ApiBaseUrl}/user/getSuggestions`)
   }
   reportUser(reportData:any){
     return this.http.post(`${this.ApiBaseUrl}/user/reportUser`,reportData)
@@ -50,10 +51,10 @@ export class UserService {
   }
 
   updateProfile(form:any){
-    return this.http.patch(`${this.ApiBaseUrl}/user/update`,form)
+    return this.http.patch<UserData>(`${this.ApiBaseUrl}/user/update`,form)
   }
   loadNotifications(){
-    return this.http.get(`${this.ApiBaseUrl}/user/getNotify`)
+    return this.http.get<NotificationData[]>(`${this.ApiBaseUrl}/user/getNotify`)
   }
   readNotifications(){
     return this.http.delete(`${this.ApiBaseUrl}/user/readNotify`)

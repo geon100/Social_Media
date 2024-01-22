@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CommentData, Post } from '../models/all.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ export class PostService {
   constructor(private http:HttpClient) { }
 
   loadHomeposts(page:number){
-    return this.http.get(`${this.ApiBaseUrl}/post/getHomeUserPosts`, {
+    return this.http.get<Post[]>(`${this.ApiBaseUrl}/post/getHomeUserPosts`, {
       params: { page: page.toString() }
     });
   }
   loadposts(page:number){
-    return this.http.get(`${this.ApiBaseUrl}/post/getUserPosts`, {
+    return this.http.get<Post[]>(`${this.ApiBaseUrl}/post/getUserPosts`, {
       params: { page: page.toString() }
     });
   }
@@ -34,7 +35,7 @@ reportPost(reportData:any){
   return this.http.post(`${this.ApiBaseUrl}/post/reportPost`,reportData)
 }
 addComment(CommentObj:any){
-  return this.http.post(`${this.ApiBaseUrl}/post/addcomment`,CommentObj)
+  return this.http.post<CommentData>(`${this.ApiBaseUrl}/post/addcomment`,CommentObj)
 }
 
 delComment(commentId:string,postId:string){

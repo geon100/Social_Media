@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, connect } from 'rxjs';
 import { Socket, io } from 'socket.io-client';
+import { ChatMessage } from '../models/all.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class SocketService {
   //   return this._onDisconnect.asObservable();
   // }
 
-  sendMessage(message: any, chatId: string): void {
+  sendMessage(message: ChatMessage, chatId: string): void {
     this.socket.emit('newMessage', { message, chatId });
   }
 

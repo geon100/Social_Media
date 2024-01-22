@@ -4,6 +4,7 @@ import { PostService } from 'src/app/services/post.service';
 import { loadUserData } from 'src/app/state/UserState/user.actions';
 import { Subscription } from 'rxjs';
 import { getUser } from 'src/app/state/UserState/user.selector';
+import { Post } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-explore',
@@ -11,7 +12,7 @@ import { getUser } from 'src/app/state/UserState/user.selector';
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnDestroy {
-  posts: any=[]
+  posts: Post[]=[]
   postsSubscription: Subscription | undefined;
   private page:number=1
   constructor(private store: Store, private service: PostService) {}
@@ -26,7 +27,7 @@ export class ExploreComponent implements OnDestroy {
     
   }
   private loadComponentposts(){
-    this.postsSubscription = this.service.loadposts(this.page).subscribe((res:any) => {
+    this.postsSubscription = this.service.loadposts(this.page).subscribe((res:Post[]) => {
       this.posts=this.posts.concat(res)
     })
   }

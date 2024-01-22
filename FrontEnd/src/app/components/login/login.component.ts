@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit{
           this.snackBar.showError(`Login failed....Error:${error?.error?.message || 'Unknown error'}`)
           return throwError(() => error); 
         })
-      ).subscribe((response) => {
+      ).subscribe((response:{token:string,refreshToken:string}) => {
         // Success case
         localStorage.setItem('userToken', response?.token);
         const expirationDate = new Date();

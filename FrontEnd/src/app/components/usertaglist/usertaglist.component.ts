@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { UserData } from 'src/app/models/all.interface';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,12 +9,13 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./usertaglist.component.css']
 })
 export class UsertaglistComponent implements OnInit{
-  selectedUsers:any[]=[]
-  followers:any[]=[]
+  selectedUsers:string[]=[]
+  followers:UserData[]=[]
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private dialogRef: MatDialogRef<UsertaglistComponent>,private service:UserService){}
   
   ngOnInit(): void {
-    this.service.getFollowers().subscribe((res:any)=>{
+    this.service.getFollowers().subscribe((res:{followers:UserData[]})=>{
+      console.log('res.follow',res)
       this.followers=res.followers
       
     })
@@ -22,7 +24,7 @@ export class UsertaglistComponent implements OnInit{
     this.dialogRef.close();
   }
 
-  toggleUserSelection(user: any) {
+  toggleUserSelection(user: UserData) {
     const userId = user._id;
     const index = this.selectedUsers.indexOf(userId);
 
@@ -33,7 +35,7 @@ export class UsertaglistComponent implements OnInit{
     }
   }
 
-  isSelected(user: any): boolean {
+  isSelected(user: UserData): boolean {
     
     return this.selectedUsers.includes(user._id);
   }
@@ -45,7 +47,7 @@ export class UsertaglistComponent implements OnInit{
     this.closeModal()
   }
 
-  sendCollabRequest(user: any){
+  sendCollabRequest(user: UserData){
     this.dialogRef.close(user)
   }
 }

@@ -14,8 +14,6 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit{
 
   showHeader: boolean = true;
-  notify:boolean=false;
-  notification:any
   constructor(private router: Router,private service:UserService,private authservice:AuthService,private dialog: MatDialog) {}
 
   ngOnInit() {

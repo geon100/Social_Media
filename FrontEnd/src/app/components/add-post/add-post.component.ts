@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UsertaglistComponent } from '../usertaglist/usertaglist.component';
+import { UserData } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-add-post',
@@ -18,8 +19,8 @@ export class AddPostComponent {
   addPostForm!: FormGroup;
   @ViewChild('fileInput') fileInput!: ElementRef;
   loading = false;
-  collab:any=null
-  tags:any[]=[]
+  collab:UserData | undefined
+  tags:string[]=[]
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddPostComponent>,
@@ -44,7 +45,7 @@ export class AddPostComponent {
       formData.append('caption', this.addPostForm.get('caption')?.value);
       formData.append('image', this.addPostForm.get('image')?.value);
       if(this.tags.length){
-        for (let i = 0; i < this.tags.length; i++) {
+        for (let i = 0; i < (this.tags.length); i++) {
           formData.append('taggedUsers[]', this.tags[i]);
         }
       }
@@ -61,12 +62,11 @@ export class AddPostComponent {
         finalize(() => {
           this.loading = false;
         })
-      ).subscribe(res => {
-        if (res) {
-          console.log('Signup successful:', res);
+      ).subscribe(() => {
+        
           this.snackBar.showSuccess('Post Added Successfully');
           this.dialogRef.close();
-        }
+        
       });
 
       
@@ -74,7 +74,7 @@ export class AddPostComponent {
   }
   tagUsers(){
     const dialog=this.dialog.open(UsertaglistComponent, {});
-    dialog.afterClosed().subscribe(res=>{
+    dialog.afterClosed().subscribe((res:string[])=>{
       if(res?.length>0){
         this.snackBar.showSuccess(`users Tagged`)
         this.tags=res
@@ -85,7 +85,7 @@ export class AddPostComponent {
 
   addCollab(){
     const dialog=this.dialog.open(UsertaglistComponent, {data:'collab'});
-    dialog.afterClosed().subscribe(res=>{
+    dialog.afterClosed().subscribe((res:UserData)=>{
       if(res){
         this.snackBar.showSuccess(`user collab added`)
         this.collab=res

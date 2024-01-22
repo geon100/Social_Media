@@ -4,6 +4,7 @@ import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
 import { loadUserData } from 'src/app/state/UserState/user.actions';
 import { Subscription } from 'rxjs';
+import { Post, UserData } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  posts: any = [];
-  users: any = [];
-  suggestions: any[] = [];
+  posts: Post[] = [];
+  users: UserData[] = [];
+  suggestions: UserData[] = [];
   private page:number=1
   private postServiceSubscription: Subscription | undefined;
   private userServiceSubscription: Subscription | undefined;
@@ -24,14 +25,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.store.dispatch(loadUserData());
     
   this.loadposts()
-    this.userServiceSubscription = this.userService.getSuggestions().subscribe((res:any) => {
+    this.userServiceSubscription = this.userService.getSuggestions().subscribe((res:UserData[]) => {
       this.users = res;
       this.loadUser();
+      console.log('homePosts',res)
     });
   }
   private loadposts(){
-    this.postServiceSubscription = this.postService.loadHomeposts(this.page).subscribe((res:any) => {
+    this.postServiceSubscription = this.postService.loadHomeposts(this.page).subscribe((res:Post[]) => {
       this.posts=this.posts.concat(res);
+      
       
     });
     }
@@ -45,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   private loadUser(userId?: string | undefined) {
     if (userId) {
-      this.users = this.users.filter((val: any) => val._id !== userId);
+      this.users = this.users.filter((val: UserData) => val._id !== userId);
       this.suggestions = this.users.slice(0, 5);
     } else {
       this.suggestions = this.users.slice(0, 5);
@@ -58,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.postServiceSubscription?.unsubscribe();
         this.userServiceSubscription?.unsubscribe();
         this.page=1
-        this.postServiceSubscription = this.postService.loadHomeposts(this.page).subscribe((res:any) => {
+        this.postServiceSubscription = this.postService.loadHomeposts(this.page).subscribe((res:Post[]) => {
           this.posts = res;
         });
 

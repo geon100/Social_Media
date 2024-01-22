@@ -30,7 +30,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ImageModalComponent } from './components/image-modal/image-modal.component';
 import { SharelistComponent } from './components/sharelist/sharelist.component';
 import { EditprofileComponent } from './components/editprofile/editprofile.component';
-import { VideocallComponent } from './components/videocall/videocall.component';
+
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -59,7 +59,6 @@ import { RecorderComponent } from './components/recorder/recorder.component';
     ImageModalComponent,
     SharelistComponent,
     EditprofileComponent,
-    VideocallComponent,
     NotificationsComponent,
     ReportModalComponent,
     UsertaglistComponent,

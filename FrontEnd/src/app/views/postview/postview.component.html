@@ -9,7 +9,7 @@
   <div class="right-section">
 
     <div>
-      <app-comments [post]="data.post"></app-comments>
+      <app-comments *ngIf="data.post" [post]="data.post"></app-comments>
     </div>
     <ng-template #noComments>
       <p>No comments available.</p>

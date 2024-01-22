@@ -7,6 +7,7 @@ import { AddPostComponent } from '../add-post/add-post.component';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationData } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-mini-profile',
@@ -16,20 +17,20 @@ import { NotificationsComponent } from '../notifications/notifications.component
 export class MiniProfileComponent implements OnInit,OnDestroy{
    user!:User
    private userSubscription: Subscription | undefined;
-   notification:any=[]
+   notification!:NotificationData[]
   constructor(private store:Store,private dialog:MatDialog,private service:UserService){}
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe()
   }
 
   ngOnInit(): void {
-    this.userSubscription=this.store.select(getUser).subscribe(res=>{
-      // console.log(res)
+    this.userSubscription=this.store.select(getUser).subscribe((res)=>{
+
       if(res) this.user=res
     })
-    this.service.loadNotifications().subscribe((res:any)=>{
-      
-      this.notification=res
+    this.service.loadNotifications().subscribe((res:NotificationData[])=>{
+
+      if(res) this.notification=res
     })
   }
   openNotifications(){
@@ -40,7 +41,7 @@ export class MiniProfileComponent implements OnInit,OnDestroy{
 
     dialogRef.afterClosed().subscribe((res) => {
       if(res!=='none'){
-      this.notification=this.notification.filter((val:any)=>val.type==='collab')
+      this.notification=this.notification.filter((val:NotificationData)=>val.type==='collab')
       if(res==='accept' || res==='reject')
       this.notification=[]
       this.service.readNotifications().subscribe()
@@ -49,7 +50,7 @@ export class MiniProfileComponent implements OnInit,OnDestroy{
 }
   openAddPostDialog() {
     const dialogRef = this.dialog.open(AddPostComponent, {
-      width: '400px', // Set the width as needed
+      width: '400px',
     });
 
     

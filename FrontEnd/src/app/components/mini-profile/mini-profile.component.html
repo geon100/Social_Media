@@ -13,8 +13,10 @@
       <h3 [routerLink]="['/profile']" style="cursor: pointer; display: inline-block; margin-right: 10px;">{{user?.userName}}</h3>
 
       <!-- Use inline styles to align the notification icon with the name -->
-      <mat-icon *ngIf="notification?.length === 0" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
-      <mat-icon *ngIf="notification?.length > 0" matBadge="{{notification.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
+      <mat-icon *ngIf="notification && notification?.length === 0" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
+      <mat-icon *ngIf="notification && notification!.length > 0" matBadge="{{notification?.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
+      <!-- <mat-icon *ngIf="notification !== undefined && notification?.length > 0" matBadge="{{notification?.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon> -->
+
     </div>
 </div>
 

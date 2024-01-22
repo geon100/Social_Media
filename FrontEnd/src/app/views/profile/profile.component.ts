@@ -9,6 +9,7 @@ import { Subscription, catchError, finalize, throwError } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { EditprofileComponent } from 'src/app/components/editprofile/editprofile.component';
 import { ReportModalComponent } from 'src/app/components/report-modal/report-modal.component';
+import { Post, UserData } from 'src/app/models/all.interface';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
   this.route.params.subscribe(params => {
     const username = params['id'];
 
-    this.userServiceSubscription=this.service.getUserByUsername(username).subscribe((res: any) => {
+    this.userServiceSubscription=this.service.getUserByUsername(username).subscribe((res: {user:UserData,posts:Post[]}) => {
         this.user = res.user;
         this.posts=res.posts
         this.service.getMe().subscribe((LogUser)=>{
@@ -53,7 +54,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
     width: '500px', 
   });
 
-  dialogRef.afterClosed().subscribe(result => {
+  dialogRef.afterClosed().subscribe((result:string) => {
     if(result){
       const report={
         userId:id,
@@ -73,7 +74,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
       data: this.user,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result:UserData) => {
       if (result) {
         this.user=result
       }
@@ -158,7 +159,7 @@ share(id:string){
 
     }
  }
- openPost(post:any){
+ openPost(post:Post){
   this.dialog.open(PostviewComponent, {
     width: '49%',
     data: { post: post ,comment:false},
@@ -171,13 +172,13 @@ setActiveTab(tab: string): void {
 
 
 followUser(userId:string|undefined){
-  this.service.followUser(userId).subscribe((res:any)=>{
+  this.service.followUser(userId).subscribe((res:{status:boolean})=>{
     this.isFollowingUser=res.status
   })
 }
 unfollowUser(userId:string|User): void {
   if(typeof userId==='string'){
-    this.service.unfollowUser(userId).subscribe((res:any)=>{
+    this.service.unfollowUser(userId).subscribe((res:{status:boolean})=>{
       this.isFollowingUser=!res.status
     })
   }

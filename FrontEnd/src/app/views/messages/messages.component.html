@@ -29,7 +29,7 @@
   
   <div class="chat" *ngIf="selectedUser">
     <div class="selected-user">
-      <span class="name">@{{ selectedUser?.users[0]?.userName }}</span>
+      <span  class="name">@{{ selectedUser?.users?.[0]?.userName }}</span>
     </div>
     
     <ul class="chat-box" #chatBox>

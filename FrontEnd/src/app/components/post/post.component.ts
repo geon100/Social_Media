@@ -8,6 +8,7 @@ import { PostviewComponent } from 'src/app/views/postview/postview.component';
 import { SharelistComponent } from '../sharelist/sharelist.component';
 import { ReportModalComponent } from '../report-modal/report-modal.component';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Post } from 'src/app/models/all.interface';
 
 @Component({
   selector: 'app-post',
@@ -15,7 +16,8 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit{
-  @Input() post: any;
+  @Input()
+  post!: Post;
   liked!:boolean
   save!:boolean
   current!:boolean
@@ -23,7 +25,7 @@ export class PostComponent implements OnInit{
   constructor(private store:Store,private service:PostService,private dialog: MatDialog,private snackBar:SnackbarService){}
 
   ngOnInit(): void {
-    console.log(this.post.tags)
+  
     this.store.select(getUser).subscribe(res=>{
       if(res) {
         this.liked=this.post.likes.includes(res?._id)

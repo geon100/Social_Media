@@ -117,12 +117,18 @@ export class PostService {
     post.likes = post.likes.filter((likeId) => likeId.toString() !== user_Id.toString());
   } else {
     post.likes.push(user_Id);
-    await this.notifyModel.create({
-      sender:userId,
-      receiver:post.user,
-      type:'like'
-    })
+    if(user_Id.toString()!==post.user.toString()){
+      await this.notifyModel.create({
+        sender:userId,
+        receiver:post.user,
+        type:'like'
+      })
+    }
+
     if(post.collab && user_Id.toString()!==post.collaborator.toString()){
+      console.log('Inside if condition for collaboration notification',);
+      console.log('user_Id.toString():', user_Id.toString());
+      console.log('post.collaborator.toString():', post.collaborator.toString());
       await this.notifyModel.create({
         sender:userId,
         receiver:post.collaborator,

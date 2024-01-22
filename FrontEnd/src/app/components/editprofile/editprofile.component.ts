@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { catchError, throwError } from 'rxjs';
+import { EditFormData, UserData } from 'src/app/models/all.interface';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,13 +13,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditprofileComponent {
   editProfileForm!: FormGroup;
-  originalUserData: any;
+  originalUserData!: EditFormData;
 
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<EditprofileComponent>,
     private userService: UserService,private snackBar:SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public userData: any
+    @Inject(MAT_DIALOG_DATA) public userData: UserData
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class EditprofileComponent {
           this.snackBar.showError(`Error Occured =>Error:${error?.error?.message || 'Unknown error'}`)
           this.oncancel()
           return throwError(() => error);
-        })).subscribe((res)=>{
+        })).subscribe((res:UserData)=>{
         this.snackBar.showSuccess('Data Updated')
           this.dialogRef.close(res)
         })

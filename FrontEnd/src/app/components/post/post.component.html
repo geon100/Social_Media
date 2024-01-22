@@ -1,26 +1,26 @@
 <div class="post">
   <div class="post-header">
     <div class="user-profile">
-      <img [src]="post.user.profilePicture" alt="User Profile" class="profile-picture">
+      <img [src]="post?.user?.profilePicture" alt="User Profile" class="profile-picture">
     </div>
     <div class="user-info">
       <ng-container *ngIf="current; else clickableUsername">
-        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.user._id]">
-          {{ post.user.userName }}
+        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post?.user?._id]">
+          {{ post?.user?.userName }}
         </h3>
         <ng-container *ngIf="post.collab">and</ng-container>
-        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.collaborator._id]">
-          {{ post.collaborator.userName }}
+        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post?.collaborator?._id]">
+          {{ post?.collaborator?.userName }}
         </h3>
       </ng-container>
     
       <ng-template #clickableUsername>
-        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.user._id]">
-          {{ post.user.userName }}
+        <h3 class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post?.user?._id]">
+          {{ post?.user?.userName }}
         </h3>
         <ng-container *ngIf="post.collab">and</ng-container>
-        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post.collaborator._id]">
-          {{ post.collaborator.userName }}
+        <h3 *ngIf="post.collab" class="username" style="display: inline; cursor: pointer;" [routerLink]="['/profile', post?.collaborator?._id]">
+          {{ post?.collaborator?.userName }}
         </h3>
       </ng-template>
     
@@ -32,13 +32,13 @@
     </button>
 
     <mat-menu #moreOptionsMenu="matMenu">
-      <button mat-menu-item (click)="openPostModal()">
+      <button *ngIf="comment" mat-menu-item (click)="openPostModal()">
         <mat-icon>remove_red_eye</mat-icon> View Post
       </button>
-      <button mat-menu-item (click)="sharelistModal(post._id)">
+      <button mat-menu-item (click)="sharelistModal(post!._id)">
         <mat-icon>share</mat-icon> Share Post
       </button>
-      <button mat-menu-item (click)="reportPost(post._id)">
+      <button mat-menu-item (click)="reportPost(post!._id)">
         <mat-icon>report</mat-icon> Report Post
       </button>
     </mat-menu>
