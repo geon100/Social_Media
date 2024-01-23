@@ -8,7 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 import * as fs from 'fs';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
-@Controller('post')
+@Controller('api/post')
 export class PostController {
   constructor(private service: PostService,private cloud:CloudinaryService) {}
 

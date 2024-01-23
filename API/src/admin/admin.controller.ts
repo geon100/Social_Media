@@ -3,7 +3,7 @@ import { LoginObj } from 'src/auth/auth.dto';
 import { AdminService } from './admin.service';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('admin')
+@Controller('api/admin')
 export class AdminController {
   constructor(private service:AdminService){}
   @Post('signin')

@@ -88,7 +88,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "getPosts", null);
 exports.AdminController = AdminController = __decorate([
-    (0, common_1.Controller)('admin'),
+    (0, common_1.Controller)('api/admin'),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
 ], AdminController);
 //# sourceMappingURL=admin.controller.js.map

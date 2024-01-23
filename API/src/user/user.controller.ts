@@ -7,7 +7,7 @@ import path from 'path';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import * as fs from 'fs';
 
-@Controller('user')
+@Controller('api/user')
 export class UserController {
 
   constructor(private service: UserService,private cloud:CloudinaryService) {}

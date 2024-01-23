@@ -199,7 +199,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PostController.prototype, "rejectCollab", null);
 exports.PostController = PostController = __decorate([
-    (0, common_1.Controller)('post'),
+    (0, common_1.Controller)('api/post'),
     __metadata("design:paramtypes", [post_service_1.PostService, cloudinary_service_1.CloudinaryService])
 ], PostController);
 //# sourceMappingURL=post.controller.js.map

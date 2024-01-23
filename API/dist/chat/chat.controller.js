@@ -165,7 +165,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "uploadAudio", null);
 exports.ChatController = ChatController = __decorate([
-    (0, common_1.Controller)('chat'),
+    (0, common_1.Controller)('api/chat'),
     __metadata("design:paramtypes", [chat_service_1.ChatService, cloudinary_service_1.CloudinaryService])
 ], ChatController);
 //# sourceMappingURL=chat.controller.js.map

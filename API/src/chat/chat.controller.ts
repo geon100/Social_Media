@@ -8,7 +8,7 @@ import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import * as fs from 'fs';
 
-@Controller('chat')
+@Controller('api/chat')
 export class ChatController {
   constructor(private service: ChatService,private cloud:CloudinaryService) {}
 
