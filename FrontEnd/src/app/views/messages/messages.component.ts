@@ -12,7 +12,7 @@ import { loadUserData } from 'src/app/state/UserState/user.actions';
 import { getUser } from 'src/app/state/UserState/user.selector';
 import { PostviewComponent } from '../postview/postview.component';
 import { PostService } from 'src/app/services/post.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RecorderComponent } from 'src/app/components/recorder/recorder.component';
 import { ChatMessage, ChatRoom } from 'src/app/models/all.interface';
 
@@ -54,9 +54,6 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
         this.chats=res
       })
     )
-    
-  
-    
 
     this.subscriptions.push(
       this.store.select(getUser).subscribe(val=>{
@@ -70,12 +67,8 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
       })
     )
 
-    
-
     this.subscriptions.push(
       this.socketService.onMessage().subscribe((res:{content:{message:ChatMessage,chatId:string}}) => {
-        // console.log('Message',res)
-        
         if (this.selectedUser && res.content.chatId === this.selectedUser._id && this.currentUser._id!==res.content.message.sender._id) {
           this.messages.push(res.content.message);
           
@@ -107,7 +100,6 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     )
   }
   markMessagesAsRead(messageIds: string[]): void {
-    // alert(1)
     this.service.readMessage(messageIds).subscribe()
   }
   openImageModal(imageUrl: string): void {
@@ -116,7 +108,6 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
       maxWidth: '100vw', 
       maxHeight: '100vh'
     });
-
   }
   handleFileInput(event:any,chat:string){
     const file = event?.target?.files[0]
@@ -155,8 +146,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
             this.scrollToBottom();
           });
         })
-      )
-      
+      ) 
     }
   }
   openRecorder(){
@@ -200,7 +190,6 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   }
 
   ViewPost(post:string){
-    
     this.postService.getPost(post).pipe(catchError((error) => {
       this.snackBar.showError(`Cannot View Post....Error:${error?.error?.message || 'Unknown error'}`);
       return throwError(() => error);
@@ -210,8 +199,6 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
         data: { post: res ,comment:false},
       });
     })
-    
-
   }
   private scrollToBottom(): void {
     try {
@@ -222,9 +209,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     }
   }
   ngOnDestroy(): void {
-    
     this.subscriptions.forEach(sub=>sub.unsubscribe())
-
   }
 
 }

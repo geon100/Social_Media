@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
   });
  }
  reportUser(id:string){
-  // alert(id)
+
   const dialogRef = this.dialog.open(ReportModalComponent, {
     width: '500px', 
   });
@@ -103,7 +103,6 @@ share(id:string){
       const form=new FormData
       form.set('image',file)
       this.loading = true; 
-      // this.snackBar.showSuccess('Valid image file selected')
       this.service.changeProfile(form).pipe(catchError((error) => {
         this.snackBar.showError(`Profile Photo change Failed....Error:${error?.error?.message || 'Unknown error'}`);
         

@@ -9,13 +9,13 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const corsOptions: CorsOptions = {
-    origin: process.env.corsOrigin,  
+    origin: process.env.CORS,  
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: false,
   };
   app.enableCors(corsOptions);
   app.useWebSocketAdapter(new IoAdapter(app));
   await app.listen(process.env.PORT);
-
+  
 }
 bootstrap();

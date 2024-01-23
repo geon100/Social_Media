@@ -1,7 +1,7 @@
 
 :host {
   @import "~ngx-toastr/toastr.css";
-  background-image: url(../../../assets/images/auth-bg2.jpg);
+  background-image: url(https://res.cloudinary.com/dt4zlqomk/image/upload/v1706002720/Nexus/auth-bg2_vhgxrt.jpg);
   background-size: cover;
   background-position: top;
   background-attachment: fixed;

@@ -18,3 +18,9 @@
 .nav-item-content mat-icon {
   margin-right: 5px; 
 }
+.logo{
+  width: 40px;
+  height: 40px;
+  mix-blend-mode: hard-light;
+  
+}

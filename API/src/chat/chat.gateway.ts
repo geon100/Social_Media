@@ -4,7 +4,7 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from
 import { Server } from "socket.io";
 
 const options: CorsOptions = {
-  origin: [process.env.corsOrigin],
+  origin: ["http://localhost:4200",'https://nexus.geobabu.online'],
   methods: ["GET", "POST"],
   credentials: true
 };
@@ -15,8 +15,7 @@ export class ChatGateway implements OnModuleInit {
   server: Server;
 
   onModuleInit() {
-    const useridToSocketIdMap = new Map<string, string>();
-    const socketIdToUseridMap = new Map<string, string>();
+    // console.log("http://localhost:4200"===process.env.CORS)
 
     this.server.on('connection', (socket) => {});
   }

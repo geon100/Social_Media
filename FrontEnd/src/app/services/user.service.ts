@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.interface';
 import { Observable } from 'rxjs';
-import { Form } from '@angular/forms';
 import { NotificationData, Post, UserData } from '../models/all.interface';
 import { environment } from 'src/environments/environment';
 

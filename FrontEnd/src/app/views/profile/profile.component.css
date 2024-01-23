@@ -1,5 +1,5 @@
 :host {
-  background-image: url('../../../assets/images/bg.jpg');
+  background-image: url('https://res.cloudinary.com/dt4zlqomk/image/upload/v1706002347/Nexus/bg1_p1o0m9.jpg');
   display: block;
   min-height: 100vh;
   padding: 80px;
@@ -137,18 +137,20 @@ h2 {
 
 .post-grid {
   display: flex;
-  flex-wrap: unset;
+  flex-wrap: wrap;
   justify-content: flex-start;
   gap: 16px;
 }
 
 .post {
-  width: calc(33.33% - 16px); 
+  flex: 0 0 calc(33.33% - 16px);
   margin-bottom: 16px;
   position: relative;
   overflow: hidden;
   max-width: 150px;
   max-height: 150px;
+  width: calc(33.33% - 16px);
+  box-sizing: border-box; /* Add this line */
 }
 
 .post-image {

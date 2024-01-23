@@ -16,7 +16,7 @@ export class AdminDashboardComponent implements OnInit{
       this.totalPostsCount=res.length
     })
   }
-  totalUsersCount:number=10
-  totalPostsCount:number=20
+  totalUsersCount:number=0
+  totalPostsCount:number=0
   
 }
