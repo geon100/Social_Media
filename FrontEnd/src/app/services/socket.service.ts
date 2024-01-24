@@ -13,7 +13,7 @@ export class SocketService {
   private socket!: Socket;
 
   initializeSocket(){
-    this.socket = io(environment.apiUrl)
+    this.socket = io(environment.socketUrl)
     }
 
   sendMessage(message: ChatMessage, chatId: string): void {

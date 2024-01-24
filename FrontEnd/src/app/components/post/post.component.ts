@@ -36,7 +36,7 @@ export class PostComponent implements OnInit{
     
   }
   reportPost(id:string){
-    alert(id)
+  
     const dialogRef = this.dialog.open(ReportModalComponent, {
       width: '500px', 
     });
@@ -70,13 +70,14 @@ export class PostComponent implements OnInit{
   }
     
   savePost(){
-    this.service.savePosts(this.post._id).subscribe((res:any)=>{
+    this.service.savePosts(this.post._id).subscribe(()=>{
       this.save=!this.save
+      this.snackBar.showSuccess('Post Saved')
     })
   }
 
   toggleLike(){
-    this.service.togglelike(this.post._id).subscribe((res:any)=>{
+    this.service.togglelike(this.post._id).subscribe((res:Post)=>{
       
       this.post.likes=res.likes
       this.liked=!this.liked

@@ -16,8 +16,7 @@ export class AdminService {
 
   login(usercred:UserCred):Observable<{token:string}>{
       return this.http.post<{token:string}>(`${this.ApiBaseUrl}/signin`,usercred)
-      // console.log(usercred)
-      // return of({token:'abc'})
+    
   }
   getUsers():Observable<UserData[]>{
     return this.http.get<UserData[]>(`${this.ApiBaseUrl}/allUsers`)

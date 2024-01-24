@@ -27,7 +27,7 @@ export class PostService {
  }
 
 togglelike(post:string){
-  return this.http.patch(`${this.ApiBaseUrl}/post/likepost`,{post})
+  return this.http.patch<Post>(`${this.ApiBaseUrl}/post/likepost`,{post})
 }
 savePosts(post:string){
   return this.http.patch(`${this.ApiBaseUrl}/post/savepost`,{post})

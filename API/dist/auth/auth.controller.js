@@ -20,11 +20,9 @@ let AuthController = class AuthController {
         this.service = service;
     }
     signUp(userobj, request) {
-        console.log('Request Body:', userobj);
         return this.service.signup(userobj);
     }
     generateNewAccess(refreshToken, request) {
-        console.log('Request Body:', refreshToken);
         return this.service.generateNewAccessToken(refreshToken);
     }
     signIn(loginCred) {

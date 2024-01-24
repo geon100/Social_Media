@@ -114,7 +114,7 @@ export class PostController {
   @Patch('rejectCollab')
   rejectCollab(@Req() req,@Body('post') postId: string){
 
-    return this.service.acceptCollaborator(postId)
+    return this.service.rejectCollab(postId)
   }
 }
 

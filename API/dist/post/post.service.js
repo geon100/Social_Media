@@ -185,11 +185,11 @@ let PostService = class PostService {
     async acceptCollaborator(postId) {
         console.log(postId);
         await this.postModel.findByIdAndUpdate(postId, { collab: true }, { new: true });
-        await this.notifyModel.deleteOne({ post: postId });
+        await this.notifyModel.deleteOne({ post: postId, type: 'collab' });
         return { status: true };
     }
     async rejectCollab(postId) {
-        await this.notifyModel.deleteOne({ post: postId });
+        await this.notifyModel.deleteOne({ post: postId, type: 'collab' });
     }
 };
 exports.PostService = PostService;

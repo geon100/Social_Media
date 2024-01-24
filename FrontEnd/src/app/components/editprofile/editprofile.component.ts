@@ -30,7 +30,7 @@ export class EditprofileComponent {
       dob: this.userData.dob,
       bio: this.userData.bio,
     }
-// alert(JSON.stringify(this.userData))
+
     this.editProfileForm = this.formBuilder.group({
       fullName: [this.userData.fullName, Validators.required],
       userName: [this.userData.userName, Validators.required],

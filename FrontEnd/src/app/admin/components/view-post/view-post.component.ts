@@ -11,7 +11,7 @@ import { Post } from 'src/app/models/all.interface';
 export class ViewPostComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,private service:AdminService) {}
   block(id:string){
-    // alert(id)
+    
     this.service.changePostStatus(id).subscribe(()=>{
       this.data.post.isActive=!this.data.post.isActive
     })

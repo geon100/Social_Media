@@ -72,7 +72,7 @@ export class SignupComponent {
     setTimeout(() => {
       this.snackBar.showError('Otp Expired')
       this.otpSent = false;
-    }, 30000);
+    }, 2 * 60 * 1000);
   }
   signup() {
     if (this.signupForm.valid) {

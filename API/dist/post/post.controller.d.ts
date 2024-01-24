@@ -62,7 +62,5 @@ export declare class PostController {
     acceptCollab(req: any, postId: string): Promise<{
         status: boolean;
     }>;
-    rejectCollab(req: any, postId: string): Promise<{
-        status: boolean;
-    }>;
+    rejectCollab(req: any, postId: string): Promise<void>;
 }

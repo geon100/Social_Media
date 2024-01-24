@@ -58,7 +58,7 @@ export class AuthService {
   async generateNewAccessToken(token:string){
     try {
       const decoded = await jwt.verify(token, process.env.JWT_SECRET) as { sub: string, email: string };
-      console.log('called',decoded)
+      
       return {token:await this.signToken(decoded.sub,decoded.email)};
     } catch (error) {
       
@@ -98,7 +98,7 @@ export class AuthService {
       setTimeout(() => {
         console.log('deleted',this.otpStorage[email])
         delete this.otpStorage[email];
-      }, 30 * 1000);
+      }, 2 * 60 * 1000);
       return otp
     } catch (error) {
       throw error;

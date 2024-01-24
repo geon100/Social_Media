@@ -15,7 +15,7 @@ export class UsertaglistComponent implements OnInit{
   
   ngOnInit(): void {
     this.service.getFollowers().subscribe((res:{followers:UserData[]})=>{
-      console.log('res.follow',res)
+      
       this.followers=res.followers
       
     })

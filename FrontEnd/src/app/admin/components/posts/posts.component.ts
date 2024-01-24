@@ -26,7 +26,7 @@ export class PostsComponent implements OnInit{
   }
 
   toggleBlock(id:string){
-    alert(id)
+    
     this.adminService.changePostStatus(id).subscribe(
       () => {
         const index = this.dataSource.data.findIndex(u => u._id === id);

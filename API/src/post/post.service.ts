@@ -215,13 +215,14 @@ export class PostService {
   async acceptCollaborator(postId:string){
     console.log(postId)
     await this.postModel.findByIdAndUpdate(postId, { collab: true }, { new: true })
-    await this.notifyModel.deleteOne({post:postId})
+    await this.notifyModel.deleteOne({post:postId,type:'collab'})
+ 
     return {status:true}
 
   }
 
   async rejectCollab(postId:string){
-    await this.notifyModel.deleteOne({post:postId})
+    await this.notifyModel.deleteOne({post:postId,type:'collab'})
   }
   
 }

@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit{
   ngOnInit() {
     this.router.events.subscribe((event: NavigationEvent) => {
       if (event instanceof NavigationEnd) {  
-        this.showHeader = !['/login', '/admin' , '/signup' ,'/admin/login','/admin/users', '/admin/dashboard','/admin/posts','/forgot-password'].includes(event.url);
+        this.showHeader = !['/login', '/admin' , '/signup' ,'/admin/login','/admin/users', '/admin/dashboard','/admin/posts','/forgot-password','/admin/reports'].includes(event.url);
       }
     });
     

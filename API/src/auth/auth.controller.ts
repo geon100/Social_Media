@@ -8,12 +8,11 @@ export class AuthController {
 
   @Post('signup')
   signUp(@Body() userobj: UserObj, @Req() request: Request) {
-    console.log('Request Body:', userobj);
+  
     return this.service.signup(userobj)
   }
   @Post('generateNewAccess')
   generateNewAccess(@Body('refreshToken') refreshToken: string, @Req() request: Request) {
-    console.log('Request Body:', refreshToken);
     return this.service.generateNewAccessToken(refreshToken)
   }
   
@@ -31,7 +30,7 @@ export class AuthController {
   
   @Post('resetPassword')
   async resetPassword(@Body() newData){
-    // const otp=await this.service.generateOtp(email)
+
     return this.service.reset(newData)
   }
 }

@@ -9,6 +9,8 @@
     </div>
     
     <ul>
+      <emoji-mart *ngIf="pickerAppear" (emojiClick)="addEmoji($event)" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>
+
       <ng-container *ngIf="chats.length > 0; else noUsers">
         <li *ngFor="let chat of chats" (click)="selectUser(chat)" [class.active]="selectedUser === chat">
           <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}">
@@ -67,7 +69,6 @@
         <button (click)="openFileInput()"  class="btn btn-danger m-2"><mat-icon>add_a_photo</mat-icon></button>
         <button (click)="picker()" class="btn btn-warning"><mat-icon> insert_emoticon</mat-icon></button>
         <input #fileInput type="file" (change)="handleFileInput($event,selectedUser._id)" accept="image/*" style="display: none">
-        <emoji-mart *ngIf="pickerAppear" (emojiClick)="addEmoji($event)" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>
         <button class="btn btn-danger m-2" (click)="openRecorder()"><mat-icon>mic</mat-icon></button>
         
         

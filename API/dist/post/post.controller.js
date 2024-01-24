@@ -80,7 +80,7 @@ let PostController = class PostController {
         return this.service.acceptCollaborator(postId);
     }
     rejectCollab(req, postId) {
-        return this.service.acceptCollaborator(postId);
+        return this.service.rejectCollab(postId);
     }
 };
 exports.PostController = PostController;
