@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
@@ -10,6 +10,9 @@ import { ChatService } from 'src/app/services/chat.service';
 import { EditprofileComponent } from 'src/app/components/editprofile/editprofile.component';
 import { ReportModalComponent } from 'src/app/components/report-modal/report-modal.component';
 import { Post, UserData } from 'src/app/models/all.interface';
+import { Store } from '@ngrx/store';
+import { getUser } from 'src/app/state/UserState/user.selector';
+import { loadUserData } from 'src/app/state/UserState/user.actions';
 
 
 @Component({
@@ -24,7 +27,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
   isCurrentUser!:boolean
   isFollowingUser!:boolean
   loading = false;
-
+  @ViewChild('profileContainer') profileContainer!:ElementRef
   private userServiceSubscription: Subscription | undefined;
   
  constructor(private route: ActivatedRoute,
@@ -32,13 +35,24 @@ export class ProfileComponent implements OnInit,OnDestroy{
   private service:UserService,
   private chat:ChatService,
   private snackBar:SnackbarService,
+  private store:Store,
   private router:Router){}
 
  ngOnInit(): void {
+  
+  this.store.select(getUser).subscribe(val=>{
+    if (!val) {
+      this.store.dispatch(loadUserData())
+    }
+  })
   this.route.params.subscribe(params => {
     const username = params['id'];
 
-    this.userServiceSubscription=this.service.getUserByUsername(username).subscribe((res: {user:UserData,posts:Post[]}) => {
+    this.userServiceSubscription=this.service.getUserByUsername(username).pipe(catchError((error) => {
+      this.snackBar.showError(` Invalid User Data...Error:${error?.error?.message || 'Unknown error'}`);
+      this.router.navigate([''])
+      return throwError(() => error);
+    })).subscribe((res: {user:UserData,posts:Post[]}) => {
         this.user = res.user;
         this.posts=res.posts
         this.service.getMe().subscribe((LogUser)=>{
@@ -66,7 +80,6 @@ export class ProfileComponent implements OnInit,OnDestroy{
       })
     }
   });
-
  }
  editProfile(){
     const dialogRef =this.dialog.open(EditprofileComponent, {

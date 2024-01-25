@@ -39,6 +39,10 @@ export class AddPostComponent {
 
   onSubmit() {
     if (this.addPostForm.valid) {
+      if(!this.addPostForm.value.caption.trim()){
+        this.snackBar.showError('Caption Not valid');
+        return
+      }
       this.loading = true; 
 
       const formData = new FormData();

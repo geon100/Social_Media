@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Post } from 'src/schemas/post.schema';
@@ -45,7 +45,7 @@ export class UserService {
             path: 'user',
           },
         });
-  
+        if(!user) throw new BadRequestException('Invalid Data')
       const posts = await this.postModel
         .find({ $or:[{user: userId},{collaborator:userId,collab: true}], isActive: true })
         .populate('user collaborator')
@@ -149,6 +149,7 @@ export class UserService {
       return await this.userModel.findById(userId)
       .populate('followers')
       .populate('following')
+      .populate('saved')
     } catch (error) {
       if (error.code === 11000) {
         throw new ConflictException('Username or email already exists');

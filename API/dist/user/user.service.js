@@ -50,6 +50,8 @@ let UserService = class UserService {
                     path: 'user',
                 },
             });
+            if (!user)
+                throw new common_1.BadRequestException('Invalid Data');
             const posts = await this.postModel
                 .find({ $or: [{ user: userId }, { collaborator: userId, collab: true }], isActive: true })
                 .populate('user collaborator')
@@ -129,7 +131,8 @@ let UserService = class UserService {
             await user.save();
             return await this.userModel.findById(userId)
                 .populate('followers')
-                .populate('following');
+                .populate('following')
+                .populate('saved');
         }
         catch (error) {
             if (error.code === 11000) {

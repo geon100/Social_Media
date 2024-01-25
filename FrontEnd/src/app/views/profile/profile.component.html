@@ -1,11 +1,11 @@
 
-<div class="user-profile">
+<div class="user-profile" #profileContainer>
   <div class="container text-center loading-container">
     <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
   </div>
   <input #coverPic (change)="changeCover($event)" type="file" hidden accept="image/*">
 
-  <div (click)="openCoverChange(coverPic)" class="cover-photo" [style.background-image]="'url(' + user?.coverPicture + ')'" *ngIf="user?.coverPicture && isCurrentUser" matTooltip="Change Cover Photo"></div>
+  <div (click)="openCoverChange(coverPic)" class="cover-photo" [style.background-image]="'url(' + user?.coverPicture + ')'" *ngIf="user?.coverPicture && isCurrentUser" matTooltip="Click to Change Cover Photo"></div>
   <div (click)="openCoverChange(coverPic)" class="cover-photo" [style.background-image]="'url(' + user?.coverPicture + ')'" *ngIf="user?.coverPicture && !isCurrentUser" ></div>
   
   <div class="profile-section">

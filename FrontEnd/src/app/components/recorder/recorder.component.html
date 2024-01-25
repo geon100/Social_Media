@@ -10,14 +10,14 @@
   <mat-card>
     <mat-card-content>
       <div>
-        <button mat-icon-button (click)="toggleRecording()">
-          <mat-icon color="primary">{{ recording ? 'stop' : 'mic-none' }}</mat-icon>
+        <button *ngIf="!audioBlob" mat-icon-button (click)="toggleRecording()">
+          <mat-icon [ngClass]="{ 'red-icon': recording, 'primary': !recording }">{{ recording ? 'stop' : 'mic-none' }}</mat-icon>
         </button>
-        <button mat-icon-button (click)="resetRecording()" *ngIf="audioBlob">
+        <button  mat-icon-button (click)="resetRecording()" *ngIf="audioBlob">
           <mat-icon>replay</mat-icon>
         </button>
       </div>
-      
+      <p *ngIf="recording" class="text-danger font-weight-bold">Recording...</p>
       <div *ngIf="audioBlob">
         <audio *ngIf="audioUrl" [src]="audioUrl" controls></audio>
       </div>

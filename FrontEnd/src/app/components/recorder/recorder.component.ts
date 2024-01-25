@@ -56,7 +56,7 @@ export class RecorderComponent {
         },
         (error: any) => {
           console.error('Error stopping recording:', error);
-          // Handle error (e.g., show a user-friendly message)
+          
         }
       );
     }
@@ -69,8 +69,9 @@ export class RecorderComponent {
     this.recording=false
     if (this.recorder) {
       this.recorder.reset();
-      this.cdr.detectChanges()
     }
+    this.cdr.detectChanges()
+    
   }
 
   sendRecording(){

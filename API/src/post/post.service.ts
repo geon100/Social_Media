@@ -120,9 +120,7 @@ export class PostService {
     }
 
     if(post.collab && user_Id.toString()!==post.collaborator.toString()){
-      console.log('Inside if condition for collaboration notification',);
-      console.log('user_Id.toString():', user_Id.toString());
-      console.log('post.collaborator.toString():', post.collaborator.toString());
+      
       await this.notifyModel.create({
         sender:userId,
         receiver:post.collaborator,
@@ -135,7 +133,7 @@ export class PostService {
   }
 
   async reportPost(reportData: {postId:string,reportText:string,type:string}, reportedBy: any) {
-    console.log(reportData, reportedBy);
+
     const existingReport = await this.reportModel.findOne({
       reportedBy: reportedBy,
       reportedPost: reportData.postId
@@ -213,7 +211,7 @@ export class PostService {
   }
 
   async acceptCollaborator(postId:string){
-    console.log(postId)
+ 
     await this.postModel.findByIdAndUpdate(postId, { collab: true }, { new: true })
     await this.notifyModel.deleteOne({post:postId,type:'collab'})
  

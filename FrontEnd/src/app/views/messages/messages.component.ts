@@ -141,7 +141,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
           this.socketService.sendMessage(res, chat);
           this.messages.push(res)
           this.messageText=''
-          
+          if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
           setTimeout(() => {
             this.scrollToBottom();
           });
@@ -151,7 +151,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   }
   openRecorder(){
     const dialog=this.dialog.open(RecorderComponent, {
-      width: '20%',
+      width: '30%',
     });
 
     this.subscriptions.push(
@@ -183,7 +183,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   }
   
   addEmoji(event:any){
-    this.messageText=event.emoji.native
+    this.messageText+=event.emoji.native
   }
   picker(){
     this.pickerAppear=!this.pickerAppear
