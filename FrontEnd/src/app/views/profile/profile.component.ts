@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.interface';
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit,OnDestroy{
   isCurrentUser!:boolean
   isFollowingUser!:boolean
   loading = false;
-  @ViewChild('profileContainer') profileContainer!:ElementRef
+  
   private userServiceSubscription: Subscription | undefined;
   
  constructor(private route: ActivatedRoute,
@@ -37,9 +37,11 @@ export class ProfileComponent implements OnInit,OnDestroy{
   private snackBar:SnackbarService,
   private store:Store,
   private router:Router){}
+ 
 
  ngOnInit(): void {
   
+
   this.store.select(getUser).subscribe(val=>{
     if (!val) {
       this.store.dispatch(loadUserData())

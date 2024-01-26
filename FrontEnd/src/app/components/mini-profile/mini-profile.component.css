@@ -6,3 +6,14 @@
   border-radius: 50% 50%;
 }
 
+h3:hover {
+  background-color: rgb(87, 83, 83);
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight box shadow for lift effect */
+  border-radius: 12px;
+  
+}
+h3{
+  padding: 5px;
+}
+

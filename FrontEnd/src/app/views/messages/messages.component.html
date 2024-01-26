@@ -13,7 +13,7 @@
 
       <ng-container *ngIf="chats.length > 0; else noUsers">
         <li class="chatRoomUsers" *ngFor="let chat of chats" (click)="selectUser(chat)" [class.active]="selectedUser === chat">
-          <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}">
+          <img [src]="chat.users[0].profilePicture" alt="{{ chat.users[0].userName }}" [routerLink]="['/profile', chat?.users![0]?._id]" matTooltip="Go to Profile">
           <h3>@{{ chat.users[0].userName }}</h3>
           <div class="user-info">
             <span class="status" [ngClass]="{'online': chat.users[0].isOnline, 'offline': !chat.users[0].isOnline}">

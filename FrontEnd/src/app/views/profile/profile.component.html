@@ -1,5 +1,5 @@
 
-<div class="user-profile" #profileContainer>
+<div class="user-profile">
   <div class="container text-center loading-container">
     <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
   </div>
@@ -12,7 +12,7 @@
     
 
     <input #profilePic (change)="changeProfile($event)" type="file" hidden accept="image/*">
-    <img *ngIf="isCurrentUser" [src]="user?.profilePicture" alt="Profile Photo" (click)="openProfileChange(profilePic)" class="profile-picture" matTooltip="Change Profile Photo">
+    <img *ngIf="isCurrentUser" [src]="user?.profilePicture" alt="Profile Photo" (click)="openProfileChange(profilePic)" class="profile-picture" matTooltip="Click to Change Profile Photo">
     <img *ngIf="!isCurrentUser" [src]="user?.profilePicture" alt="Profile Photo" (click)="openProfileChange(profilePic)" class="profile-picture">
     <div class="user-details">
       <div class="user-header">
@@ -64,7 +64,7 @@
           <div class="follower-details">
             <h3>{{ follower.fullName }}</h3>
           </div>
-          <h3 style="cursor: pointer;" [routerLink]="['/profile', follower._id]">@{{ follower.userName }}</h3>
+          <h3 style="cursor: pointer;" [routerLink]="['/profile', follower._id]" matTooltip="Go to Profile">@{{ follower.userName }}</h3>
         </div>
       </div>
     
@@ -83,7 +83,7 @@
           <div class="following-details">
             <h3>{{ followedUser.fullName }}</h3>
           </div>
-          <h3 style="cursor: pointer;" [routerLink]="['/profile', followedUser._id]">@{{ followedUser.userName }}</h3>
+          <h3 style="cursor: pointer;" [routerLink]="['/profile', followedUser._id]" matTooltip="Go to Profile">@{{ followedUser.userName }}</h3>
         </div>
       </div>
     
