@@ -27,10 +27,8 @@
 
   <div class="text-center">
     <button class="mb-3" mat-raised-button color="primary" (click)="openAddPostDialog()">Add Post</button>
-    <button mat-icon-button>
-        <mat-icon *ngIf="notification && notification?.length === 0" style="cursor: pointer;" (click)="openNotifications()">notifications</mat-icon>
-        <mat-icon *ngIf="notification && notification!.length > 0" matBadge="{{notification?.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
-    </button>
+    <mat-icon *ngIf="notification && notification?.length === 0" style="cursor: pointer;" (click)="openNotifications()">notifications</mat-icon>
+    <mat-icon *ngIf="notification && notification!.length > 0" matBadge="{{notification?.length}}" matBadgeColor="warn" style="vertical-align: middle; cursor: pointer; margin-left: 10px;" (click)="openNotifications()">notifications</mat-icon>
 </div>
 
 
