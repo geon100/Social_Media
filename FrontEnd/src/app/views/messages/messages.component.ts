@@ -82,6 +82,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   }
   
   openFileInput(){
+    if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
     this.fileInput?.nativeElement?.click()
   }
   selectUser(chat:ChatRoom): void {
@@ -103,6 +104,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     this.service.readMessage(messageIds).subscribe()
   }
   openImageModal(imageUrl: string): void {
+    if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
     this.dialog.open(ImageModalComponent, {
       data: imageUrl ,
       maxWidth: '100vw', 
@@ -110,6 +112,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     });
   }
   handleFileInput(event:any,chat:string){
+    
     const file = event?.target?.files[0]
     if(file){
     const form=new FormData()
@@ -135,13 +138,15 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     }
   }
   sendMessage(chat:string){
+    if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
     if(this.messageText.trim()!==''){
+      
       this.subscriptions.push(
         this.service.sendMessage(chat,this.messageText.trim()).subscribe((res:ChatMessage)=>{
           this.socketService.sendMessage(res, chat);
           this.messages.push(res)
           this.messageText=''
-          if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
+          
           setTimeout(() => {
             this.scrollToBottom();
           });
@@ -150,6 +155,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
     }
   }
   openRecorder(){
+    if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
     const dialog=this.dialog.open(RecorderComponent, {
       width: '30%',
     });
@@ -190,6 +196,7 @@ export class MessagesComponent implements AfterViewInit,OnDestroy{
   }
 
   ViewPost(post:string){
+    if(this.pickerAppear) this.pickerAppear=!this.pickerAppear
     this.postService.getPost(post).pipe(catchError((error) => {
       this.snackBar.showError(`Cannot View Post....Error:${error?.error?.message || 'Unknown error'}`);
       return throwError(() => error);

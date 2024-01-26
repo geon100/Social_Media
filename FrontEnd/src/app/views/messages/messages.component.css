@@ -63,9 +63,10 @@ li {
   transition: background-color 0.3s;
 }
 
-/* li:hover {
+.chatRoomUsers:hover {
   background-color: #f7f9fb;
-} */
+  color:black ;
+}
 
 li img {
   width: 40px;
@@ -109,6 +110,7 @@ li.active {
   display: flex;
   flex-direction: column;
 }
+
 
 .selected-user {
   border-bottom: 1px solid #e6ecf3;

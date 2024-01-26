@@ -141,7 +141,7 @@ export class UserService {
       const user=await this.userModel.findById(userId)
         user.userName=obj.userName
         user.fullName=obj.fullName
-        user.bio=obj.bio
+        user.bio=obj.bio.trim()
         user.dob=new Date(obj.dob)
         
       await user.save()

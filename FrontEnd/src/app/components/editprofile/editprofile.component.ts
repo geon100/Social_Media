@@ -56,7 +56,7 @@ export class EditprofileComponent {
   }
   onSubmit(): void {
     if (this.editProfileForm.valid) {
-      if (!this.editProfileForm.value.fullName.trim() || !this.editProfileForm.value.bio.trim() || !this.editProfileForm.value.userName.trim()) {
+      if (!this.editProfileForm.value.fullName.trim() || !this.editProfileForm.value.userName.trim()) {
         this.snackBar.showSuccess('Enter valid Data')
         this.oncancel();
         return

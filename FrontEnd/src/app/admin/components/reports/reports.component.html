@@ -50,7 +50,7 @@
   <ng-template #noReports>
     <p>No reports available.</p>
   </ng-template>
-  <mat-card-footer>
-    <mat-paginator *ngIf="dataSource && dataSource.data.length > 5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-card-footer >
+    <mat-paginator  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </mat-card-footer>
 </mat-card>

@@ -20,9 +20,9 @@ export class ReportsComponent {
 
   ngOnInit() {
     this.adminService.getReports().subscribe((reports:any)=>{
-      this.dataSource.paginator=this.paginator
-      console.log('reports',reports)
       this.dataSource.data = reports
+      this.dataSource.paginator=this.paginator
+      
     })
     
   }
