@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { RegisterUser } from 'src/app/models/auth.interface';
@@ -19,7 +19,7 @@ export class SignupComponent {
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
-      fullName: ['', Validators.required],
+      fullName: ['', [Validators.required, this.noWhitespaceValidator]],
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
       userName: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)]],
@@ -28,7 +28,12 @@ export class SignupComponent {
       otp:['',Validators.required]
     });
   }
-
+  noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+  
+    return isValid ? null : { 'whitespace': true };
+  }
   matchPassword(control: AbstractControl): { [key: string]: boolean } | null {
     const password = this.signupForm?.get('password')?.value;
     const confirmPassword = control?.value;

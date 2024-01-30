@@ -12,6 +12,9 @@
         <div *ngIf="signupForm?.get('fullName')?.touched && signupForm?.get('fullName')?.hasError('required')" class="text-danger h6">
           Full Name is required
         </div>
+        <div *ngIf="signupForm?.get('fullName')?.touched && signupForm?.get('fullName')?.hasError('whitespace')" class="text-danger h6">
+          Full Name cannot be just whitespace
+        </div>
       </div>
       <div class="mb-3">
         <label for="dob" class="form-label">Date of Birth</label>
