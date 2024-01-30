@@ -33,7 +33,7 @@ export class EditprofileComponent {
 
     this.editProfileForm = this.formBuilder.group({
       fullName: [this.userData.fullName, [Validators.required]],
-      userName: [this.userData.userName, [Validators.required]],
+      userName: [this.userData.userName, [Validators.required,Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
       dob: [this.userData.dob,[ Validators.required,this.ageValidator(13)]],
       email: [{ value: this.userData.email, disabled: true }],
       bio: [this.userData.bio]

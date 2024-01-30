@@ -21,7 +21,7 @@ export class SignupComponent {
     this.signupForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
-      userName: ['', Validators.required],
+      userName: ['', [Validators.required,Validators.pattern(/^[a-zA-Z0-9_-]{3,16}$/)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/), this.matchPassword.bind(this)]],
       dob: [null, [Validators.required, this.ageValidator(13)]],
@@ -70,8 +70,10 @@ export class SignupComponent {
   }
   private timer(){
     setTimeout(() => {
-      this.snackBar.showError('Otp Expired')
-      this.otpSent = false;
+      if(!(localStorage.getItem('userToken'))){
+        this.snackBar.showError('Otp Expired')
+        this.otpSent = false;
+      }
     }, 2 * 60 * 1000);
   }
   signup() {

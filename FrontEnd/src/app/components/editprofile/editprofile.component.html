@@ -3,6 +3,7 @@
 <div class="edit-profile-container">
   <h2>Edit Profile</h2>
   <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+    
     <div class="form-group">
       <label for="fullName">Full Name:</label>
       <input type="text" id="fullName" formControlName="fullName" class="form-control" required>

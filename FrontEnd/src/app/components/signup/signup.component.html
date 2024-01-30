@@ -17,7 +17,7 @@
         <label for="dob" class="form-label">Date of Birth</label>
         <div class="input-group">
           <input type="text" id="dob" name="dob" class="form-control" formControlName="dob" [matDatepicker]="picker" readonly>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix [for]="picker" style="color: aliceblue;"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </div>
         <div *ngIf="signupForm?.get('dob')?.touched && signupForm?.get('dob')?.hasError('required')" class="text-danger h6">
@@ -42,6 +42,9 @@
         <input type="text" id="userName" name="userName" class="form-control" formControlName="userName">
         <div *ngIf="signupForm?.get('userName')?.touched && signupForm?.get('userName')?.hasError('required')" class="text-danger h6">
           Username is required
+        </div>
+        <div *ngIf="signupForm?.get('userName')?.dirty && signupForm?.get('userName')?.invalid" class="text-danger h6">
+          Must be a valid Username
         </div>
       </div>
       

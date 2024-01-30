@@ -74,7 +74,7 @@ export class PostComponent implements OnInit{
   savePost(){
     this.service.savePosts(this.post._id).subscribe(()=>{
       this.save=!this.save
-      this.snackBar.showSuccess('Post Saved')
+      if(this.save) this.snackBar.showSuccess('Post Saved')
     })
   }
 
